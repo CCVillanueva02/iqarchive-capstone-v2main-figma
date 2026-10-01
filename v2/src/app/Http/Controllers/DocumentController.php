@@ -46,6 +46,10 @@ class DocumentController extends Controller
             return redirect()->route('documents.program-accreditation', $request->except('tab'));
         }
 
+        if ($request->query('tab') === 'institutional-records' || $request->query('tab') === 'institutional-accreditation') {
+            return redirect()->route('documents.institutional-accreditation', $request->except('tab'));
+        }
+
         $this->authorize('viewAny', Document::class);
 
         $offices = DocumentCategory::where('scope', 'institutional')
@@ -54,7 +58,7 @@ class DocumentController extends Controller
                     ->whereNull('college_id')
                     ->where('visibility', 'univ');
             }])
-            ->orderBy('name')
+            ->latest('id')
             ->get();
 
         $selectedOfficeId = $request->integer('office_id') ?: ($offices->first()?->id ?? null);
@@ -63,6 +67,7 @@ class DocumentController extends Controller
             ->whereNull('college_id')
             ->where('visibility', 'univ')
             ->with(['uploader:id,name,email'])
+            ->withCount('documentLinks')
             ->when($selectedOfficeId, fn ($q) => $q->where('category_id', $selectedOfficeId));
 
         if ($search = $request->input('search')) {
@@ -108,7 +113,7 @@ class DocumentController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'office_id' => ['required', 'integer', 'exists:document_categories,id'],
-            'file' => ['required', 'file', 'mimes:pdf', 'max:20480'],
+            'file' => ['required', 'file', 'mimes:pdf,docx,doc,xlsx,xls,csv,pptx,ppt,png,jpg,jpeg,webp,zip', 'max:51200'],
             'description' => ['nullable', 'string', 'max:1000'],
         ]);
 
@@ -167,12 +172,14 @@ class DocumentController extends Controller
                 Rule::unique('document_categories', 'name')->where(fn ($query) => $query->where('scope', 'institutional')),
             ],
             'description' => ['nullable', 'string', 'max:1000'],
+            'icon' => ['nullable', 'string', 'max:50'],
         ]);
 
         $office = DocumentCategory::create([
             'name' => $validated['name'],
             'scope' => 'institutional',
             'description' => $validated['description'] ?? null,
+            'icon' => $validated['icon'] ?? null,
         ]);
 
         AuditLog::create([
@@ -203,7 +210,7 @@ class DocumentController extends Controller
         $document = Document::withoutGlobalScopes()->findOrFail($documentId);
         $this->authorize('view', $document);
 
-        $url = $this->storageService->getTemporaryUrl($document->file_path, 15);
+        $url = $document->external_url ?: $this->storageService->getTemporaryUrl($document->file_path, 15);
 
         AuditLog::create([
             'college_id' => $document->college_id,
@@ -218,5 +225,60 @@ class DocumentController extends Controller
         ]);
 
         return response()->json(['url' => $url]);
+    }
+
+    /**
+     * Stream binary document file for inline preview or download.
+     *
+     * Security Reasoning: Authorizes user view permission on the document model
+     * before reading binary contents from private storage. Prevents unauthorized file access.
+     */
+    public function file(Request $request, int $documentId): \Symfony\Component\HttpFoundation\Response
+    {
+        $document = Document::withoutGlobalScopes()->findOrFail($documentId);
+        $this->authorize('view', $document);
+
+        if ($document->external_url) {
+            return redirect()->away($document->external_url);
+        }
+
+        $disk = \Illuminate\Support\Facades\Storage::disk(config('filesystems.default', 'local'));
+        if (! $disk->exists($document->file_path)) {
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($document->file_path)) {
+                $disk = \Illuminate\Support\Facades\Storage::disk('public');
+            } else {
+                abort(404, 'Document file not found.');
+            }
+        }
+
+        $disposition = $request->query('download') ? 'attachment' : 'inline';
+
+        AuditLog::create([
+            'college_id' => $document->college_id,
+            'user_id' => Auth::id(),
+            'action' => $request->query('download') ? 'document.download' : 'document.preview',
+            'target_type' => Document::class,
+            'target_id' => (string) $document->id,
+            'ip_address' => $request->ip(),
+            'details' => [
+                'file_hash' => $document->file_hash,
+                'disposition' => $disposition,
+            ],
+        ]);
+
+        $fullPath = $disk->path($document->file_path);
+
+        $headers = [
+            'Content-Type' => $document->mime_type ?? 'application/pdf',
+        ];
+
+        if ($request->query('download')) {
+            return response()->download($fullPath, $document->original_filename, $headers);
+        }
+
+        return response()->file($fullPath, [
+            ...$headers,
+            'Content-Disposition' => "inline; filename=\"{$document->original_filename}\"",
+        ]);
     }
 }

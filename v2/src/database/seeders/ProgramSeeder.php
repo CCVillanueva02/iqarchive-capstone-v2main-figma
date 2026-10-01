@@ -28,7 +28,7 @@ class ProgramSeeder extends Seeder
         $programsData = [
             // LEGAZPI EAST CAMPUS: Institute of Design and Architecture
             'IDA' => [
-                'MSARCH' => ['name' => 'Master of Science in Architecture', 'level' => 'Candidate Status'],
+                'MSARCH' => ['name' => 'Master of Science in Architecture', 'level' => 'Candidate'],
                 'BSARCH' => ['name' => 'Bachelor of Science in Architecture', 'level' => 'Level 1'],
             ],
 
@@ -36,13 +36,13 @@ class ProgramSeeder extends Seeder
             'CIT' => [
                 'MAIE' => ['name' => 'Master of Arts in Industrial Education', 'level' => 'Level 2'],
                 'BSFT' => ['name' => 'Bachelor of Science in Food Technology', 'level' => 'Level 1'],
-                'BTVTED' => ['name' => 'Bachelor of Technical Vocational Teacher Education', 'level' => 'Candidate Status'],
+                'BTVTED' => ['name' => 'Bachelor of Technical Vocational Teacher Education', 'level' => 'Candidate'],
                 'BSAT' => ['name' => 'Bachelor of Science in Automotive Technology', 'level' => 'Level 2'],
                 'BSET' => ['name' => 'Bachelor of Science in Electronics Technology', 'level' => 'Level 3'],
                 'BSMT' => ['name' => 'Bachelor of Science in Mechanical Technology', 'level' => 'Level 2'],
                 'BSCT' => ['name' => 'Bachelor of Science in Civil Technology', 'level' => 'Level 1'],
                 'BSELT' => ['name' => 'Bachelor of Science in Electrical Technology', 'level' => 'Level 2'],
-                'BID' => ['name' => 'Bachelor in Industrial Design', 'level' => 'Candidate Status'],
+                'BID' => ['name' => 'Bachelor in Industrial Design', 'level' => 'Candidate'],
             ],
 
             // LEGAZPI EAST CAMPUS: College of Engineering
@@ -52,7 +52,7 @@ class ProgramSeeder extends Seeder
                 'BSCE' => ['name' => 'Bachelor of Science in Civil Engineering', 'level' => 'Level 4'],
                 'BSEE' => ['name' => 'Bachelor of Science in Electrical Engineering', 'level' => 'Level 3'],
                 'BSMINE' => ['name' => 'Bachelor of Science in Mining Engineering', 'level' => 'Level 1'],
-                'BSGE' => ['name' => 'Bachelor of Science in Geodetic Engineering', 'level' => 'Candidate Status'],
+                'BSGE' => ['name' => 'Bachelor of Science in Geodetic Engineering', 'level' => 'Candidate'],
             ],
 
             // LEGAZPI WEST CAMPUS: College of Education
@@ -63,7 +63,7 @@ class ProgramSeeder extends Seeder
                 'MAED-READ' => ['name' => 'Master of Arts in Reading Education', 'level' => 'Level 2'],
                 'MAED-FIL' => ['name' => 'Master of Arts in Filipino Education', 'level' => 'Level 2'],
                 'MAED-ENG' => ['name' => 'Master of Arts in English Education', 'level' => 'Level 3'],
-                'MAED-MUS' => ['name' => 'Master of Arts in Music Education', 'level' => 'Candidate Status'],
+                'MAED-MUS' => ['name' => 'Master of Arts in Music Education', 'level' => 'Candidate'],
                 'MAED-MATH' => ['name' => 'Master of Arts in Mathematics Education', 'level' => 'Level 2'],
                 'MAED-SOC' => ['name' => 'Master of Arts in Social Studies Education', 'level' => 'Level 2'],
                 'MAED-PHYS' => ['name' => 'Master of Arts in Physics Education', 'level' => 'Level 1'],
@@ -72,8 +72,8 @@ class ProgramSeeder extends Seeder
                 'MAED-SCI' => ['name' => 'Master of Arts in Science Education', 'level' => 'Level 1'],
                 'MAED-GC' => ['name' => 'Master of Arts in Guidance and Counseling', 'level' => 'Level 2'],
                 'MAED-ELM' => ['name' => 'Master of Arts in Educational Leadership and Management', 'level' => 'Level 3'],
-                'MAED-ECE' => ['name' => 'Master of Arts in Early Childhood Education', 'level' => 'Candidate Status'],
-                'MAED-CAE' => ['name' => 'Master of Arts in Culture and Arts Education', 'level' => 'Candidate Status'],
+                'MAED-ECE' => ['name' => 'Master of Arts in Early Childhood Education', 'level' => 'Candidate'],
+                'MAED-CAE' => ['name' => 'Master of Arts in Culture and Arts Education', 'level' => 'Candidate'],
                 'BSED' => ['name' => 'Bachelor of Secondary Education', 'level' => 'Level 4'],
                 'BEED' => ['name' => 'Bachelor of Elementary Education', 'level' => 'Level 4'],
                 'BCAED' => ['name' => 'Bachelor of Culture and Arts Education', 'level' => 'Level 1'],
@@ -86,7 +86,7 @@ class ProgramSeeder extends Seeder
                 'MA-LIT' => ['name' => 'Master of Arts in Literature', 'level' => 'Level 2'],
                 'MA-FIL' => ['name' => 'Master in Filipino', 'level' => 'Level 2'],
                 'ABJOURN' => ['name' => 'Bachelor of Arts in Journalism', 'level' => 'Level 3'],
-                'BPA' => ['name' => 'Bachelor of Performing Arts', 'level' => 'Candidate Status'],
+                'BPA' => ['name' => 'Bachelor of Performing Arts', 'level' => 'Candidate'],
                 'ABEL' => ['name' => 'Bachelor of Arts in English Language', 'level' => 'Level 3'],
                 'ABBROAD' => ['name' => 'Bachelor of Arts in Broadcasting', 'level' => 'Level 3'],
                 'ABCOMM' => ['name' => 'Bachelor of Arts in Communication', 'level' => 'Level 4'],
@@ -97,7 +97,7 @@ class ProgramSeeder extends Seeder
             'IPESR' => [
                 'MAPEH' => ['name' => 'Master of Arts in Physical Education', 'level' => 'Level 2'],
                 'BPE' => ['name' => 'Bachelor of Physical Education', 'level' => 'Level 1'],
-                'BSESS' => ['name' => 'Bachelor of Science in Exercise and Sports Sciences', 'level' => 'Candidate Status'],
+                'BSESS' => ['name' => 'Bachelor of Science in Exercise and Sports Sciences', 'level' => 'Candidate'],
             ],
 
             // LEGAZPI WEST CAMPUS: College of Nursing
@@ -115,7 +115,7 @@ class ProgramSeeder extends Seeder
                 'BSCS' => ['name' => 'Bachelor of Science in Computer Science', 'level' => 'Level 3'],
                 'BSCHEM' => ['name' => 'Bachelor of Science in Chemistry', 'level' => 'Level 4'],
                 'BSIT' => ['name' => 'Bachelor of Science in Information Technology', 'level' => 'Level 3'],
-                'BSMET' => ['name' => 'Bachelor of Science in Meteorology', 'level' => 'Candidate Status'],
+                'BSMET' => ['name' => 'Bachelor of Science in Meteorology', 'level' => 'Candidate'],
             ],
 
             // LEGAZPI WEST CAMPUS: Jesse M. Robredo Institute of Governance and Development
@@ -124,8 +124,8 @@ class ProgramSeeder extends Seeder
                 'PHD-DM' => ['name' => 'Doctor of Philosophy in Development Management', 'level' => 'Level 2'],
                 'BPA-GOV' => ['name' => 'Bachelor of Public Administration', 'level' => 'Level 2'],
                 'MPA' => ['name' => 'Master of Public Administration', 'level' => 'Level 3'],
-                'MPA-HE' => ['name' => 'Master in Public Administration major in Health Emergency and Disaster Management', 'level' => 'Candidate Status'],
-                'MPA-PP' => ['name' => 'Master in Public Administration major in Public Procurement', 'level' => 'Candidate Status'],
+                'MPA-HE' => ['name' => 'Master in Public Administration major in Health Emergency and Disaster Management', 'level' => 'Candidate'],
+                'MPA-PP' => ['name' => 'Master in Public Administration major in Public Procurement', 'level' => 'Candidate'],
                 'MLGM' => ['name' => 'Master in Local Government Management', 'level' => 'Level 1'],
             ],
 
@@ -136,7 +136,7 @@ class ProgramSeeder extends Seeder
 
             // LEGAZPI WEST CAMPUS: College of Dental Medicine
             'CDM' => [
-                'DMD' => ['name' => 'Doctor of Dental Medicine', 'level' => 'Candidate Status'],
+                'DMD' => ['name' => 'Doctor of Dental Medicine', 'level' => 'Candidate'],
             ],
 
             // DARAGA CAMPUS: College of Business, Economics and Management
@@ -169,16 +169,16 @@ class ProgramSeeder extends Seeder
                 'BUG-MSAGRI' => ['name' => 'Master of Science in Agriculture', 'level' => 'Level 2'],
                 'BUG-MRD' => ['name' => 'Master in Rural Development', 'level' => 'Level 2'],
                 'BUG-MSBEM' => ['name' => 'Master of Science in Biodiversity & Environmental Management', 'level' => 'Level 1'],
-                'BUG-MSSFS' => ['name' => 'Master of Science in Sustainable Food Systems', 'level' => 'Candidate Status'],
+                'BUG-MSSFS' => ['name' => 'Master of Science in Sustainable Food Systems', 'level' => 'Candidate'],
                 'BUG-BSF' => ['name' => 'Bachelor of Science in Forestry', 'level' => 'Level 3'],
                 'BUG-BSABE' => ['name' => 'Bachelor of Science in Agricultural and Biosystems Engineering', 'level' => 'Level 2'],
                 'BUG-BSAGRI' => ['name' => 'Bachelor of Science in Agriculture', 'level' => 'Level 4'],
                 'BUG-BSAGRIBUS' => ['name' => 'Bachelor of Science in Agribusiness', 'level' => 'Level 3'],
                 'BUG-BAT' => ['name' => 'Bachelor in Agricultural Technology', 'level' => 'Level 2'],
-                'BUG-BTVTED' => ['name' => 'Bachelor of Technical-Vocational Teacher Education', 'level' => 'Candidate Status'],
+                'BUG-BTVTED' => ['name' => 'Bachelor of Technical-Vocational Teacher Education', 'level' => 'Candidate'],
                 'BUG-DVM' => ['name' => 'Doctor of Veterinary Medicine', 'level' => 'Level 1'],
                 'BUG-BSFT' => ['name' => 'Bachelor of Science in Food Technology', 'level' => 'Level 1'],
-                'BUG-BSDEVCOMM' => ['name' => 'Bachelor of Science in Development Communication', 'level' => 'Candidate Status'],
+                'BUG-BSDEVCOMM' => ['name' => 'Bachelor of Science in Development Communication', 'level' => 'Candidate'],
             ],
 
             // SATELLITE CAMPUS: BU POLANGUI
@@ -196,14 +196,14 @@ class ProgramSeeder extends Seeder
                 'BUP-BSIT' => ['name' => 'Bachelor of Science in Information Technology', 'level' => 'Level 3'],
                 'BUP-BSELT' => ['name' => 'Bachelor of Science in Electrical Technology', 'level' => 'Level 1'],
                 'BUP-BSMT' => ['name' => 'Bachelor of Science in Mechanical Technology', 'level' => 'Level 1'],
-                'BUP-BSIT-ANI' => ['name' => 'Bachelor of Science in Information Technology major in Animation', 'level' => 'Candidate Status'],
-                'BUP-BTLE' => ['name' => 'Bachelor of Technology and Livelihood Education', 'level' => 'Candidate Status'],
+                'BUP-BSIT-ANI' => ['name' => 'Bachelor of Science in Information Technology major in Animation', 'level' => 'Candidate'],
+                'BUP-BTLE' => ['name' => 'Bachelor of Technology and Livelihood Education', 'level' => 'Candidate'],
             ],
 
             // SATELLITE CAMPUS: BU TABACO
             'BUTC' => [
                 'BUTC-MSFISH' => ['name' => 'Master of Science in Fisheries', 'level' => 'Level 2'],
-                'BUTC-MSFT' => ['name' => 'Master of Science in Fisheries Technology', 'level' => 'Candidate Status'],
+                'BUTC-MSFT' => ['name' => 'Master of Science in Fisheries Technology', 'level' => 'Candidate'],
                 'BUTC-BSFISH' => ['name' => 'Bachelor of Science in Fisheries', 'level' => 'Level 3'],
                 'BUTC-BSED' => ['name' => 'Bachelor of Secondary Education', 'level' => 'Level 3'],
                 'BUTC-BSENT' => ['name' => 'Bachelor of Science in Entrepreneurship', 'level' => 'Level 2'],
@@ -217,8 +217,8 @@ class ProgramSeeder extends Seeder
                 'BUGC-BEED' => ['name' => 'Bachelor of Elementary Education', 'level' => 'Level 3'],
                 'BUGC-BSED' => ['name' => 'Bachelor of Secondary Education', 'level' => 'Level 2'],
                 'BUGC-BSENT' => ['name' => 'Bachelor of Science in Entrepreneurship', 'level' => 'Level 1'],
-                'BUGC-BSBA' => ['name' => 'Bachelor of Science in Business Administration major in Microfinance', 'level' => 'Candidate Status'],
-                'BUGC-BAT' => ['name' => 'Bachelor in Agricultural Technology ', 'level' => 'Candidate Status'],
+                'BUGC-BSBA' => ['name' => 'Bachelor of Science in Business Administration major in Microfinance', 'level' => 'Candidate'],
+                'BUGC-BAT' => ['name' => 'Bachelor in Agricultural Technology ', 'level' => 'Candidate'],
             ],
         ];
 

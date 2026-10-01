@@ -1,0 +1,407 @@
+{
+  "chapters": [
+    {
+      "id": "chap-1",
+      "number": 1,
+      "title": "Institutional Profile & Historical Development",
+      "subtitle": "Foundation, Charter Mandate, Campuses, and Strategic Trajectory",
+      "summary": "Bicol University, established on June 21, 1969 by virtue of Republic Act 5521, stands as the premier state university in the Bicol Region. Operating across 7 specialized campus clusters in Albay (Main, East, Daraga, Guinobatan, Polangui, Tabaco) and serving over 32,000 students, the institution delivers quality higher education aligned with regional and national development priorities.",
+      "metrics": [
+        {
+          "label": "Year Established",
+          "value": "1969"
+        },
+        {
+          "label": "Active Campuses",
+          "value": "7"
+        },
+        {
+          "label": "Total Student Population",
+          "value": "32,500+"
+        },
+        {
+          "label": "Academic Degree Programs",
+          "value": "68"
+        }
+      ],
+      "dossiers": [
+        {
+          "id": "pdoc-1",
+          "title": "Republic Act 5521 - Bicol University Charter",
+          "type": "pdf",
+          "size": "2.1 MB",
+          "date": "2024-03-15",
+          "category": "Legal Foundation"
+        },
+        {
+          "id": "pdoc-2",
+          "title": "Bicol University Institutional Profile & Factbook 2024",
+          "type": "pdf",
+          "size": "8.4 MB",
+          "date": "2024-06-20",
+          "category": "Factbook"
+        },
+        {
+          "id": "pdoc-3",
+          "title": "Medium-Term Development Plan & Strategic Goals 2024-2028",
+          "type": "pdf",
+          "size": "4.6 MB",
+          "date": "2024-01-10",
+          "category": "Strategic Roadmap"
+        }
+      ]
+    },
+    {
+      "id": "chap-2",
+      "number": 2,
+      "title": "Governance, Administration & University Code",
+      "subtitle": "Board of Regents, Executive Councils, and Administrative Decentralization",
+      "summary": "The governing board of Bicol University is the Board of Regents (BOR), chaired by the CHED Commissioner. Policy development is coordinated through the Administrative Council and Academic Council. Revisions to the Bicol University Code of 2016 were endorsed in 2024 to articulate modernization in mandates, statutory fiscal guidelines, and digital workflows.",
+      "metrics": [
+        {
+          "label": "BOR Regular Sessions/Yr",
+          "value": "4"
+        },
+        {
+          "label": "Academic Councils",
+          "value": "1"
+        },
+        {
+          "label": "Administrative Councils",
+          "value": "1"
+        },
+        {
+          "label": "Operating Units",
+          "value": "14 Colleges/Units"
+        }
+      ],
+      "dossiers": [
+        {
+          "id": "pdoc-4",
+          "title": "Bicol University Code (Revised 2024 Edition)",
+          "type": "pdf",
+          "size": "12.8 MB",
+          "date": "2024-07-01",
+          "category": "Statutory Code"
+        },
+        {
+          "id": "pdoc-5",
+          "title": "Compendium of Key Board of Regents Resolutions (2020-2024)",
+          "type": "pdf",
+          "size": "15.3 MB",
+          "date": "2024-05-12",
+          "category": "BOR Compendium"
+        },
+        {
+          "id": "pdoc-6",
+          "title": "Consolidated Administrative Order Designations & Structures",
+          "type": "pdf",
+          "size": "3.2 MB",
+          "date": "2024-02-18",
+          "category": "Governance Matrix"
+        }
+      ]
+    },
+    {
+      "id": "chap-3",
+      "number": 3,
+      "title": "Academic Programs & Curricular Innovations",
+      "subtitle": "Outcomes-Based Education, Flexible Pedagogy, and Licensure Performance",
+      "summary": "Academic offerings span undergraduate and post-graduate disciplines across Health Sciences, Engineering, Education, Science, Agriculture, Arts, and Business. All curricula are institutionalized under Outcomes-Based Education (OBE) frameworks conforming to CHED PSGs, with consistent above-national-average performance in Medicine, Nursing, Accountancy, and Engineering board examinations.",
+      "metrics": [
+        {
+          "label": "COPC Compliant Programs",
+          "value": "100%"
+        },
+        {
+          "label": "AACCUP Accredited Programs",
+          "value": "92%"
+        },
+        {
+          "label": "Average Licensure Rate",
+          "value": "84.6%"
+        },
+        {
+          "label": "Open University Offerings",
+          "value": "8"
+        }
+      ],
+      "dossiers": [
+        {
+          "id": "pdoc-7",
+          "title": "Institutional Curricular Portfolio & Course Inventory 2024",
+          "type": "pdf",
+          "size": "9.1 MB",
+          "date": "2024-04-10",
+          "category": "Curricular Index"
+        },
+        {
+          "id": "pdoc-8",
+          "title": "Consolidated PRC Licensure Examination Performance Report (5-Year)",
+          "type": "pdf",
+          "size": "5.7 MB",
+          "date": "2024-03-25",
+          "category": "Board Exam Analytics"
+        }
+      ]
+    },
+    {
+      "id": "chap-4",
+      "number": 4,
+      "title": "Research, Development & Extension (BU-KUGOS)",
+      "subtitle": "Innovation Ecosystem, Research Clusters, and Community Partnerships",
+      "summary": "The research and development thrusts are operationalized under the BU-KUGOS (Kaalaman Ugnayan Gabay sa Organisasyon at Sangkatauhan) framework approved under BOR Resolution No. 24 s. 2024. The university hosts specialized research centers in Disaster Risk Reduction, Bicol Biodiversity, Pili and Abaca Innovations, and Advanced Computing, backed by over \u20b1120M in external grants.",
+      "metrics": [
+        {
+          "label": "Active External Grants",
+          "value": "\u20b1120M+"
+        },
+        {
+          "label": "Scopus/WoS Publications",
+          "value": "145"
+        },
+        {
+          "label": "Registered Patents & UMs",
+          "value": "22"
+        },
+        {
+          "label": "Adopted Communities",
+          "value": "18"
+        }
+      ],
+      "dossiers": [
+        {
+          "id": "pdoc-9",
+          "title": "BU Research, Development and Extension Agenda 2024-2028 (BU-KUGOS)",
+          "type": "pdf",
+          "size": "7.1 MB",
+          "date": "2024-02-14",
+          "category": "RDE Agenda"
+        },
+        {
+          "id": "pdoc-10",
+          "title": "Consolidated Extension Community Impact Assessment Report 2024",
+          "type": "pdf",
+          "size": "4.9 MB",
+          "date": "2024-06-30",
+          "category": "Impact Studies"
+        }
+      ]
+    },
+    {
+      "id": "chap-5",
+      "number": 5,
+      "title": "Faculty & Staff Human Capital",
+      "subtitle": "Merit Selection, Terminal Degrees, Faculty Development, and Welfare",
+      "summary": "Bicol University maintains a dedicated faculty corps of over 1,100 teaching personnel, with over 72% possessing vertically articulated masteral and doctoral degrees. The Faculty and Staff Development Committee (FSDC) actively funds local and international scholarships, ensuring academic rigor and continuous faculty advancement.",
+      "metrics": [
+        {
+          "label": "Total Faculty Members",
+          "value": "1,120"
+        },
+        {
+          "label": "Doctorate & Masteral Holders",
+          "value": "72.4%"
+        },
+        {
+          "label": "Scholars on Study Leave",
+          "value": "45"
+        },
+        {
+          "label": "PRC Licensed Faculty",
+          "value": "91%"
+        }
+      ],
+      "dossiers": [
+        {
+          "id": "pdoc-11",
+          "title": "Faculty Profile & Vertical Articulation Statistical Directory 2024",
+          "type": "pdf",
+          "size": "3.8 MB",
+          "date": "2024-05-18",
+          "category": "Faculty Roster"
+        },
+        {
+          "id": "pdoc-12",
+          "title": "Civil Service Approved Merit Selection Plan & FSDP Manual",
+          "type": "pdf",
+          "size": "2.6 MB",
+          "date": "2024-01-22",
+          "category": "HR Policies"
+        }
+      ]
+    },
+    {
+      "id": "chap-6",
+      "number": 6,
+      "title": "Student Welfare & Comprehensive Services",
+      "subtitle": "Holistic Formation, Scholarship Assistance, and Alumni Trajectories",
+      "summary": "The Office of Student Affairs and Services (OSAS) manages comprehensive student support programs, including over 14,000 scholarship grantees through the Universal Access to Quality Tertiary Education Act (RA 10931) and private donors. University-wide 10-year graduate tracer studies demonstrate over 82% graduate employment within 12 months.",
+      "metrics": [
+        {
+          "label": "Scholarship Recipients",
+          "value": "14,200+"
+        },
+        {
+          "label": "Accredited Student Orgs",
+          "value": "98"
+        },
+        {
+          "label": "Graduate Employability",
+          "value": "82.4%"
+        },
+        {
+          "label": "Annual Guidance Sessions",
+          "value": "6,500+"
+        }
+      ],
+      "dossiers": [
+        {
+          "id": "pdoc-13",
+          "title": "Bicol University Student Handbook (Updated Edition)",
+          "type": "pdf",
+          "size": "6.2 MB",
+          "date": "2024-04-12",
+          "category": "Student Life"
+        },
+        {
+          "id": "pdoc-14",
+          "title": "10-Year Longitudinal Graduate Tracer Study Consolidated Analysis",
+          "type": "pdf",
+          "size": "5.8 MB",
+          "date": "2024-05-20",
+          "category": "Tracer Analytics"
+        }
+      ]
+    },
+    {
+      "id": "chap-7",
+      "number": 7,
+      "title": "Physical Infrastructure & Modernization (LUDIP)",
+      "subtitle": "Land Use Master Plan, Modern Laboratories, Disaster Resilience",
+      "summary": "The Land Use Development and Infrastructure Plan (LUDIP) 2024-2034 coordinates physical development across all university landholdings. Major investments in disaster-resilient classrooms, state-of-the-art engineering and medical simulation laboratories, high-speed fiber-optic backbones, and BP 344 accessibility retrofitting have modernized university campuses.",
+      "metrics": [
+        {
+          "label": "Total Campus Land Area",
+          "value": "380+ Hectares"
+        },
+        {
+          "label": "Specialized Laboratories",
+          "value": "74"
+        },
+        {
+          "label": "Campus Fiber Bandwidth",
+          "value": "10 Gbps"
+        },
+        {
+          "label": "BFP Fire Safety Compliance",
+          "value": "100%"
+        }
+      ],
+      "dossiers": [
+        {
+          "id": "pdoc-15",
+          "title": "Bicol University Comprehensive LUDIP Plan (2024-2034)",
+          "type": "pdf",
+          "size": "14.2 MB",
+          "date": "2024-03-30",
+          "category": "Master Plan"
+        },
+        {
+          "id": "pdoc-16",
+          "title": "Campus Infrastructure & Laboratory Modernization Portfolio",
+          "type": "pdf",
+          "size": "11.5 MB",
+          "date": "2024-06-15",
+          "category": "Facilities Dossier"
+        }
+      ]
+    },
+    {
+      "id": "chap-8",
+      "number": 8,
+      "title": "Financial Management & Resource Generation",
+      "subtitle": "Budget Optimization, Transparency, Income Generating Projects (IGP)",
+      "summary": "Bicol University exercises prudent fiscal governance through automated budget tracking via the BUBMMS, adhering strictly to the Government Accounting Manual (GAM). Sustainable auxiliary services and income-generating projects (IGPs) managed under the Business Affairs Office supplement tuition subsidies to advance institutional modernization.",
+      "metrics": [
+        {
+          "label": "Annual Budget (GAA)",
+          "value": "\u20b11.8B+"
+        },
+        {
+          "label": "Auxiliary IGP Revenues",
+          "value": "\u20b164M+"
+        },
+        {
+          "label": "Budget Utilization Rate",
+          "value": "97.8%"
+        },
+        {
+          "label": "COA Audit Status",
+          "value": "Unqualified Opinion"
+        }
+      ],
+      "dossiers": [
+        {
+          "id": "pdoc-17",
+          "title": "Audited Annual Financial Statements & Balance Sheet 2023-2024",
+          "type": "pdf",
+          "size": "5.4 MB",
+          "date": "2024-04-25",
+          "category": "Financial Statements"
+        },
+        {
+          "id": "pdoc-18",
+          "title": "Business Affairs Office Income Generating Project (IGP) Portfolio",
+          "type": "pdf",
+          "size": "3.9 MB",
+          "date": "2024-05-10",
+          "category": "Resource Generation"
+        }
+      ]
+    },
+    {
+      "id": "chap-9",
+      "number": 9,
+      "title": "Institutional Quality Assurance & Internationalization",
+      "subtitle": "Internal Quality Audits, ISO 9001:2015, and Global Rankings",
+      "summary": "The Internal Quality Assurance (IQA) Office spearheads university-wide quality assurance, managing continuous compliance with ISO 9001:2015 standards and AACCUP accreditation. Through international linkages, ASEAN University Network (AUN-QA) benchmarks, and the IQArchive digital platform, Bicol University ensures verifiable institutional excellence.",
+      "metrics": [
+        {
+          "label": "ISO 9001:2015 Status",
+          "value": "Certified (TUV Rheinland)"
+        },
+        {
+          "label": "Accredited Programs",
+          "value": "64/68 (94%)"
+        },
+        {
+          "label": "International Partners",
+          "value": "32 Global HEIs"
+        },
+        {
+          "label": "Internal Quality Auditors",
+          "value": "48 Trained Staff"
+        }
+      ],
+      "dossiers": [
+        {
+          "id": "pdoc-19",
+          "title": "ISO 9001:2015 Quality Management System Manual & Certificate",
+          "type": "pdf",
+          "size": "4.2 MB",
+          "date": "2024-02-28",
+          "category": "QMS Manual"
+        },
+        {
+          "id": "pdoc-20",
+          "title": "AACCUP Institutional Accreditation Readiness & Progress Matrix",
+          "type": "pdf",
+          "size": "3.6 MB",
+          "date": "2024-06-12",
+          "category": "Accreditation Matrix"
+        }
+      ]
+    }
+  ]
+}

@@ -9,8 +9,10 @@ UI Standard: DaisyUI table, badge, btn (< 150 lines).
 -->
 
 <script setup>
-import { computed } from 'vue';
-import { BookOpen, UploadCloud, Download } from 'lucide-vue-next';
+import { ref, computed } from 'vue';
+import { BookOpen, UploadCloud, Eye } from 'lucide-vue-next';
+import DocumentPreviewDrawer from '@/Components/DocumentPreviewDrawer.vue';
+import DocumentTypeIcon from '@/Components/Icons/DocumentTypeIcon.vue';
 
 const props = defineProps({
     program: { type: Object, required: true },
@@ -19,6 +21,19 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['openUpload', 'backToHub']);
+
+const previewDoc = ref(null);
+const isPreviewOpen = ref(false);
+
+function openPreview(doc) {
+    previewDoc.value = doc;
+    isPreviewOpen.value = true;
+}
+
+function closePreview() {
+    isPreviewOpen.value = false;
+    previewDoc.value = null;
+}
 
 const narrativeDocs = computed(() => {
     return props.documents.filter((d) =>
@@ -71,7 +86,12 @@ const narrativeDocs = computed(() => {
                     </thead>
                     <tbody class="divide-y divide-slate-100">
                         <tr v-for="doc in narrativeDocs" :key="doc.id" class="hover:bg-slate-50/50">
-                            <td class="font-bold text-slate-900">{{ doc.title }}</td>
+                            <td class="font-bold text-slate-900">
+                                <div class="flex items-center gap-2">
+                                    <DocumentTypeIcon :document="doc" size-class="w-4 h-4" />
+                                    <span>{{ doc.title }}</span>
+                                </div>
+                            </td>
                             <td class="text-slate-500">{{ doc.original_filename }}</td>
                             <td class="text-slate-600">{{ doc.uploader?.name || 'System' }}</td>
                             <td>
@@ -80,13 +100,15 @@ const narrativeDocs = computed(() => {
                                 </span>
                             </td>
                             <td class="text-right">
-                                <a
-                                    :href="`/documents/${doc.id}/download`"
-                                    class="btn btn-ghost btn-xs text-sidebar-blue hover:bg-blue-50 gap-1 font-semibold"
+                                <button
+                                    type="button"
+                                    @click="openPreview(doc)"
+                                    class="btn btn-ghost btn-xs text-bu-blue-700 hover:bg-blue-50 gap-1 font-semibold"
+                                    title="View Document Details & Preview"
                                 >
-                                    <Download class="w-3.5 h-3.5" />
-                                    <span>Download</span>
-                                </a>
+                                    <Eye class="w-3.5 h-3.5" />
+                                    <span>View</span>
+                                </button>
                             </td>
                         </tr>
                     </tbody>
@@ -100,5 +122,13 @@ const narrativeDocs = computed(() => {
                 <p class="mt-1">Upload the official narrative exhibit to attach it to this degree program.</p>
             </div>
         </div>
+
+        <!-- Half-Screen Document Preview Drawer -->
+        <DocumentPreviewDrawer
+            :show="isPreviewOpen"
+            :document="previewDoc"
+            :program="program"
+            @close="closePreview"
+        />
     </div>
 </template>

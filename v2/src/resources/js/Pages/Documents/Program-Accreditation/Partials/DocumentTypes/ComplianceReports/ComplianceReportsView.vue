@@ -1,16 +1,19 @@
 <!--
-================================================================================
-IQArchive v2 — Compliance Reports Workspace (Tier 4)
-================================================================================
+===============================================================================
+IQArchive v2 — Compliance Reports Master Workspace
+===============================================================================
 File: resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/ComplianceReports/ComplianceReportsView.vue
-Role: Lists official compliance records, AACCUP evaluations, and certificates.
-UI Standard: DaisyUI table, badge, btn (< 160 lines).
-================================================================================
+Role: Renders area-based compliance ledger with actions, documents, and preview.
+UI Standard: DaisyUI card, badge, btn (< 140 lines).
+===============================================================================
 -->
 
 <script setup>
-import { computed } from 'vue';
-import { FileCheck2, UploadCloud, Download } from 'lucide-vue-next';
+import { ref, computed } from 'vue';
+import { loadSavedComplianceAreas, saveComplianceAreas } from './data/complianceReportsData';
+import ComplianceAreaCarousel from './Partials/ComplianceAreaCarousel.vue';
+import RecommendationCard from './Partials/RecommendationCard.vue';
+import DocumentPreviewDrawer from '@/Components/DocumentPreviewDrawer.vue';
 
 const props = defineProps({
     program: { type: Object, required: true },
@@ -20,85 +23,100 @@ const props = defineProps({
 
 const emit = defineEmits(['openUpload', 'backToHub']);
 
-const complianceDocs = computed(() => {
-    return props.documents.filter((d) => 
-        (d.category?.name || '').toLowerCase().includes('compliance') ||
-        (d.title || '').toLowerCase().includes('compliance')
-    );
+const areas = ref(loadSavedComplianceAreas(props.program?.id));
+const selectedAreaId = ref(areas.value[0]?.id || 'comp_area_i');
+
+const currentArea = computed(() => {
+    return areas.value.find((a) => a.id === selectedAreaId.value) || areas.value[0];
 });
+
+const currentAreaRecommendations = computed(() => {
+    return currentArea.value?.recommendations || [];
+});
+
+function handleUpdateRec(updatedRec) {
+    const rec = currentArea.value?.recommendations?.find((r) => r.id === updatedRec.id);
+    if (rec) {
+        Object.assign(rec, updatedRec);
+        saveComplianceAreas(props.program?.id, areas.value);
+    }
+}
+
+
+// Document Preview Drawer State
+const previewDoc = ref(null);
+const isPreviewOpen = ref(false);
+
+function handlePreviewDoc(docItem) {
+    let previewUrl = docItem.file_url || null;
+    if (docItem.file_obj && !previewUrl) {
+        try {
+            previewUrl = URL.createObjectURL(docItem.file_obj);
+        } catch (e) {
+            console.warn('Could not create object URL for file:', e);
+        }
+    }
+
+    previewDoc.value = {
+        id: docItem.id,
+        title: docItem.title || docItem.filename,
+        original_filename: docItem.filename,
+        file_path: previewUrl || docItem.filename,
+        file_url: previewUrl,
+        mime_type: 'application/pdf',
+        file_size_bytes: 1450000,
+        uploader: { name: 'IQA Task Force' },
+    };
+    isPreviewOpen.value = true;
+}
+
+function closePreview() {
+    isPreviewOpen.value = false;
+    previewDoc.value = null;
+}
 </script>
 
 <template>
-    <div class="space-y-4">
-        <!-- Header Banner -->
-        <div class="card card-border bg-base-100 border-slate-200 p-5 rounded-2xl shadow-xs">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
-                        <FileCheck2 class="w-5 h-5" />
-                    </div>
-                    <div>
-                        <h2 class="text-base font-bold text-slate-900">Compliance & Evaluation Reports</h2>
-                        <p class="text-xs text-slate-500 mt-0.5">
-                            Official AACCUP compliance documentation, certificates, and post-accreditation action reports.
-                        </p>
-                    </div>
-                </div>
+    <div class="space-y-5">
+        <!-- 1. Area Carousel Selector -->
+        <ComplianceAreaCarousel
+            :areas="areas"
+            :selected-area-id="selectedAreaId"
+            @select-area="selectedAreaId = $event"
+        />
 
-                <button
-                    type="button"
-                    @click="emit('openUpload', 'compliance-reports')"
-                    class="btn btn-sm bg-emerald-600 hover:bg-emerald-700 text-white border-none gap-1.5"
-                >
-                    <UploadCloud class="w-4 h-4" />
-                    <span>Upload Report</span>
-                </button>
+        <!-- 2. Recommendations Ledger -->
+        <div class="space-y-4">
+            <div class="flex items-center justify-between px-1">
+                <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-600">
+                    {{ currentArea.code }}: {{ currentArea.title }} Recommendations
+                </h3>
             </div>
-        </div>
 
-        <!-- Documents Table -->
-        <div class="card card-border bg-base-100 border-slate-200 rounded-2xl overflow-hidden shadow-xs">
-            <div v-if="complianceDocs.length > 0" class="overflow-x-auto">
-                <table class="table table-sm w-full text-xs">
-                    <thead>
-                        <tr class="bg-slate-50 border-b border-slate-200 text-slate-600">
-                            <th>Document Title</th>
-                            <th>Original Filename</th>
-                            <th>Uploader</th>
-                            <th>Status</th>
-                            <th class="text-right">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100">
-                        <tr v-for="doc in complianceDocs" :key="doc.id" class="hover:bg-slate-50/50">
-                            <td class="font-bold text-slate-900">{{ doc.title }}</td>
-                            <td class="text-slate-500">{{ doc.original_filename }}</td>
-                            <td class="text-slate-600">{{ doc.uploader?.name || 'System' }}</td>
-                            <td>
-                                <span class="badge badge-success badge-soft text-[10px] font-semibold">
-                                    Approved
-                                </span>
-                            </td>
-                            <td class="text-right">
-                                <a
-                                    :href="`/documents/${doc.id}/download`"
-                                    class="btn btn-ghost btn-xs text-sidebar-blue hover:bg-blue-50 gap-1 font-semibold"
-                                >
-                                    <Download class="w-3.5 h-3.5" />
-                                    <span>Download</span>
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- List of Recommendation Cards -->
+            <div v-if="currentAreaRecommendations.length > 0" class="space-y-3.5">
+                <RecommendationCard
+                    v-for="rec in currentAreaRecommendations"
+                    :key="rec.id"
+                    :rec="rec"
+                    :available-documents="documents"
+                    @preview-doc="handlePreviewDoc"
+                    @update-rec="handleUpdateRec"
+                />
             </div>
 
             <!-- Empty State -->
-            <div v-else class="p-12 text-center text-slate-400 text-xs">
-                <FileCheck2 class="w-10 h-10 text-slate-300 mx-auto mb-2" />
-                <p class="font-bold text-slate-700">No compliance reports recorded</p>
-                <p class="mt-1">Upload the initial compliance matrix or certificate to begin.</p>
+            <div v-else class="card card-border bg-white border-slate-200 rounded-2xl p-10 text-center space-y-2 shadow-xs">
+                <h4 class="text-sm font-bold text-slate-700">No recommendations for this area</h4>
+                <p class="text-xs text-slate-500">There are currently no recorded AACCUP recommendations in this area.</p>
             </div>
         </div>
+
+        <!-- Document Preview Drawer -->
+        <DocumentPreviewDrawer
+            :document="previewDoc"
+            :is-open="isPreviewOpen"
+            @close="closePreview"
+        />
     </div>
 </template>

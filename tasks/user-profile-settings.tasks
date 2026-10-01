@@ -1,0 +1,75 @@
+# User Profile & Settings — Task Plan & Implementation Log
+
+## Plan
+- High-level goal: Design and implement a role-tailored User Profile & Settings module conforming to IQArchive's institutional design system (DaisyUI + Tailwind CSS v4 + Inertia.js Vue 3), prioritizing the **IQA Member / Staff** interface first as the flagship accreditation authority view.
+- Scope:
+  - In scope (Phase 1 — IQA Member Interface First):
+    - Interactive Profile & Account Settings view at `/settings`, tailored primarily for IQA Staff (`iqa_staff` / `iqa_member`).
+    - Dedicated IQA University-Wide Scope & Governance card (all colleges, active survey monitoring).
+    - IQA Workstation Preferences (document matrix density, human-in-the-loop OCR review threshold, default landing workspace).
+    - Accreditation Alert Routing (dean endorsements, deficit alerts, survey milestone reminders).
+    - Institutional Security & Audit Footprint card (Google SSO read-only lock banner, recent audit trail from `audit_logs`).
+    - Backend data orchestration in `AuthController::settings()` or dedicated `UserProfileController` returning typed props for IQA users.
+    - Modular architecture under 150 lines per Vue component (DaisyUI `card`, `badge`, `toggle`, `tabs`, `table`, `btn`).
+  - In scope (Phase 2 & Phase 3 — Remaining Roles):
+    - Phase 2: College Dean (single-college scope, dean approval alerts) and Task Force Member (program + assigned area parameters, upload defaults).
+    - Phase 3: External/Internal Accreditors (read-only evaluation matrix, visit window), BU Executive (KPI digests), System Administrator (tenant & log administration).
+  - Out of scope:
+    - Modifying Google Workspace passwords or SSO credentials (centrally managed by BU ICTO).
+    - Direct database schema modifications unless non-breaking user preference JSON columns or defaults are needed.
+
+## Role Component Comparison Matrix
+
+| Component Section | IQA Member (Phase 1 Priority) | College Dean (Phase 2) | Task Force Member (Phase 2) | Accreditors (Phase 3) | BU Executive / Admin (Phase 3) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Profile Identity** | Institutional email, IQA Staff badge, QA Officer designation, Google SSO verified lock | Institutional email, Dean badge, College affiliation badge | Institutional email, Faculty / TF badge, College & Program pill | Institutional email, Accreditor badge, Affiliated Agency / Team | Executive / SysAdmin badge, University Seal |
+| **Authority & Scope** | **University-Wide (All Colleges & Programs)**; Active survey monitoring counter | **Single College Scope** (e.g. College of Science); Program roster under college | **Program & Area Scope** (e.g. BSCS Area III & VIII); Assigned parameters | **Survey Visit Instrument Scope** (Active accreditation instrument & assigned areas) | University-wide strategic governance / System-wide infrastructure |
+| **Workstation Preferences** | Table density toggle (compact/comfortable), OCR validation threshold (e.g. 80%), default launch workspace (`/iqa`, `/documents`, `/documents/program-accreditation`) | Approval queue view mode, Endorsement signature preset | Evidence upload format defaults, OCR auto-tagging preview toggle | Rating scale display density, evidence pane split-view mode | Executive scorecard chart type, export file format preset (PDF/Excel) |
+| **Notification Routing** | Dean submissions pending IQA endorsement, Task Force deficit alerts, AACCUP visit reminders | Evidence submitted for Dean approval, compliance deadlines | Area deficit alerts, review feedback from Dean/IQA | Survey evaluation schedule, team consensus meetings | Monthly accreditation board summary, strategic KPI milestone alerts |
+| **Security & Activity** | Google SSO status, Last 5 IQA endorsement & validation audit events | Google SSO status, Last 5 college endorsements | Google SSO status, Last 5 evidence uploads | Google SSO status, Session expiry countdown | Google SSO status, Security log audit summary |
+
+## Key Architectural & Design Decisions
+1. **IQA Member as Reference Implementation**: Build the core shell and all partials tailored to the IQA member first. Subsequent roles will plug into the same shell via role adapters and conditional slots.
+2. **Modular File Size Cap (< 150 lines)**:
+   - `resources/js/Pages/Auth/AccountSettings.vue`: Master container, responsive layout, tab switcher (< 140 lines).
+   - `resources/js/Pages/Auth/Partials/ProfileHeader.vue`: Institutional identity banner, avatar, verified Google SSO badge (< 90 lines).
+   - `resources/js/Pages/Auth/Partials/IqaScopeCard.vue`: University-wide oversight scope, active cycle stats (< 110 lines).
+   - `resources/js/Pages/Auth/Partials/IqaWorkstationPreferences.vue`: Document table density, OCR review threshold, default workspace (< 130 lines).
+   - `resources/js/Pages/Auth/Partials/NotificationPreferences.vue`: Toggle alerts for endorsements, deficits, visit milestones (< 120 lines).
+   - `resources/js/Pages/Auth/Partials/SecurityAuditCard.vue`: Central SSO notice, recent audit trail (< 120 lines).
+3. **Institutional Design Tokens**: Strictly follow `DESIGN.md` (Navy `#0B1B3D`, BU Blue `#0038A8`, BU Orange `#F26522`, DaisyUI `card`, `badge`, `toggle`, `btn`, `alert`).
+
+## Edge Cases to Handle
+- IQA user with no specific `college_id` (must gracefully display "University-Wide Access (All Colleges & Campuses)").
+- Dual-role IQA users (e.g. `iqa-staff-multi` with IQA Staff + Task Force Member) showing dual badges and primary workspace switch.
+- Missing avatar fallbacks with stylized institutional initials (Navy/Orange).
+- Empty audit log states with calm institutional placeholder copy.
+
+## Testing Strategy
+- Feature tests in `tests/Feature/UserProfileSettingsTest.php`:
+  - Gated route: Unauthenticated requests to `/settings` redirect to `/login`.
+  - Authenticated IQA Staff receives full profile, university-wide scope, preferences, and recent audit logs.
+- Frontend build validation: `npm run build` must compile with zero errors.
+- Visual inspection via browser subagent at `/dev/login/iqa-staff` -> `/settings` on desktop viewport (1440x900).
+
+## Implementation Progress
+
+### [Session 1 — Planning & IQA Interface Design Consultation]
+- [x] Analyzed codebase authentication flow, models, controllers, and design tokens (`DESIGN.md`).
+- [x] Defined Role Component Comparison Matrix isolating IQA Member requirements.
+- [x] Tailored task roadmap prioritizing the IQA Member interface in Phase 1.
+- [x] Subtask 1: Implement backend data orchestration in `UserProfileController.php` serving verified profile identity, roles, and session info.
+- [x] Subtask 2: Removed all tab navigation, subtab options, and customization forms per user request.
+- [x] Subtask 3: Assembled unified `AccountSettings.vue` single-view DaisyUI profile card (< 140 lines) focused strictly on essential logged-in user information.
+- [x] Subtask 4: Add backend test coverage in `UserProfileSettingsTest.php` and verify via `php artisan test` (3/3 passing, 52/52 overall suite passing).
+- [x] Subtask 5: Verify build with `npm run build` (built cleanly in 2.6s with zero errors/warnings).
+
+### [Phase 2 — College Dean & Task Force Adapters] (Scheduled Next)
+- [ ] Implement `DeanScopeCard.vue` and `DeanWorkstationPreferences.vue`.
+- [ ] Implement `TaskForceScopeCard.vue` and `TaskForcePreferences.vue`.
+- [ ] Verify multi-role switching via `/dev/login/dean-multi` and `/dev/login/task-force-member`.
+
+### [Phase 3 — Accreditors, BU Executive & SysAdmin Adapters] (Scheduled Final)
+- [ ] Implement Accreditor read-only instrument view preferences.
+- [ ] Implement BU Executive KPI preferences and SysAdmin audit tools.
+- [ ] Comprehensive cross-role test run and documentation sign-off.

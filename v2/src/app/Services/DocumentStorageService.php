@@ -29,9 +29,16 @@ class DocumentStorageService
      */
     public function getTemporaryUrl(string $path, int $minutes = 15): string
     {
-        // When S3 is configured, mint temporary signed URL. Fall back to local URL for tests.
+        // When S3 is configured, mint temporary signed URL. Fall back to local file route for dev/testing.
         if (config('filesystems.default') === 's3') {
-            return Storage::disk('s3')->temporaryUrl($path, now()->addMinutes($minutes));
+            /** @var \Illuminate\Filesystem\FilesystemAdapter $s3Disk */
+            $s3Disk = Storage::disk('s3');
+            return $s3Disk->temporaryUrl($path, now()->addMinutes($minutes));
+        }
+
+        $doc = \App\Models\Document::withoutGlobalScopes()->where('file_path', $path)->first();
+        if ($doc) {
+            return route('documents.file', $doc->id);
         }
 
         return url('/storage/' . ltrim($path, '/'));
@@ -46,12 +53,13 @@ class DocumentStorageService
     public function storeEvidence(mixed $file, int $collegeId, int $programId): array
     {
         $hash = hash_file('sha256', $file->getRealPath());
-        $path = "evidence/{$collegeId}/{$programId}/{$hash}.pdf";
+        $ext = strtolower($file->getClientOriginalExtension() ?: 'pdf');
+        $path = "evidence/{$collegeId}/{$programId}/{$hash}.{$ext}";
 
         Storage::disk(config('filesystems.default', 'local'))->putFileAs(
             "evidence/{$collegeId}/{$programId}",
             $file,
-            "{$hash}.pdf"
+            "{$hash}.{$ext}"
         );
 
         return [
@@ -71,12 +79,13 @@ class DocumentStorageService
     public function storeCommonDocument(mixed $file, int $categoryId): array
     {
         $hash = hash_file('sha256', $file->getRealPath());
-        $path = "evidence/common/{$categoryId}/{$hash}.pdf";
+        $ext = strtolower($file->getClientOriginalExtension() ?: 'pdf');
+        $path = "evidence/common/{$categoryId}/{$hash}.{$ext}";
 
         Storage::disk(config('filesystems.default', 'local'))->putFileAs(
             "evidence/common/{$categoryId}",
             $file,
-            "{$hash}.pdf"
+            "{$hash}.{$ext}"
         );
 
         return [

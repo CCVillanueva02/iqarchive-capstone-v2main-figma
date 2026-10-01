@@ -38,7 +38,7 @@ defineEmits(['toggleCollapse']);
 <template>
     <aside
         :class="[
-            'relative bg-[#0B1B3D] border-r border-[#15264a] text-slate-200 flex flex-col justify-between shrink-0 transition-all duration-200 z-30 select-none shadow-xl',
+            'relative bg-sidebar-blue border-r border-sidebar-blue-hover text-slate-200 flex flex-col justify-between shrink-0 transition-all duration-200 z-30 select-none no-drag shadow-xl',
             isCollapsed ? 'w-20' : 'w-64'
         ]"
     >
@@ -47,7 +47,7 @@ defineEmits(['toggleCollapse']);
             v-if="isCollapsed"
             type="button"
             @click="$emit('toggleCollapse')"
-            class="absolute -right-3.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-[#0E214A] hover:bg-bu-orange-500 text-slate-300 hover:text-white border border-bu-orange-500 hover:border-bu-orange-500 shadow-xl flex items-center justify-center cursor-pointer transition-all duration-150 z-50 group"
+            class="absolute -right-3.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-sidebar-blue-surface hover:bg-bu-orange-500 text-slate-300 hover:text-white border border-bu-orange-500 hover:border-bu-orange-500 shadow-xl flex items-center justify-center cursor-pointer transition-all duration-150 z-50 group"
             title="Expand sidebar"
             aria-label="Expand sidebar"
         >
@@ -56,7 +56,7 @@ defineEmits(['toggleCollapse']);
 
         <!-- 1. Header & Institutional Wordmark with Centered BU Seal Logo -->
         <div :class="[
-            'h-16 border-b border-white/10 flex items-center shrink-0 bg-[#081530] transition-all',
+            'h-16 border-b border-white/10 flex items-center shrink-0 bg-sidebar-blue-dark transition-all',
             isCollapsed ? 'justify-center px-0' : 'justify-between px-4'
         ]">
             <Link
@@ -66,8 +66,10 @@ defineEmits(['toggleCollapse']);
                     isCollapsed ? 'justify-center w-full' : 'gap-3'
                 ]"
             >
-                <div class="w-9 h-9 rounded-lg bg-white/10 p-0.5 flex items-center justify-center shrink-0 shadow-xs ring-1 ring-white/10 overflow-hidden">
-                    <img src="/bulogo.png" alt="Bicol University Seal" class="w-full h-full object-contain" />
+                <div class="avatar shrink-0">
+                    <div class="w-9 h-9 mask mask-squircle bg-white/10 shadow-xs ring-1 ring-white/10">
+                        <img src="/bulogo.png" alt="Bicol University Seal" class="object-contain" />
+                    </div>
                 </div>
                 <div v-if="!isCollapsed" class="leading-tight truncate">
                     <div class="font-bold text-base tracking-tight text-white flex items-center gap-1.5">

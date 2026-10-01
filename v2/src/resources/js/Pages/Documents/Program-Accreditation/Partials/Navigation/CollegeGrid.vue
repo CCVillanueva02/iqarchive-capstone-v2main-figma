@@ -111,8 +111,10 @@ const filteredColleges = computed(() => {
             >
                 <!-- Top Identity Block: Logo + Vertically Centered Title -->
                 <div class="flex items-center gap-3.5 min-h-13">
-                    <div class="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200/80 p-1 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 group-hover:border-bu-blue-200 transition-all duration-200">
-                        <img :src="college.logo_url" :alt="college.name" class="w-full h-full object-contain" loading="lazy" />
+                    <div class="avatar shrink-0">
+                        <div class="w-14 h-14 mask mask-squircle bg-slate-50 border border-slate-200/80 shadow-2xs group-hover:scale-105 group-hover:border-bu-blue-200 transition-all duration-200">
+                            <img :src="college.logo_url" :alt="college.name" class="object-contain" loading="lazy" />
+                        </div>
                     </div>
                     <div class="min-w-0 flex-1">
                         <h3 class="text-sm font-bold text-slate-900 group-hover:text-sidebar-blue transition-colors leading-snug line-clamp-2">

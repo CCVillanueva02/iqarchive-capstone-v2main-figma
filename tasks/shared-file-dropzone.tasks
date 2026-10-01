@@ -1,0 +1,30 @@
+# Shared File Dropzone — Task Plan & Implementation Log
+
+## Plan
+- High-level goal: Extract a reusable `FileDropzone.vue` component to provide a consistent, modern drag-and-drop file upload experience across Common Documents and Program Accreditation.
+- Scope:
+  - Create `resources/js/Components/FileDropzone.vue` with drag-and-drop, file type validation, size formatting, and file preview/remove pill.
+  - Refactor `UploadCommonDocModal.vue` to use `FileDropzone`.
+  - Refactor `UploadDocumentModal.vue` (Program Accreditation) to use `FileDropzone`.
+  - Ensure both modal components stay well under the 150-line modularity rule.
+- Key decisions:
+  - Component supports `v-model` binding with a native `File` object or `null`.
+  - Flexible props: `accept`, `maxSizeMb`, `hint`, `error`, and institutional `color` ('blue' | 'orange').
+  - Automatically formats file size using `tabular-nums` and standard byte units.
+  - Standard DaisyUI components (`fieldset`, `legend`, `btn`, `btn-circle`, `btn-ghost`, `border-dashed`).
+- Testing strategy:
+  - Frontend build verification with `npm run build`.
+  - Feature test verification with `php artisan test`.
+
+## Implementation Progress
+### 2026-09-30 — Initial Implementation
+- [x] Created `resources/js/Components/FileDropzone.vue` (144 lines).
+- [x] Refactored `UploadCommonDocModal.vue` to use `FileDropzone` (reduced from 215 to 151 lines).
+- [x] Refactored `UploadDocumentModal.vue` to use `FileDropzone` (reduced from 166 to 149 lines).
+- [x] Verified full backend test suite (`php artisan test` - 51/51 passing).
+- [x] Verified frontend build (`npm run build` - successful).
+
+## Final Status
+- Completed: 2026-09-30
+- Tests: ✓ (all 51 passing)
+- Line counts: All 3 files strictly adhere to the <150 line cap.

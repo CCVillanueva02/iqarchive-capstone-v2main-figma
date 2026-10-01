@@ -1,0 +1,37 @@
+# Common Documents Table Refactor — Task Plan & Implementation Log
+
+## Plan
+- High-level goal: Streamline the Common Documents table by removing the Status column and filter, since institutional university files do not undergo IQA review or status transitions. Adjust the search bar to sit cleanly in the header.
+- Scope:
+  - Remove Status column (`<th>` and `<td>`) in `DocumentsTable.vue`.
+  - Remove Status filter dropdown (`<select>`) in `DocumentsTable.vue`.
+  - Adjust search bar into the header card alongside office name/description with clear button.
+  - Update `Index.vue` to remove status parameters from filtering and office navigation.
+  - Update `DocumentPreviewDrawer.vue` to support `hideStatus` prop, showing "Format" instead of review status for common documents.
+  - Keep components modular and strictly under the 150–200 line cap.
+- Key decisions:
+  - Common documents are university-wide institutional policies, BOR resolutions, and administrative guidelines uploaded directly by authorized staff—status workflows (draft/endorse/approve/return) only apply to Program Accreditation evidence.
+  - Relocating the search input to the right side of the office header saves vertical space and eliminates an unnecessary row.
+- Testing strategy:
+  - Run `php artisan test` to verify backend and query integrity.
+  - Run `npm run build` to verify Vue asset compilation.
+  - Visual verification with Playwright browser screenshot.
+
+## Implementation Progress
+### 2026-09-30
+- [x] Refactored `DocumentsTable.vue`: removed status column, status filter, and unused download logic; placed search input in card header (165 lines).
+- [x] Refactored `Index.vue`: removed `status` from query parameters and default filter state.
+- [x] Updated `DocumentPreviewDrawer.vue`: added `hideStatus` prop to display `Format` instead of approval status for common documents.
+- [x] Refined table heading spacing and title justification (line-clamp-2).
+- [x] Implemented Option A (Accreditation Uses column):
+  - Backend: Added `->withCount('documentLinks')` to `DocumentController.php` using the existing `accreditation_document_links` relationship.
+  - Frontend: Added `Accreditation Uses` column to `DocumentsTable.vue` displaying real-time citation count (`0 uses` or active badge).
+  - Tests: Added test in `CommonDocumentsTest.php` verifying `document_links_count` presence.
+- [x] Verified full test suite (`php artisan test` 52/52 passing).
+- [x] Verified asset build (`npm run build`).
+- [x] Visual validation with Playwright browser screenshots.
+
+## Final Status
+- Completed: 2026-09-30
+- Tests: ✓ (all 52 tests passing)
+- Line counts: All components within modular standards.

@@ -10,7 +10,10 @@ Responsibility: User profile drawer/dropdown at sidebar bottom with account sett
 
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import { ChevronDown, Settings, LogOut } from 'lucide-vue-next';
+import { ChevronDown, Settings, LogOut, ZoomIn } from 'lucide-vue-next';
+import { useDisplayScale } from '@/Composables/useDisplayScale.js';
+
+const { currentScale, availableScales, setScale } = useDisplayScale();
 
 defineProps({
     user: {
@@ -33,7 +36,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="p-3 border-t border-white/10 bg-[#081530] shrink-0">
+    <div class="p-3 border-t border-white/10 bg-sidebar-blue-dark shrink-0">
         <div class="dropdown dropdown-top w-full">
             <button
                 tabindex="0"
@@ -60,15 +63,41 @@ defineProps({
                 <ChevronDown v-if="!isCollapsed" class="w-3.5 h-3.5 text-slate-400 group-hover:text-white transition-transform" />
             </button>
 
-            <!-- Dropdown Content: Account Details, Settings & Sign Out -->
+            <!-- Dropdown Content: Account Details, Settings, Scale & Sign Out -->
             <ul
                 tabindex="0"
-                class="dropdown-content menu menu-sm bg-[#0F172A] border border-slate-700/80 rounded-xl z-50 p-2 shadow-2xl w-60 text-slate-200 mb-2 gap-1"
+                class="dropdown-content menu menu-sm bg-slate-900 border border-slate-700/80 rounded-xl z-50 p-2 shadow-2xl w-60 text-slate-200 mb-2 gap-1"
             >
                 <li class="menu-title text-slate-400 text-[10px] uppercase font-bold px-2 py-1">
                     {{ roleMeta.label }}
                     <span class="block text-white normal-case font-medium truncate">{{ user.email }}</span>
                 </li>
+
+                <div class="divider my-0.5 border-slate-800"></div>
+
+                <!-- Display Scale Switcher -->
+                <li class="menu-title text-slate-400 text-[10px] uppercase font-bold px-2 pt-1 pb-0.5 flex items-center justify-between">
+                    <span class="flex items-center gap-1.5">
+                        <ZoomIn class="w-3 h-3 text-slate-400" />
+                        <span>Display Scale</span>
+                    </span>
+                    <span class="font-mono text-bu-orange-400 normal-case">{{ currentScale }}</span>
+                </li>
+                <div class="grid grid-cols-3 gap-1 px-1 py-1">
+                    <button
+                        v-for="scale in availableScales"
+                        :key="scale.value"
+                        type="button"
+                        :class="[
+                            'btn btn-xs text-[10px] font-mono border-0 rounded-lg cursor-pointer transition-colors',
+                            currentScale === scale.value ? 'bg-bu-orange-500 text-white font-bold' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                        ]"
+                        :title="scale.description"
+                        @click="setScale(scale.value)"
+                    >
+                        {{ scale.value }}
+                    </button>
+                </div>
 
                 <div class="divider my-0.5 border-slate-800"></div>
 

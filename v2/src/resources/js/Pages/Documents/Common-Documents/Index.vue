@@ -38,7 +38,7 @@ const props = defineProps({
     },
     filters: {
         type: Object,
-        default: () => ({ search: '', status: '' }),
+        default: () => ({ search: '' }),
     },
     canUpload: {
         type: Boolean,
@@ -59,21 +59,19 @@ function handleSelectOffice(officeId) {
         {
             tab: 'common-documents',
             office_id: officeId,
-            search: props.filters.search,
-            status: props.filters.status,
+            search: props.filters?.search || '',
         },
         { preserveState: true, preserveScroll: true }
     );
 }
 
-function handleFilter({ search, status }) {
+function handleFilter({ search }) {
     router.get(
         '/documents',
         {
             tab: 'common-documents',
             office_id: props.selectedOfficeId,
             search,
-            status,
         },
         { preserveState: true, preserveScroll: true }
     );
@@ -116,7 +114,7 @@ function handleFilter({ search, status }) {
             </div>
 
             <!-- Main Two-Column Layout (1/4 left, 3/4 right) (full height) -->
-            <div class="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+            <div class="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-10 gap-5 items-stretch">
                 <div class="lg:col-span-2 h-full min-h-0">
                     <OfficePanel
                         :offices="offices"
@@ -125,7 +123,7 @@ function handleFilter({ search, status }) {
                     />
                 </div>
 
-                <div class="lg:col-span-10 h-full min-h-0">
+                <div class="lg:col-span-8 h-full min-h-0">
                     <DocumentsTable
                         :documents="documents"
                         :selected-office="activeOffice"

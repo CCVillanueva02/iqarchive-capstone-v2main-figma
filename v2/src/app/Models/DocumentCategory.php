@@ -28,6 +28,7 @@ class DocumentCategory extends Model
         'name',
         'scope',
         'description',
+        'icon',
     ];
 
     protected function casts(): array

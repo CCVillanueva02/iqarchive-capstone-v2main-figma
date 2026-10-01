@@ -1,0 +1,43 @@
+# User Accounts UI — Task Plan & Implementation Log
+
+## Plan
+- High-level goal: Build the Accounts Management (User Accounts) UI under the ADMINISTRATION module strictly for the IQA role, matching the v1 layout reference with DaisyUI 5 components and modular frontend architecture.
+- Scope:
+  - Frontend only: `Index.vue`, `UserFilterBar.vue`, `UserTable.vue`, `PreRegisterModal.vue`.
+  - Minimal web route and controller mapping so `/admin/users` is accessible in browser.
+  - Sidebar and Topbar remain untouched (inherited from `AppShell`).
+  - Purely scoped to IQA role persona.
+- Key decisions:
+  - Component library: 100% DaisyUI 5 (`btn`, `table table-pin-rows`, `badge badge-soft`, `tabs tabs-box`, `input`, `select`, `modal`).
+  - Modularity (Ponytail): Keep every Vue SFC strictly under 150-200 lines by extracting partials.
+  - Realistic initial state conforming to the reference screenshot: 13 institutional users, status pill tabs with counts, role filter, and action buttons.
+- Edge cases to handle:
+  - Empty search / filter results state with clear reset button.
+  - Responsive table container with horizontal scroll protection.
+  - Fallback initials when avatar photo is missing.
+
+## Implementation Progress
+### Session 1 - Initial UI Build
+- [x] Subtask 1: Register `/admin/users` route and minimal controller action for IQA.
+- [x] Subtask 2: Create `Partials/UserFilterBar.vue` (tabs, search bar, role filter dropdown).
+- [x] Subtask 3: Create `Partials/UserTable.vue` (data table, avatar initials, status pills, badges, action buttons).
+- [x] Subtask 4: Create `Partials/PreRegisterModal.vue` (DaisyUI dialog for pre-registering users/task forces).
+- [x] Subtask 5: Assemble `Pages/Admin/Users/Index.vue` with `AppShell`.
+- [x] Subtask 6: Verify via build (`npm run build` passed) and visual browser check.
+- [x] Subtask 7: Update profile picture frame to borderless squircle (`rounded-xl` with exact `#ECEFF4` light gray background sampled from reference image, `#1E293B` bold initials, and vibrant green `#10B981` active indicator firmly anchored to the bottom-right).
+- [x] Subtask 8: Update row edit action button icon to `#092c75` via Lucide `color="#092c75"` prop and explicit SVG stroke styling with stroke-width 2.
+- [x] Subtask 9: Code audit & redundancy cleanup — refactored repetitive status tabs into a DRY `tabs` data structure in `UserFilterBar.vue` (shaving 40 duplicate lines) and eliminated redundant SVG attributes in `UserTable.vue`.
+- [x] Subtask 10: Removed top-right `X` close button from `PreRegisterModal.vue` header to match reference design.
+
+## Final Status
+- Completed: Sep 30, 2026
+- Reference Match: ✓ 1:1 visual match with user's cropped reference image (`DB`, `MS`, `JC`) with bottom-right vibrant green indicator and `#092c75` edit icon.
+- Tests: ✓ Frontend Vite build compiled cleanly (`exit code 0`); verified in browser via dev login (`/dev/login/iqa-staff`).
+- Visual & DaisyUI Standards: ✓ Clean borderless squircle avatar frames, identical card container footprints, all buttons, badges, tables, inputs, tabs, pagination, and modals adhere strictly to DaisyUI component classes.
+- Modularity (Ponytail): ✓ All Vue SFCs kept modular and under line caps:
+  - [Index.vue](file:///c:/Users/admin/Desktop/iqarchive-capstone/v2/src/resources/js/Pages/Admin/Users/Index.vue): 180 lines
+  - [UserFilterBar.vue](file:///c:/Users/admin/Desktop/iqarchive-capstone/v2/src/resources/js/Pages/Admin/Users/Partials/UserFilterBar.vue): 107 lines
+  - [UserTable.vue](file:///c:/Users/admin/Desktop/iqarchive-capstone/v2/src/resources/js/Pages/Admin/Users/Partials/UserTable.vue): 165 lines
+  - [PreRegisterModal.vue](file:///c:/Users/admin/Desktop/iqarchive-capstone/v2/src/resources/js/Pages/Admin/Users/Partials/PreRegisterModal.vue): 153 lines
+  - Total: 549 lines (all 4 files strictly under the 200 line cap)
+- Browser Verification: Verified live on `http://127.0.0.1:8000/admin/users`, including page 1 (rows 1-10) and page 2 (rows 11-14) pagination controls.

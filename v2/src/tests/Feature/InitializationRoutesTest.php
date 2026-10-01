@@ -52,6 +52,7 @@ class InitializationRoutesTest extends TestCase
     {
         $endpoints = [
             '/admin',
+            '/admin/colleges',
             '/iqa',
             '/dean',
             '/task-force',

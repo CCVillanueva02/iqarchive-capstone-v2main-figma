@@ -33,8 +33,10 @@ class Document extends Model
         'college_id',
         'program_id',
         'category_id',
+        'criterion_id',
         'user_id',
         'title',
+        'external_url',
         'original_filename',
         'file_path',
         'file_hash',
@@ -65,6 +67,11 @@ class Document extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(DocumentCategory::class, 'category_id');
+    }
+
+    public function criterion(): BelongsTo
+    {
+        return $this->belongsTo(InstrumentCriterion::class, 'criterion_id');
     }
 
     public function uploader(): BelongsTo

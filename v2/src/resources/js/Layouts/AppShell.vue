@@ -20,6 +20,12 @@ import AppTopbar from '@/Layouts/Partials/AppTopbar.vue';
 import AppUserMenu from '@/Layouts/Partials/AppUserMenu.vue';
 import { getNavigationSections } from '@/Layouts/navigation.js';
 import { CheckCircle2, AlertCircle, Info } from 'lucide-vue-next';
+import { useDisplayScale } from '@/Composables/useDisplayScale.js';
+
+const { initScale } = useDisplayScale();
+onMounted(() => {
+    initScale();
+});
 
 const page = usePage();
 

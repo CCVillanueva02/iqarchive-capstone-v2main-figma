@@ -1,0 +1,94 @@
+# Institutional Accreditation Module — Task Plan & Implementation Log
+
+## Plan
+- High-level goal: Build the full Institutional Accreditation (IA) workstation for Bicol University, reusing the proven design patterns from Program Accreditation, tailored for university-wide institutional assessment across 4 official document types: Compliance Reports, Self-Survey, Supporting Docs to the Instrument, and Institutional Portfolio.
+- Scope:
+  - **In Scope**:
+    - Backend: Controller (`InstitutionalAccreditationController.php`), route definitions (`/documents/institutional-accreditation`), and security authorization gates.
+    - Navigation: Left sidebar link updates (`navigation.js`), redirect helpers for legacy URLs (`/documents?tab=institutional-records`), and contextual breadcrumb tracking.
+    - Orchestrator: `resources/js/Pages/Documents/Institutional-Accreditation/Index.vue` (< 190 lines).
+    - Hub: `InstitutionalDocumentTypeHub.vue` (< 150 lines) with 4 official dossier cards (Compliance Reports, Self Survey, Supporting Docs to the Instrument, Portfolio) and institutional evidence activity table.
+    - Document Type 1: **Compliance Reports** (`ComplianceReportsView.vue`, `InstitutionalRecommendationCard.vue`, carousel, and proof attachments using `institutionalComplianceData.json`).
+    - Document Type 2: **Self Survey** (`SelfSurveyView.vue`, area carousel, parameter scoring blocks, AACCUP rubric reference using `institutionalSurveyData.json`).
+    - Document Type 3: **Supporting Docs to the Instrument** (`SupportingDocsView.vue`, `InstitutionalParametersSidebar.vue`, `InstitutionalCriterionCard.vue`, benchmarks workspace, and attach modal using `institutionalSupportingDocsData.json`).
+    - Document Type 4: **Institutional Portfolio** (`PortfolioView.vue`, `PortfolioChapterNav.vue`, chapter metrics, narrative summary, and dossier evidence cards using `institutionalPortfolioData.json`).
+  - **Out of Scope**:
+    - Program-level filtering (IA is strictly university-wide for Bicol University).
+- Key decisions:
+  - Reuse the visual language, typography, and DaisyUI components established in Program Accreditation for immediate user familiarity.
+  - Leverage the curated JSON datasets already extracted from real BU IA documents in `v2/IQA-docs/Accreditation/`.
+  - Maintain strict modular component boundaries (< 150–200 lines per file).
+  - Implement "one-by-one" iterative phasing starting with foundational architecture and the Master Hub.
+
+## Implementation Progress
+### [2026-10-01 / Phase 0: System Audit & Design Review]
+- [x] Conducted `/office-hours` diagnostic on Institutional Accreditation structure vs Program Accreditation.
+- [x] Conducted `/plan-design-review` with Impeccable and DaisyUI standards.
+- [x] Verified existing data foundations in `Institutional-Accreditation/Partials/DocumentTypes/*/data/`.
+- [x] Verified baseline tests (61/61 passing) and build compilation (`npm run build` 1.41s).
+### [2026-10-01 / Phase 1: Institutional Core Architecture & Hub]
+- [x] Created `InstitutionalAccreditationController.php` with IQA role security gates and university-scoped documents query.
+- [x] Registered `GET /documents/institutional-accreditation` in `routes/web.php` and added tab redirect in `DocumentController.php`.
+- [x] Updated sidebar navigation in `navigation.js` to link "Institutional Accreditation".
+- [x] Built `InstitutionalContextCard.vue` (< 100 lines) with BU seal and 9 Areas counter.
+- [x] Built `InstitutionalRecentEvidenceTable.vue` (< 150 lines) with search, file-type icons, and preview drawer.
+- [x] Built `InstitutionalDocumentTypeHub.vue` (< 130 lines) with the 4 dossier category cards.
+- [x] Built `Index.vue` (< 140 lines) orchestrator with breadcrumbs and back-navigation.
+- [x] Added automated feature tests in `InstitutionalAccreditationTest.php` (5 tests passing).
+- [x] Verified full backend test suite: 66/66 tests passing (420 assertions).
+- [x] Verified frontend build: `npm run build` succeeds in 1.36s with zero errors.
+- [x] Visually verified UI in browser subagent.
+
+### [2026-10-01 / Phase 2: Document Type 1 — Supporting Documents to Instrument (`supporting-docs`)]
+- [x] Aligned hub card ordering to exact requested sequence:
+  1. Supporting Documents to Instrument
+  2. Self-Survey Documents
+  3. Compliance Reports
+  4. Narrative Profile
+- [x] Implemented `AttachInstitutionalEvidenceModal.vue` (< 150 lines) with dual-tab upload (PDF/Office files & Google Drive links).
+- [x] Implemented `InstitutionalAreaCarousel.vue` (< 90 lines) for Areas I through IX with progress trackers.
+- [x] Implemented `InstitutionalParametersSidebar.vue` (< 70 lines) with active accent indicator and dynamic completion percentages.
+- [x] Implemented `InstitutionalCriterionCard.vue` (< 145 lines) with S/I/O/BP tags, collapsible suggested evidence list, attached doc pills, and preview triggers.
+- [x] Implemented `InstitutionalBenchmarkChecklistWorkspace.vue` (< 160 lines) with horizontal progress, 4 section tabs (Systems, Implementation, Outcomes, Best Practices), and benchmark cards.
+- [x] Implemented `SupportingDocsView.vue` (< 150 lines) integrating state, persistence, drawer preview, and modal triggers.
+- [x] Added `storeDocument` and `destroyDocument` controller actions and web routes with security gates and transaction integrity.
+- [x] Added automated feature tests in `InstitutionalAccreditationTest.php` (7/7 passing).
+- [x] Full backend test suite: 68/68 passing (425 assertions).
+- [x] Frontend build: `npm run build` succeeds cleanly in 1.48s with 0 errors.
+- [x] Browser visual verification completed: hub, carousel navigation, parameter switching, accordion toggle, modal opening, and Google Drive tab.
+- [x] Refined hub card design: eliminated awkward space above buttons by aligning title/description baseline heights and applying a compact 16px vertical rhythm with forward arrows.
+- [x] Synchronized Program Accreditation Tier 3 Hub (`DocumentTypeHub.vue`) with identical card architecture, solid action buttons, compact `h-8` height, and responsive grid.
+- [x] Removed "Suggested Evidence Items" accordion from `InstitutionalCriterionCard.vue`.
+- [x] Fixed PDF preview in IA Supporting Docs: linked authentic database document records (e.g. Document #28) with real binary PDF streams, passed server-created document IDs on upload, and added an explicit "Preview Unavailable" error state in `DocumentPreviewDrawer.vue` instead of misleadingly falling through to `OfficeDocPreview`.
+
+### [2026-10-01 / Phase 3: Document Type 2 — Self-Survey Documents (`self-survey`)]
+- [x] Created `institutionalSurveyData.js` (< 60 lines) mapping Areas I through IX from `institutionalSurveyData.json` into normalized System/Implementation/Outcome sections and AACCUP 1-5 rating scale.
+- [x] Created `RatingScaleReference.vue` (< 50 lines) collapsible rubric accordion.
+- [x] Created `SelfSurveyAreaCarousel.vue` (< 95 lines) horizontal selector for Areas I through IX with real-time completion progress indicators.
+- [x] Created `SelfSurveyParameterBlock.vue` (< 160 lines) with System, Implementation, Outcome sections, Item Rating (IR) dropdowns (0-5, NA), live SIOM section means, Parameter Mean, and Best Practices text notes.
+- [x] Created `SelfSurveySummaryFooter.vue` (< 95 lines) with Total Rating calculation, vibrant emerald Area Mean banner, surveyor sign-off, print/export, and submit action.
+- [x] Created `SelfSurveyView.vue` (< 190 lines) master orchestrator with localStorage draft persistence and pre-seeded baseline scores.
+- [x] Wired `<SelfSurveyView>` into `Institutional-Accreditation/Index.vue`.
+- [x] Added automated feature test in `InstitutionalAccreditationTest.php` (8/8 passing).
+- [x] Full backend test suite: 69/69 passing (436 assertions).
+- [x] Frontend build: `npm run build` succeeds cleanly in 1.46s with 0 errors.
+
+### [2026-10-01 / Phase 4: Document Type 3 — Compliance Reports (`compliance-reports`)]
+- [x] Normalized Areas I through IX from `institutionalComplianceData.json` into structured arrays with `loadSavedComplianceAreas`, `saveComplianceAreas`, and `getComplianceStatusConfig` in `institutionalComplianceData.js` (109 lines).
+- [x] Created `ComplianceAreaCarousel.vue` (82 lines) with 9 horizontal area cards and emerald completion indicators.
+- [x] Created `RecommendationHeader.vue` (68 lines) rendering recommendation badge, number circle, title text, and Mark as Completed / Reopen actions.
+- [x] Created `RecommendationDocItem.vue` (57 lines) with PDF/Drive icon, filesize display, preview trigger, and deletion action.
+- [x] Created `UploadProofModal.vue` (168 lines) and `RepositoryDocPickerModal.vue` (147 lines) for attaching local files and institutional repository documents.
+- [x] Created `RecommendationInputSection.vue` (146 lines) input dock for typing actions and staging proof attachments.
+- [x] Created `RecommendationCard.vue` (176 lines) orchestrating header, actions list, supporting documents list, and input dock.
+- [x] Created `ComplianceReportsView.vue` (118 lines) master orchestrator with localStorage persistence and preview drawer integration.
+- [x] Wired `<ComplianceReportsView>` into `Institutional-Accreditation/Index.vue`.
+- [x] Added automated feature test in `InstitutionalAccreditationTest.php` (9/9 passing).
+- [x] Full backend test suite: 70/70 passing (447 assertions).
+- [x] Frontend build: `npm run build` succeeds cleanly in 1.41s with 0 errors.
+
+### Upcoming Phases (One by One — Ordered per Spec)
+- [ ] Phase 5: Document Type 4 — Narrative Profile / Institutional Portfolio (`portfolio`)
+
+
+

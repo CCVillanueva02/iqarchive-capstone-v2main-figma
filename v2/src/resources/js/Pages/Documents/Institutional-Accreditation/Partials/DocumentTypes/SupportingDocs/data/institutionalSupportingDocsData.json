@@ -1,0 +1,564 @@
+{
+  "I": {
+    "areaNumber": 1,
+    "roman": "I",
+    "name": "Governance and Management",
+    "fullName": "GOVERNANCE AND MANAGEMENT (including resource generation)",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Governance - Organizational Structure",
+        "benchmarks": [
+          {
+            "code": "S.1",
+            "type": "system",
+            "title": "The governance of the institution is clearly defined in the organizational structure.",
+            "suggestedEvidence": [
+              "Secretary's Certification No. 75, s. 2024",
+              "Approved Bicol University Organizational Structure Charts",
+              "Revised BU Code 2024",
+              "Administrative Orders on Key Designations"
+            ]
+          },
+          {
+            "code": "I.1",
+            "type": "impl",
+            "title": "The policy-making body demonstrates strong leadership and supports the institution's programs and operations.",
+            "suggestedEvidence": [
+              "Matrix of BOR Resolutions and Proposals",
+              "Excerpts of Minutes of BOR, Admin Council & Academic Council Meetings",
+              "Secretary's Certifications on various proposals",
+              "Documentation of BOR Actions on BU Official Portal"
+            ]
+          },
+          {
+            "code": "O.1",
+            "type": "outcome",
+            "title": "Conflict in administrative jurisdictions and official relationships are minimal.",
+            "suggestedEvidence": [
+              "Certification of University Legal Office on administrative complaints",
+              "Records of President's Campus Visits & Dialogue Assemblies",
+              "BUUFAI and BUANTS Faculty/Personnel Union consultation activities"
+            ]
+          },
+          {
+            "code": "BP.1",
+            "type": "best_practice",
+            "title": "Conduct of regular campus visits by the University President and creation of specialized TWGs for in-depth policy analysis.",
+            "suggestedEvidence": [
+              "University President Campus Dialogue Schedules & Transcripts",
+              "TWG Accomplishment Reports and Policy Recommendations"
+            ]
+          }
+        ]
+      },
+      {
+        "letter": "B",
+        "name": "Probity and Ethical Standards",
+        "benchmarks": [
+          {
+            "code": "S.1",
+            "type": "system",
+            "title": "Clear institutional policies and codes of conduct govern ethical practices across all operations.",
+            "suggestedEvidence": [
+              "Civil Service Commission Code of Conduct Implementation Rules",
+              "University Committee on Decorum and Investigation (CODI) Manual",
+              "Statement of Assets, Liabilities, and Net Worth (SALN) Compliance Reports"
+            ]
+          },
+          {
+            "code": "I.1",
+            "type": "impl",
+            "title": "The organization follows institutional processes with respect to governance because leadership was selected based on transparent procedures.",
+            "suggestedEvidence": [
+              "Search Committee for University Officials Rules & Procedures",
+              "BOR Resolutions Confirming Key Designations and Appointments"
+            ]
+          },
+          {
+            "code": "O.1",
+            "type": "outcome",
+            "title": "Stakeholders express high trust and satisfaction in transparent management.",
+            "suggestedEvidence": [
+              "Clientele Satisfaction Measurement (CSM) Annual Consolidated Reports",
+              "Freedom of Information (FOI) Portal Requests and Response Analytics"
+            ]
+          }
+        ]
+      },
+      {
+        "letter": "C",
+        "name": "Governance - Strategic Vision",
+        "benchmarks": [
+          {
+            "code": "S.1",
+            "type": "system",
+            "title": "Management is guided by a well-defined institutional vision and mission consonance with regional, national, and global trends.",
+            "suggestedEvidence": [
+              "BU Vision, Mission, and Quality Policy Manual",
+              "Integration in Regional Development Plan (RDP) & Philippine Development Plan (PDP)",
+              "SDG Mapping across Academic and Administrative Priorities"
+            ]
+          },
+          {
+            "code": "I.1",
+            "type": "impl",
+            "title": "The institution implements the Strategic Plan and periodically evaluates it through Agency Performance Reviews.",
+            "suggestedEvidence": [
+              "Office Performance Commitment and Review (OPCR) Consolidated Ratings",
+              "Year-End Management Review Minutes & Executive Resolutions",
+              "COA Annual Audit Exit Meeting Documentation"
+            ]
+          },
+          {
+            "code": "O.1",
+            "type": "outcome",
+            "title": "Key developmental milestones in the Strategic Plan are achieved on schedule.",
+            "suggestedEvidence": [
+              "Annual University Accomplishment Reports",
+              "Consolidated Performance Indicator Matrix (PIM) Verified Ratings"
+            ]
+          }
+        ]
+      },
+      {
+        "letter": "G",
+        "name": "Management and Financial Control",
+        "benchmarks": [
+          {
+            "code": "S.1",
+            "type": "system",
+            "title": "There is a sound system of management, budget allocation, and financial control.",
+            "suggestedEvidence": [
+              "Government Accounting Manual (GAM) Vol. I, II, and III Adoption Order",
+              "COA Circular No. 2020-001 Internal Guidelines",
+              "Business Affairs Office (BAO) Manual of Operations"
+            ]
+          },
+          {
+            "code": "I.1",
+            "type": "impl",
+            "title": "The university executes rigid monitoring of income-generating projects and fund utilization.",
+            "suggestedEvidence": [
+              "BU Budget Management and Monitoring System (BUBMMS) System Logs",
+              "Quarterly Financial Reports submitted to DBM and COA",
+              "Income Generating Project (IGP) Periodic Viability Evaluations"
+            ]
+          },
+          {
+            "code": "O.1",
+            "type": "outcome",
+            "title": "Fund utilization is effective and transparent with minimal audit observations.",
+            "suggestedEvidence": [
+              "Audited Annual Financial Reports (CY 2020-2023)",
+              "COA Annual Audit Report (AAR) Transmittals"
+            ]
+          }
+        ]
+      },
+      {
+        "letter": "H",
+        "name": "Enabling Feature - Use of ICT in Management",
+        "benchmarks": [
+          {
+            "code": "S.1",
+            "type": "system",
+            "title": "Information systems support institutional decision-making, digital records, and administrative transactions.",
+            "suggestedEvidence": [
+              "Information and Communications Technology Office (ICTO) Strategic Plan",
+              "BU-ICTO Service Request System Architecture & Protocols",
+              "Enterprise Resource Planning & Student Information System (BU-SIS) Documentation"
+            ]
+          },
+          {
+            "code": "I.1",
+            "type": "impl",
+            "title": "Digital workflows for clientele feedback, service requests, and record requests are actively implemented.",
+            "suggestedEvidence": [
+              "Clientele Satisfaction Measurement (CSM) Digital Portal Analytics",
+              "Service Request System (SRS) Resolution Logs",
+              "Document Tracking & Archiving Workflow System Records"
+            ]
+          },
+          {
+            "code": "BP.1",
+            "type": "best_practice",
+            "title": "Digitizing the Clientele Satisfaction Measurement form from paper-based to automated online feedback promotes data accuracy and real-time responsiveness.",
+            "suggestedEvidence": [
+              "CSM Digital Platform Implementation Report & BOR Commendation"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "II": {
+    "areaNumber": 2,
+    "roman": "II",
+    "name": "Teaching, Learning and Evaluation",
+    "fullName": "TEACHING, LEARNING AND EVALUATION",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Setting and Achieving Program Standards",
+        "benchmarks": [
+          {
+            "code": "S.1",
+            "type": "system",
+            "title": "Academic programs have clearly defined objectives and learning outcomes aligned with the institution's VMGO.",
+            "suggestedEvidence": [
+              "Program Educational Objectives (PEO) Alignment Matrix",
+              "CHED Policies, Standards, and Guidelines (PSGs) Compliance Certifications",
+              "BOR Resolutions Approving Revised Curricula"
+            ]
+          },
+          {
+            "code": "I.1",
+            "type": "impl",
+            "title": "Periodic review and evaluation of academic programs are conducted incorporating labor market and stakeholder demands.",
+            "suggestedEvidence": [
+              "Curriculum Review Committee Minutes & Stakeholder Consultation Records",
+              "Industry Advisory Board Recommendations and Action Matrices",
+              "PRC Licensure Examination Performance Analysis"
+            ]
+          },
+          {
+            "code": "O.1",
+            "type": "outcome",
+            "title": "Graduates demonstrate desired program competencies and achieve high employability.",
+            "suggestedEvidence": [
+              "Institutional Graduate Tracer Study Reports",
+              "Employer Satisfaction Surveys on Graduate Competence",
+              "PRC Licensure Examination Performance across Colleges"
+            ]
+          }
+        ]
+      },
+      {
+        "letter": "B",
+        "name": "Curriculum Design and Evaluation",
+        "benchmarks": [
+          {
+            "code": "S.1",
+            "type": "system",
+            "title": "Curricula reflect outcomes-based education (OBE) principles and conform to CHED standards.",
+            "suggestedEvidence": [
+              "University OBE Curriculum Framework & Syllabus Guidelines",
+              "Approved Program Syllabi with Course Learning Outcomes",
+              "Certificate of Program Compliance (COPC) Issued by CHED"
+            ]
+          },
+          {
+            "code": "I.1",
+            "type": "impl",
+            "title": "Innovative instructional methodologies, flexible learning, and blended coursework are deployed.",
+            "suggestedEvidence": [
+              "Bicol University Open University (BUOU) LMS Deployment Records",
+              "Faculty Training Logs on Instructional Tech & Module Writing"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "III": {
+    "areaNumber": 3,
+    "roman": "III",
+    "name": "Faculty and Staff",
+    "fullName": "FACULTY AND STAFF",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Recruitment, Selection, and Merit Promotion",
+        "benchmarks": [
+          {
+            "code": "S.1",
+            "type": "system",
+            "title": "A merit selection plan and transparent qualification standards govern the recruitment and promotion of faculty and staff.",
+            "suggestedEvidence": [
+              "BU Merit Selection Plan (MSP) approved by Civil Service Commission",
+              "Administrative Order No. 12 s. 2024 - UHRMPSB Composition",
+              "Administrative Order No. 09 s. 2024 - UFMSB Composition"
+            ]
+          },
+          {
+            "code": "I.1",
+            "type": "impl",
+            "title": "Hiring and promotion processes strictly observe publication requirements, objective scoring, and odd-numbered voting boards.",
+            "suggestedEvidence": [
+              "CSC Publication of Vacant Positions Notices",
+              "UFMSB and UHRMPSB Deliberation Minutes and Comparative Assessment Matrices",
+              "Appointment Papers and Oath of Office Records"
+            ]
+          },
+          {
+            "code": "O.1",
+            "type": "outcome",
+            "title": "The institution maintains a highly qualified corps of full-time faculty holding vertically articulated graduate degrees.",
+            "suggestedEvidence": [
+              "HRMDO Certified Faculty Qualification Profile (Doctorate, Masteral, Baccalaureate)",
+              "PRC Professional Licensure Maintenance Records"
+            ]
+          }
+        ]
+      },
+      {
+        "letter": "B",
+        "name": "Faculty and Staff Development Program",
+        "benchmarks": [
+          {
+            "code": "S.1",
+            "type": "system",
+            "title": "A comprehensive Faculty and Staff Development Program (FSDP) provides scholarships, grants, and study leaves.",
+            "suggestedEvidence": [
+              "BU Faculty and Staff Development Committee (FSDC) Guidelines",
+              "Annual Budgetary Allocation for Faculty Scholarships"
+            ]
+          },
+          {
+            "code": "I.1",
+            "type": "impl",
+            "title": "Faculty members participate in local, national, and international training, research conferences, and post-graduate studies.",
+            "suggestedEvidence": [
+              "FSDC Approved List of Faculty Scholars on Study Leave",
+              "Certificates of Participation in Specialized Training Programs",
+              "Travel Authorities and Re-entry Action Plans"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "IV": {
+    "areaNumber": 4,
+    "roman": "IV",
+    "name": "Research",
+    "fullName": "RESEARCH",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Research Agenda and Management",
+        "benchmarks": [
+          {
+            "code": "S.1",
+            "type": "system",
+            "title": "The institutional Research, Development, and Extension (RDE) Agenda is approved and aligned with national and regional priorities.",
+            "suggestedEvidence": [
+              "BOR Secretary Certification No. 24 s. 2024 - BU-KUGOS Framework Approval",
+              "BU RDE Agenda 2024-2028 Manual",
+              "Research Operations Manual and Ethics Review Guidelines"
+            ]
+          },
+          {
+            "code": "I.1",
+            "type": "impl",
+            "title": "Research grants, workload deloading, and incentive mechanisms support faculty research initiatives.",
+            "suggestedEvidence": [
+              "University Research Deloading Guidelines and Faculty Assignment Lists",
+              "Institutional Research Grant Contracts & Notice of Awards",
+              "Research Proposal Review Committee (RPRC) Evaluation Sheets"
+            ]
+          },
+          {
+            "code": "O.1",
+            "type": "outcome",
+            "title": "Faculty publish in Scopus/WoS indexed journals, secure external grants, and register intellectual properties.",
+            "suggestedEvidence": [
+              "Consolidated Research Publications in Indexed Journals (2020-2024)",
+              "External Research Grants from DOST, CHED, DA, and International Agencies",
+              "IPOPHL Letters of Patent and Utility Model Registration"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "V": {
+    "areaNumber": 5,
+    "roman": "V",
+    "name": "Extension, Consultancy and Linkages",
+    "fullName": "EXTENSION, OCCUPANCY AND LINKAGES",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Extension Policy and Program Management",
+        "benchmarks": [
+          {
+            "code": "S.1",
+            "type": "system",
+            "title": "The institutional extension agenda and operational manual guide community engagement and technology transfer.",
+            "suggestedEvidence": [
+              "BOR Secretary Certification No. 11 s. 2024 - BU Extension Manual of Operations Approval",
+              "Bicol University Extension Manual (Revised 2024)",
+              "Extension Project Proposal Review and Approval Guidelines"
+            ]
+          },
+          {
+            "code": "I.1",
+            "type": "impl",
+            "title": "Extension programs are implemented in partnership with LGUs, civil society, and adopted communities.",
+            "suggestedEvidence": [
+              "Memoranda of Agreement (MOA) with Partner LGUs and Communities",
+              "Extension Training Modules and Community Activity Attendance Sheets",
+              "Community Impact Evaluation Framework (CIEF) Periodic Reports"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "VI": {
+    "areaNumber": 6,
+    "roman": "VI",
+    "name": "Support to Students",
+    "fullName": "SUPPORT TO STUDENTS",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Student Services Management and Welfare",
+        "benchmarks": [
+          {
+            "code": "S.1",
+            "type": "system",
+            "title": "A comprehensive Student Affairs and Services (SAS) program provides holistic student development.",
+            "suggestedEvidence": [
+              "Bicol University Student Handbook (Approved by BOR)",
+              "Office of Student Affairs and Services (OSAS) Operations Manual",
+              "Student Disciplinary Code and Grievance Machinery Guidelines"
+            ]
+          },
+          {
+            "code": "I.1",
+            "type": "impl",
+            "title": "Career placement, counseling, scholarships, and mental health services are available across all campuses.",
+            "suggestedEvidence": [
+              "Guidance and Counseling Center Psychological Services Logs",
+              "Consolidated Scholarship and Financial Assistance Recipient Roster",
+              "Tele-Counseling Portal Usage Analytics and Satellite Campus Coverage Reports"
+            ]
+          },
+          {
+            "code": "O.1",
+            "type": "outcome",
+            "title": "Comprehensive graduate tracer studies demonstrate positive alumni career trajectories and employer satisfaction.",
+            "suggestedEvidence": [
+              "10-Year Institutional Graduate Tracer Study Report",
+              "Alumni Relations and Placement Office Job Fair & Employment Analytics"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "VII": {
+    "areaNumber": 7,
+    "roman": "VII",
+    "name": "Library",
+    "fullName": "LIBRARY",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Library Administration, Holdings, and Digital Resources",
+        "benchmarks": [
+          {
+            "code": "S.1",
+            "type": "system",
+            "title": "The university library is administered by licensed professional librarians with sufficient holdings and e-resources.",
+            "suggestedEvidence": [
+              "University Library Five-Year Professional Staffing Plan",
+              "HRMDO Notices of Appointment of Licensed College Librarians",
+              "Library Collection Development Policy Manual"
+            ]
+          },
+          {
+            "code": "I.1",
+            "type": "impl",
+            "title": "Online public access catalogs (OPAC) and remote electronic databases are accessible to all faculty and students.",
+            "suggestedEvidence": [
+              "OpenAthens Remote Authentication Service Contract and User Logs",
+              "Subscriptions to ScienceDirect, Scopus, IEEE Xplore, and EBSCOhost",
+              "Library Utilization Statistics across Main and Satellite Campuses"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "VIII": {
+    "areaNumber": 8,
+    "roman": "VIII",
+    "name": "Infrastructure and Learning Resources",
+    "fullName": "INFRASTRUCTURE AND OTHER LEARNING SOURCES",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Campus Master Plan and Physical Facilities",
+        "benchmarks": [
+          {
+            "code": "S.1",
+            "type": "system",
+            "title": "The Land Use Development and Infrastructure Plan (LUDIP) guides physical campus modernization and development.",
+            "suggestedEvidence": [
+              "Bicol University Comprehensive LUDIP 2024-2034 approved by BOR",
+              "CHED Site Validation Compliance Certificates on LUDIP Implementation",
+              "Campus Architectural Master Site Plans"
+            ]
+          },
+          {
+            "code": "I.1",
+            "type": "impl",
+            "title": "Academic buildings, laboratories, and safety infrastructure meet national statutory standards and accessibility law (BP 344).",
+            "suggestedEvidence": [
+              "Bureau of Fire Protection (BFP) Safety Inspection Certificates",
+              "BP 344 Accessibility Ramp and Tactile Paving Audit Reports",
+              "Disaster Risk Reduction and Management (DRRM) Campus Safety Protocols"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "IX": {
+    "areaNumber": 9,
+    "roman": "IX",
+    "name": "Quality Assurance Culture",
+    "fullName": "QUALITY ASSURANCE CULTURE",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Internal Quality Assurance Office and Systems",
+        "benchmarks": [
+          {
+            "code": "S.1",
+            "type": "system",
+            "title": "A dedicated, fully equipped Internal Quality Assurance (IQA) Office spearheads university-wide quality assurance.",
+            "suggestedEvidence": [
+              "BOR Resolution No. 111 s. 2016 - Establishment of BU IQA Office",
+              "IQA Office Organizational Structure and Staffing Mandate",
+              "Inventory of IQA Office Modern Equipment and Digital Workstations"
+            ]
+          },
+          {
+            "code": "I.1",
+            "type": "impl",
+            "title": "A Quality Management System (QMS) aligned with ISO 9001:2015 is implemented with periodic internal quality audits.",
+            "suggestedEvidence": [
+              "ISO 9001:2015 Re-Certification Certificate (TUV Rheinland)",
+              "Annual Internal Quality Audit (IQA) Schedules, Audit Plans & Non-Conformance Reports",
+              "Management Review Minutes and Continuous Improvement Plans"
+            ]
+          },
+          {
+            "code": "O.1",
+            "type": "outcome",
+            "title": "Institutional and program accreditation levels are systematically monitored, maintained, and elevated.",
+            "suggestedEvidence": [
+              "AACCUP Institutional and Program Accreditation Status Master Matrix",
+              "IQArchive Digital System Deployment and Archival Verification Records"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

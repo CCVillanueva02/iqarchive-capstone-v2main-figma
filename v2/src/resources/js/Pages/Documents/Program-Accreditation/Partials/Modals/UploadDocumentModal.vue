@@ -4,7 +4,7 @@ IQArchive v2 — Upload Accreditation Document Modal
 ================================================================================
 File: resources/js/Pages/Documents/Program-Accreditation/Partials/Modals/UploadDocumentModal.vue
 Role: Modal dialog for uploading evidence files linked to programs or criteria.
-UI Standard: DaisyUI modal-box, input-bordered, btn (< 170 lines).
+UI Standard: DaisyUI modal, fieldset, input-bordered, btn (< 150 lines).
 ================================================================================
 -->
 
@@ -12,6 +12,7 @@ UI Standard: DaisyUI modal-box, input-bordered, btn (< 170 lines).
 import { watch } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { X, UploadCloud } from 'lucide-vue-next';
+import FileDropzone from '@/Components/FileDropzone.vue';
 
 const props = defineProps({
     show: { type: Boolean, default: false },
@@ -44,13 +45,11 @@ function handleClose() {
     emit('close');
 }
 
-function handleFileChange(e) {
-    const file = e.target.files[0];
-    if (file) {
-        form.file = file;
-        if (!form.title) {
-            form.title = file.name.replace(/\.[^/.]+$/, '');
-        }
+function handleFileChange(file) {
+    form.file = file;
+    form.clearErrors('file');
+    if (file && !form.title) {
+        form.title = file.name.replace(/\.[^/.]+$/, '');
     }
 }
 
@@ -60,9 +59,7 @@ function submit() {
     }
     form.post('/documents/program-accreditation/documents', {
         preserveScroll: true,
-        onSuccess: () => {
-            handleClose();
-        },
+        onSuccess: () => handleClose(),
     });
 }
 </script>
@@ -85,6 +82,7 @@ function submit() {
                     type="button"
                     @click="handleClose"
                     class="btn btn-ghost btn-sm btn-circle text-slate-400 hover:text-slate-700"
+                    aria-label="Close modal"
                 >
                     <X class="w-5 h-5" />
                 </button>
@@ -92,10 +90,11 @@ function submit() {
 
             <!-- Form -->
             <form @submit.prevent="submit" class="space-y-4 pt-4">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">
+                <!-- Document Title -->
+                <fieldset class="fieldset">
+                    <legend class="fieldset-legend font-semibold text-slate-700 text-xs">
                         Document Title <span class="text-error">*</span>
-                    </label>
+                    </legend>
                     <input
                         v-model="form.title"
                         type="text"
@@ -104,40 +103,38 @@ function submit() {
                         :class="{ 'input-error': form.errors.title }"
                         required
                     />
-                    <p v-if="form.errors.title" class="text-error text-xs mt-1">{{ form.errors.title }}</p>
-                </div>
+                    <span v-if="form.errors.title" class="text-error text-xs mt-1">{{ form.errors.title }}</span>
+                </fieldset>
 
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">
+                <!-- Category Type -->
+                <fieldset class="fieldset">
+                    <legend class="fieldset-legend font-semibold text-slate-700 text-xs">
                         Category Type <span class="text-error">*</span>
-                    </label>
+                    </legend>
                     <select
                         v-model="form.category_type"
                         class="select select-bordered w-full select-sm text-sm"
                         required
                     >
-                        <option value="supporting-documents">Supporting Documents</option>
+                        <option value="supporting-documents">Supporting Documents to Instrument</option>
                         <option value="self-survey">Self-Survey Documents</option>
                         <option value="compliance-reports">Compliance Reports</option>
                         <option value="ppp">Program Performance Profile (PPP)</option>
                         <option value="narrative-profile">Narrative Profile</option>
                     </select>
-                </div>
+                </fieldset>
 
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Select File <span class="text-error">*</span>
-                    </label>
-                    <input
-                        type="file"
-                        @change="handleFileChange"
-                        class="file-input file-input-bordered file-input-sm w-full text-xs"
-                        accept=".pdf,.docx,.xlsx,.png,.jpg"
-                        required
-                    />
-                    <p class="text-[11px] text-slate-400 mt-1">Allowed: PDF, DOCX, XLSX, PNG, JPG (Max 50MB)</p>
-                    <p v-if="form.errors.file" class="text-error text-xs mt-1">{{ form.errors.file }}</p>
-                </div>
+                <!-- Shared File Dropzone -->
+                <FileDropzone
+                    v-model="form.file"
+                    accept=".pdf,.docx,.xlsx,.png,.jpg"
+                    :max-size-mb="50"
+                    label="Select File"
+                    hint="Allowed: PDF, DOCX, XLSX, PNG, JPG (Max 50MB)"
+                    :error="form.errors.file"
+                    color="orange"
+                    @change="handleFileChange"
+                />
 
                 <!-- Actions -->
                 <div class="modal-action pt-2 border-t border-slate-100 flex items-center justify-end gap-2">
@@ -152,7 +149,7 @@ function submit() {
                     <button
                         type="submit"
                         class="btn btn-sm bg-bu-orange-500 hover:bg-bu-orange-600 text-white border-none gap-1.5"
-                        :disabled="form.processing"
+                        :disabled="form.processing || !form.file"
                     >
                         <span v-if="form.processing" class="loading loading-spinner loading-xs"></span>
                         <UploadCloud v-else class="w-4 h-4" />

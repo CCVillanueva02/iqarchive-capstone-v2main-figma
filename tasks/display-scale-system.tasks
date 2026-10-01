@@ -1,0 +1,39 @@
+# Display Scale System — Task Plan & Implementation Log
+
+## Plan
+- High-level goal: Establish default 120% desktop typography and container scaling for optimal client readability while providing an interactive user switcher between 100%, 110%, and 120% with localStorage persistence.
+- Scope:
+  - Add desktop root scale media query in `app.css` (setting `html { font-size: 120%; }` on screens ≥1024px).
+  - Create `useDisplayScale.js` composable to manage scale options and synchronize root `font-size`.
+  - Add interactive scale switcher to `AppTopbar.vue` and `AppUserMenu.vue`.
+  - Ensure zero layout shift and instant persistence.
+- Key decisions:
+  - Use `rem`-based root scaling rather than CSS `zoom` to maintain standard coordinate geometry and prevent fixed overlay issues.
+  - Expose scale toggle in both `AppTopbar.vue` and `AppUserMenu.vue` so users can switch scales regardless of whether the topbar is hidden on specific workspaces.
+- Testing strategy:
+  - Compile with `npm run build`.
+  - Validate in browser across desktop viewports.
+  - Verify persistence in `localStorage`.
+
+## Implementation Progress
+### [2026-09-30 / Session 1]
+- [x] Subtask 1: Added 120% default desktop root font size in `app.css`.
+- [x] Subtask 2: Created `useDisplayScale.js` composable with `100%`, `110%`, and `120%` options.
+- [x] Subtask 3: Added dropdown scale switcher in `AppTopbar.vue`.
+- [x] Subtask 4: Added persistent 3-button scale toggle in `AppUserMenu.vue`.
+- [x] Subtask 5: Mounted scale initialization in `AppShell.vue` and `AppTopbar.vue`.
+- [x] Subtask 6: Verified in browser with Playwright, confirmed dynamic root font-size updates and localStorage retention.
+
+### [2026-09-30 / Session 2]
+- [x] Subtask 7: Calibrated default desktop scale to 110% (17.6px base) in `app.css` and `useDisplayScale.js` as the balanced median value between 100% and 120%.
+
+## Final Status
+- Completed: 2026-09-30
+- Tests: ✓ (52/52 passing, 332 assertions; Vite build succeeded)
+- Files:
+  - `resources/css/app.css`
+  - `resources/js/Composables/useDisplayScale.js`
+  - `resources/js/Layouts/Partials/AppTopbar.vue`
+  - `resources/js/Layouts/Partials/AppUserMenu.vue`
+  - `resources/js/Layouts/AppShell.vue`
+  - `tasks/display-scale-system.tasks`

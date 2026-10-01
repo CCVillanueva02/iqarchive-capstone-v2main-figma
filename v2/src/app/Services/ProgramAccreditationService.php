@@ -88,26 +88,46 @@ class ProgramAccreditationService
      * Rules:
      * - All Levels: Supporting Documents, Compliance Report, Self Survey.
      * - Levels 1 & 2: Adds Program Performance Profile (PPP).
-     * - Levels 3 & 4: Adds Narrative Profile (and PPP).
+     * - Levels 3, 4, & 5: Adds Narrative Profile.
      */
     public function resolveAllowedDocumentTypes(string $level): array
     {
         $types = [
-            ['id' => 'supporting-documents', 'title' => 'Supporting Documents', 'description' => 'Checklist criteria link inputs for inputs (Systems), implementation details, outcomes, and best practices.', 'badge' => 'Areas I–X', 'color' => 'navy'],
-            ['id' => 'self-survey', 'title' => 'Self-Survey Documents', 'description' => 'Internal QA self-evaluation spreadsheets, numerical rating guides, and diagnostic compliance evaluations.', 'badge' => 'Matrix & Ratings', 'color' => 'orange'],
-            ['id' => 'compliance-reports', 'title' => 'Compliance Reports', 'description' => 'Official compliance logs, AACCUP evaluations, corrective action reports, and certificates of accreditation.', 'badge' => 'Official Reports', 'color' => 'emerald'],
+            [
+                'id' => 'supporting-documents',
+                'title' => 'Supporting Documents to Instrument',
+                'description' => 'Evidence checklist criteria and cloud links mapped to AACCUP Master Survey.',
+                'color' => 'navy',
+            ],
+            [
+                'id' => 'self-survey',
+                'title' => 'Self-Survey Documents',
+                'description' => 'Internal QA self-evaluation spreadsheets, numerical rating guides, and diagnostic compliance evaluations.',
+                'color' => 'orange',
+            ],
+            [
+                'id' => 'compliance-reports',
+                'title' => 'Compliance Reports',
+                'description' => 'Official compliance logs, AACCUP evaluations, corrective action reports, and certificates of accreditation.',
+                'color' => 'emerald',
+            ],
         ];
 
         $normalized = strtolower(trim($level));
         $isLevel1Or2 = str_contains($normalized, 'level 1') || str_contains($normalized, 'level 2') || str_contains($normalized, 'level i') || str_contains($normalized, 'level ii');
-        $isLevel3Or4 = str_contains($normalized, 'level 3') || str_contains($normalized, 'level 4') || str_contains($normalized, 'level iii') || str_contains($normalized, 'level iv');
+        $isLevel3To5 = str_contains($normalized, 'level 3')
+            || str_contains($normalized, 'level 4')
+            || str_contains($normalized, 'level 5')
+            || str_contains($normalized, 'level iii')
+            || str_contains($normalized, 'level iv')
+            || str_contains($normalized, 'level v');
 
-        if ($isLevel1Or2 || $isLevel3Or4) {
-            $types[] = ['id' => 'ppp', 'title' => 'Program Performance Profile (PPP)', 'description' => 'Institutional quantitative program data, faculty profile ratios, student demographics, and laboratory assets.', 'badge' => 'Required (Levels 1–2)', 'color' => 'blue'];
+        if ($isLevel1Or2) {
+            $types[] = ['id' => 'ppp', 'title' => 'Program Performance Profile (PPP)', 'description' => 'Institutional quantitative program data, faculty profile ratios, student demographics, and laboratory assets.', 'color' => 'blue'];
         }
 
-        if ($isLevel3Or4) {
-            $types[] = ['id' => 'narrative-profile', 'title' => 'Narrative Profile', 'description' => 'Comprehensive qualitative program narratives, executive summaries, and institutional advancement evidence.', 'badge' => 'Required (Levels 3–4)', 'color' => 'violet'];
+        if ($isLevel3To5) {
+            $types[] = ['id' => 'narrative-profile', 'title' => 'Narrative Profile', 'description' => 'Comprehensive qualitative program narratives, executive summaries, and institutional advancement evidence.', 'color' => 'violet'];
         }
 
         return $types;
@@ -122,7 +142,7 @@ class ProgramAccreditationService
             'college_id' => $college->id,
             'name' => $data['name'],
             'code' => strtoupper($data['code']),
-            'current_level' => $data['current_level'] ?? 'Candidate Status',
+            'current_level' => $data['current_level'] ?? 'Candidate',
         ]);
     }
 
@@ -131,31 +151,41 @@ class ProgramAccreditationService
      */
     public function storeProgramDocument(
         Program $program,
-        UploadedFile $file,
+        ?UploadedFile $file,
         string $title,
         string $categoryType,
         User $uploader,
-        ?int $criterionId = null
+        ?int $criterionId = null,
+        ?string $externalUrl = null
     ): Document {
-        return DB::transaction(function () use ($program, $file, $title, $categoryType, $uploader, $criterionId) {
+        return DB::transaction(function () use ($program, $file, $title, $categoryType, $uploader, $criterionId, $externalUrl) {
+            $catName = $categoryType === 'supporting-documents'
+                ? 'Supporting Documents to Instrument'
+                : ucwords(str_replace('-', ' ', $categoryType));
+
             $category = DocumentCategory::firstOrCreate(
-                ['name' => ucwords(str_replace('-', ' ', $categoryType)), 'scope' => 'program'],
+                ['name' => $catName, 'scope' => 'program'],
                 ['description' => "Accreditation documents for {$categoryType}"]
             );
 
-            $stored = $this->storageService->storeEvidence($file, $program->college_id, $program->id);
+            $stored = null;
+            if ($file) {
+                $stored = $this->storageService->storeEvidence($file, $program->college_id, $program->id);
+            }
 
             $document = Document::create([
                 'college_id' => $program->college_id,
                 'program_id' => $program->id,
                 'category_id' => $category->id,
+                'criterion_id' => $criterionId,
                 'user_id' => $uploader->id,
                 'title' => $title,
-                'original_filename' => $file->getClientOriginalName(),
-                'file_path' => $stored['file_path'],
-                'file_hash' => $stored['file_hash'],
-                'file_size_bytes' => $stored['file_size'],
-                'mime_type' => $stored['mime_type'],
+                'external_url' => $externalUrl,
+                'original_filename' => $file?->getClientOriginalName() ?? ($externalUrl ? 'Cloud Document Link' : 'Document'),
+                'file_path' => $stored['file_path'] ?? ($externalUrl ?? ''),
+                'file_hash' => $stored['file_hash'] ?? hash('sha256', ($externalUrl ?? microtime()) . $uploader->id),
+                'file_size_bytes' => $stored['file_size'] ?? 0,
+                'mime_type' => $stored['mime_type'] ?? ($externalUrl ? 'application/x-url' : 'application/pdf'),
                 'status' => 'iqa_appr',
                 'visibility' => 'college',
             ]);

@@ -141,7 +141,8 @@ class ProgramAccreditationController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'category_type' => ['required', 'string'],
             'criterion_id' => ['nullable', 'exists:instrument_criteria,id'],
-            'file' => ['required', 'file', 'mimes:pdf,docx,xlsx,png,jpg', 'max:51200'],
+            'file' => ['nullable', 'required_without:external_url', 'file', 'mimes:pdf,docx,xlsx,png,jpg', 'max:51200'],
+            'external_url' => ['nullable', 'required_without:file', 'url', 'max:1000'],
         ]);
 
         $program = Program::findOrFail($validated['program_id']);
@@ -152,7 +153,8 @@ class ProgramAccreditationController extends Controller
             title: $validated['title'],
             categoryType: $validated['category_type'],
             uploader: Auth::user(),
-            criterionId: $validated['criterion_id'] ?? null
+            criterionId: $validated['criterion_id'] ?? null,
+            externalUrl: $validated['external_url'] ?? null
         );
 
         AuditLog::create([
@@ -161,11 +163,42 @@ class ProgramAccreditationController extends Controller
             'action' => 'PROGRAM_DOCUMENT_UPLOADED',
             'target_type' => Document::class,
             'target_id' => $document->id,
-            'details' => ['title' => $document->title, 'program_id' => $program->id],
+            'details' => [
+                'title' => $document->title,
+                'program_id' => $program->id,
+                'criterion_id' => $document->criterion_id,
+                'is_link' => ! empty($document->external_url),
+            ],
             'ip_address' => $request->ip(),
         ]);
 
-        return redirect()->back()->with('success', "Document '{$document->title}' uploaded successfully.");
+        return redirect()->back()->with('success', "Evidence '{$document->title}' recorded successfully.");
+    }
+
+    /**
+     * Delete or unlink an accreditation evidence document.
+     */
+    public function destroyDocument(Document $document, Request $request): RedirectResponse
+    {
+        $this->authorizeIqaAccess();
+
+        $collegeId = $document->college_id;
+        $title = $document->title;
+        $programId = $document->program_id;
+
+        $document->delete();
+
+        AuditLog::create([
+            'user_id' => Auth::id(),
+            'college_id' => $collegeId,
+            'action' => 'PROGRAM_DOCUMENT_DELETED',
+            'target_type' => Document::class,
+            'target_id' => $document->id,
+            'details' => ['title' => $title, 'program_id' => $programId],
+            'ip_address' => $request->ip(),
+        ]);
+
+        return redirect()->back()->with('success', "Evidence '{$title}' removed successfully.");
     }
 
     /**

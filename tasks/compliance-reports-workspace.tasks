@@ -1,0 +1,70 @@
+# Compliance Reports Workspace — Task Plan & Implementation Log
+
+## Plan
+- **High-level goal:** Build the interactive Compliance Reports workspace for Program Accreditation matching the reference card-based layout with uniform Area Carousel, clean document styling, two-column Actions/Evidence breakdown, and verifiable document attachments.
+- **Scope:**
+  - Area Carousel navigation (Areas I to X) matching the uniform standard.
+  - Recommendation cards featuring:
+    - Color-coded numbered status badge
+    - Recommendation text
+    - Status badge (`Completed`, `Partial`, `Not started`) with dynamic status workflow
+    - 2-column body: `ACTIONS TAKEN` (clean typographic dash list) & `SUPPORTING DOCUMENTS` (clickable PDF pills)
+    - Always-visible input section for adding Actions Taken and uploading/attaching Supporting Document proofs
+    - Controlled modal upload for file proofs (no instant OS popups)
+    - "Mark as Completed" / "Reopen" action toggle
+    - Repository file selection from the program's official document database
+  - Document Preview integration via `DocumentPreviewDrawer`.
+  - Local state persistence and status updating.
+  - Authentic AACCUP recommendations data extracted from official reports across Master Survey Instrument Areas I to X.
+- **Key decisions:**
+  - Modular architecture respecting the 150–200 line cap rule:
+    - `ComplianceReportsView.vue`: Master orchestrator, focused directly on Area Carousel and recommendations (< 135 lines).
+    - `ComplianceAreaCarousel.vue`: Uniform area carousel with compliance progress (< 80 lines).
+    - `RecommendationCard.vue`: Card-based recommendation layout with clean dash list styling and live update triggers (< 180 lines).
+    - `RecommendationDocItem.vue`: Clickable document pill with improved delete button (< 60 lines).
+    - `RecommendationInputSection.vue`: Always-visible dock to type actions and stage proofs (< 135 lines).
+    - `UploadProofModal.vue`: Controlled DaisyUI upload dialog for files (< 140 lines).
+    - `RepositoryDocPickerModal.vue`: Modal to search and select evidence from existing repository documents (< 125 lines).
+    - `complianceReportsData.json`: Authentic AACCUP compliance records across all 10 Master Survey Instrument areas.
+    - `complianceReportsData.js`: Local persistence helpers.
+  - Exclusively DaisyUI component classes (`card`, `badge`, `btn`, `modal`, `input`, `textarea`, `select`).
+- **Testing strategy:**
+  - Verify calculations and status workflows.
+  - Run `php artisan test` and `npm run build` to guarantee zero regressions.
+
+## Implementation Progress
+### [Session 1 - 2026-10-01]
+- [x] Subtask 1: Parse and extract authentic recommendations from Compliance Reports PDFs into `complianceReportsData.json` and `complianceReportsData.js` (Areas I to X, authentic AACCUP recommendations).
+- [x] Subtask 2: Create `ComplianceAreaCarousel.vue` matching uniform design with `min-w-56 max-w-64`, `min-h-28 h-28`, and compliance progress indicators.
+- [x] Subtask 3: Create `RecommendationDocItem.vue` and `RecommendationCard.vue`.
+- [x] Subtask 4: Wire up `ComplianceReportsView.vue` with preview drawer integration and upload trigger.
+- [x] Subtask 5: Run tests (`php artisan test`, 61 tests passing) and asset compilation (`npm run build`, built in 1.31s).
+
+### [Session 2 - 2026-10-01]
+- [x] Subtask 6: Update `complianceReportsData.json` with the official 10 Program Accreditation Areas from Master Survey Instrument (Areas I to X) and authentic recommendations from Level I-IV Summary of Findings and Recommendations (SFR).
+- [x] Subtask 7: Build `RecommendationInputSection.vue` providing an always-visible input dock on each recommendation card to type Actions Taken and attach supporting proofs.
+- [x] Subtask 8: Build `RepositoryDocPickerModal.vue` and `UploadProofModal.vue` enabling controlled file upload and repository file selection.
+- [x] Subtask 9: Refined status lifecycle:
+  - Default to `not_started` when no entries/documents exist.
+  - Automatically promote to `partial` when document/action is attached.
+  - Added "Mark as Completed" / "Reopen" toggle button.
+  - Removed upper-right status dropdown.
+  - Removed remarks from display and input forms.
+  - Removed "Verified" status badge from supporting document pills.
+  - Improved delete buttons for actions taken and attached files.
+- [x] Subtask 10: Cleaned layout per user design feedback:
+  - Removed 4 KPI metric cards section.
+  - Removed top header banner card ("Compliance to AACCUP Recommendations...").
+  - Refined Actions Taken into a clean, document-like bulleted list using typographic bullet points (`•`) with smooth hover delete actions and no bulky background boxes.
+- [x] Subtask 11: Run full verification suite (`npm run build` completed cleanly; `php artisan test` 61/61 passing).
+
+## Final Status
+- Completed: 2026-10-01
+- Tests: ✓ (61/61 backend tests passing; zero regressions)
+- Security review: ✓ (Scoping by college_id & program_id; IQA authorization gates intact)
+- File limits: ✓ (All Vue components strictly under 180 lines)
+- UI Standard: ✓ (100% DaisyUI classes: card, badge, btn, modal, dropdown, input, textarea)
+- Known limitations: None.
+
+## Lessons & Notes
+- Removing the top header banner and metric cards stripped away unnecessary visual noise and aligned the Compliance Reports view directly with the streamlined layout used in `SupportingDocsView` and `SelfSurveyView`.

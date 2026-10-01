@@ -24,6 +24,7 @@ use App\Models\Program;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
@@ -174,8 +175,30 @@ class ProgramAccreditationTest extends TestCase
                 ->component('Documents/Program-Accreditation/Index')
                 ->where('currentTier', 3)
                 ->where('selectedProgram.id', $this->programLevel3->id)
-                ->has('documentTypes', 5) // Supporting docs, self survey, compliance, PPP, Narrative Profile
-                ->where('documentTypes.4.id', 'narrative-profile')
+                ->has('documentTypes', 4) // Supporting docs, self survey, compliance, Narrative Profile (PPP is only for levels 1-2)
+                ->where('documentTypes.3.id', 'narrative-profile')
+            );
+    }
+
+    public function test_tier_3_resolves_correct_document_types_for_level_5_program(): void
+    {
+        $programLevel5 = Program::create([
+            'college_id' => $this->college->id,
+            'name' => 'Doctor of Philosophy in Education',
+            'code' => 'BUGC-PHD',
+            'current_level' => 'Level 5',
+        ]);
+
+        $response = $this->actingAs($this->iqaUser)
+            ->get("/documents/program-accreditation?college_id={$this->college->id}&program_id={$programLevel5->id}");
+
+        $response->assertStatus(200)
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('Documents/Program-Accreditation/Index')
+                ->where('currentTier', 3)
+                ->where('selectedProgram.id', $programLevel5->id)
+                ->has('documentTypes', 4)
+                ->where('documentTypes.3.id', 'narrative-profile')
             );
     }
 
@@ -186,7 +209,7 @@ class ProgramAccreditationTest extends TestCase
                 'college_id' => $this->college->id,
                 'name' => 'Bachelor in Agricultural Technology',
                 'code' => 'BUGC-BAT',
-                'current_level' => 'Candidate Status',
+                'current_level' => 'Candidate',
             ]);
 
         $response->assertRedirect("/documents/program-accreditation?college_id={$this->college->id}");
@@ -203,5 +226,110 @@ class ProgramAccreditationTest extends TestCase
             ->get('/documents?tab=program-accreditation');
 
         $response->assertRedirect(route('documents.program-accreditation'));
+    }
+
+    public function test_supporting_documents_category_is_named_supporting_documents_to_ia_instruments(): void
+    {
+        $response = $this->actingAs($this->iqaUser)
+            ->get("/documents/program-accreditation?college_id={$this->college->id}&program_id={$this->programLevel1->id}");
+
+        $response->assertStatus(200)
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('Documents/Program-Accreditation/Index')
+                ->where('documentTypes.0.id', 'supporting-documents')
+                ->where('documentTypes.0.title', 'Supporting Documents to Instrument')
+            );
+    }
+
+    public function test_iqa_user_can_upload_document_linked_to_criterion(): void
+    {
+        Storage::fake(config('filesystems.default', 'local'));
+
+        $criterion = \App\Models\InstrumentCriterion::first();
+        $this->assertNotNull($criterion);
+
+        $fakePdf = \Illuminate\Http\UploadedFile::fake()->create('VMGO_Secretary_Cert_75.pdf', 500, 'application/pdf');
+
+        $response = $this->actingAs($this->iqaUser)
+            ->post('/documents/program-accreditation/documents', [
+                'program_id' => $this->programLevel1->id,
+                'title' => 'Secretary Certification No. 75, s. 2024',
+                'category_type' => 'supporting-documents',
+                'criterion_id' => $criterion->id,
+                'file' => $fakePdf,
+            ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('documents', [
+            'program_id' => $this->programLevel1->id,
+            'criterion_id' => $criterion->id,
+            'title' => 'Secretary Certification No. 75, s. 2024',
+        ]);
+    }
+
+    public function test_iqa_user_can_attach_external_cloud_link_to_criterion(): void
+    {
+        $criterion = \App\Models\InstrumentCriterion::first();
+        $this->assertNotNull($criterion);
+
+        $driveUrl = 'https://drive.google.com/drive/folders/1b_MbE0DhN-DrYBwsUh-oFRSbfX3WLy2j?usp=drive_link';
+
+        $response = $this->actingAs($this->iqaUser)
+            ->post('/documents/program-accreditation/documents', [
+                'program_id' => $this->programLevel1->id,
+                'title' => 'BOR Resolutions Google Drive Evidence Folder',
+                'category_type' => 'supporting-documents',
+                'criterion_id' => $criterion->id,
+                'external_url' => $driveUrl,
+            ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('documents', [
+            'program_id' => $this->programLevel1->id,
+            'criterion_id' => $criterion->id,
+            'title' => 'BOR Resolutions Google Drive Evidence Folder',
+            'external_url' => $driveUrl,
+        ]);
+    }
+
+    public function test_iqa_user_can_delete_attached_evidence(): void
+    {
+        $category = DocumentCategory::firstOrCreate(
+            ['name' => 'Supporting Documents to Instrument', 'scope' => 'program'],
+            ['description' => 'Test category']
+        );
+
+        $doc = \App\Models\Document::create([
+            'college_id' => $this->college->id,
+            'program_id' => $this->programLevel1->id,
+            'category_id' => $category->id,
+            'user_id' => $this->iqaUser->id,
+            'title' => 'Temporary Obsolete Document',
+            'original_filename' => 'obsolete.pdf',
+            'file_path' => 'evidence/test.pdf',
+            'file_hash' => hash('sha256', 'obsolete'),
+            'file_size_bytes' => 100,
+            'mime_type' => 'application/pdf',
+        ]);
+
+        $response = $this->actingAs($this->iqaUser)
+            ->delete("/documents/program-accreditation/documents/{$doc->id}");
+
+        $response->assertRedirect();
+        $this->assertDatabaseMissing('documents', ['id' => $doc->id]);
+    }
+
+    public function test_iqa_user_can_access_self_survey_workspace(): void
+    {
+        $response = $this->actingAs($this->iqaUser)
+            ->get("/documents/program-accreditation?college_id={$this->college->id}&program_id={$this->programLevel1->id}&category=self-survey");
+
+        $response->assertStatus(200)
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('Documents/Program-Accreditation/Index')
+                ->where('currentTier', 3)
+                ->where('activeCategory', 'self-survey')
+                ->has('instrument.areas')
+            );
     }
 }

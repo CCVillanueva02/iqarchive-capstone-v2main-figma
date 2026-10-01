@@ -29,4 +29,43 @@ class AdminController extends Controller
     {
         return Inertia::render('Admin/Index');
     }
+
+    /**
+     * Display the accounts management console for IQA and System Administrators.
+     *
+     * Security Reasoning: Access restricted to authorized administrative personas
+     * (IQA staff and System Admin) to manage institutional users and role affiliations.
+     */
+    public function users(Request $request): Response
+    {
+        $users = \App\Models\User::with(['roles', 'college'])->get()->map(function ($u) {
+            return [
+                'id' => $u->id,
+                'name' => $u->name,
+                'email' => $u->email,
+                'avatar_url' => $u->avatar_url,
+                'role' => $u->role ?? 'Task Force Member',
+                'college_code' => $u->college?->code ?? 'CS',
+                'program_code' => 'BSIT',
+                'status' => $u->status ?? 'active',
+                'created_at' => $u->created_at?->format('M d, Y') ?? 'Aug 25, 2026',
+                'created_ago' => '1 month ago',
+            ];
+        });
+
+        return Inertia::render('Admin/Users/Index', [
+            'initialUsers' => $users,
+        ]);
+    }
+
+    /**
+     * Display the Colleges & Programs directory console.
+     *
+     * Security Reasoning: Provides institutional oversight of colleges, campuses,
+     * and their associated degree programs. Gated at route and controller boundary.
+     */
+    public function colleges(Request $request): Response
+    {
+        return Inertia::render('Iqa/Colleges');
+    }
 }

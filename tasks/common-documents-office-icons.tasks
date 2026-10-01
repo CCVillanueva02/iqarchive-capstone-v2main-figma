@@ -1,0 +1,32 @@
+# Common Documents Office Icons — Task Plan & Implementation Log
+
+## Plan
+- High-level goal: Allow users to pick an icon when adding a new administrative office in the Common Documents workspace, persist the selected icon, and render it in the office directory panel with default descending sorting by time added.
+- Scope:
+  - Add an icon selector in `AddOfficeModal.vue` with curated, academic/administrative-friendly Lucide icons.
+  - Submit the selected icon name with the form (`/documents/offices`).
+  - Update `OfficePanel.vue` to render the saved icon, falling back to name heuristics or default building icon for legacy data.
+  - Set default sorting for administrative offices to descending by time added (`latest('id')`).
+  - Update backend tests in `CommonDocumentsTest.php` to verify icon persistence, sorting, and audit logging.
+- Key decisions:
+  - Integrated prefix dropdown on Office Name input (`join` + `dropdown`) to keep the modal sleek, compact, and avoid bulky grids.
+  - Extract shared office icon dictionary and resolver to `resources/js/Pages/Documents/Common-Documents/Partials/officeIcons.js` to keep components under the 150-200 line cap.
+  - Maintain backwards-compatibility for existing offices that don't have an `icon` column value.
+- Testing strategy:
+  - PHPUnit tests verifying `icon` persistence and default descending sorting by time added.
+  - Frontend build verification with `npm run build`.
+
+## Implementation Progress
+### 2026-09-30 — Initial Implementation & Refinement
+- [x] Verified database migration `2026_09_29_175338_add_icon_to_document_categories_table.php` has already run and `icon` column is present.
+- [x] Created `resources/js/Pages/Documents/Common-Documents/Partials/officeIcons.js` with icon catalog and resolver.
+- [x] Updated `AddOfficeModal.vue` with a compact `join` prefix dropdown icon trigger on the office name input.
+- [x] Updated `OfficePanel.vue` to use `resolveOfficeIcon` prioritizing DB icon, with legacy name fallback.
+- [x] Updated `DocumentController.php` to sort offices by `latest('id')` (descending by time added).
+- [x] Added tests in `CommonDocumentsTest.php` for office icon creation and descending sort order.
+- [x] Ran test suite (14/14 tests passing) and verified frontend builds cleanly (`npm run build`).
+
+## Final Status
+- Completed: 2026-09-30
+- Tests: ✓ (all 14 tests in CommonDocumentsTest passing)
+- Line counts: All components strictly within the 150-200 line limit (`AddOfficeModal.vue`: 191 lines, `OfficePanel.vue`: 99 lines, `officeIcons.js`: 73 lines).

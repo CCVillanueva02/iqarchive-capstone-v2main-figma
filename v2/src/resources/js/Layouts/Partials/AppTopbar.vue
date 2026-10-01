@@ -9,8 +9,16 @@ Responsibility: 64px persistent workstation header with multi-tenant scope badge
 -->
 
 <script setup>
+import { onMounted } from 'vue';
 import { Link } from '@inertiajs/vue3';
-import { Building2, Clock, Bell, ExternalLink } from 'lucide-vue-next';
+import { Building2, Clock, Bell, ExternalLink, ZoomIn, Check } from 'lucide-vue-next';
+import { useDisplayScale } from '@/Composables/useDisplayScale.js';
+
+const { currentScale, availableScales, setScale, initScale } = useDisplayScale();
+
+onMounted(() => {
+    initScale();
+});
 
 defineProps({
     user: {
@@ -50,8 +58,42 @@ defineProps({
             <span>System Time: {{ systemTime }}</span>
         </div>
 
-        <!-- Right: Notifications & Role Indicator -->
-        <div class="flex items-center gap-3">
+        <!-- Right: Scale, Notifications & Role Indicator -->
+        <div class="flex items-center gap-2.5">
+            <!-- Interactive Display Scale Switcher -->
+            <div class="dropdown dropdown-end">
+                <button
+                    tabindex="0"
+                    type="button"
+                    class="btn btn-ghost btn-xs gap-1 px-2 text-xs font-medium text-slate-600 hover:text-slate-900 border border-slate-200/80 rounded-lg hover:bg-slate-100 cursor-pointer shadow-2xs"
+                    title="Interface Display Scale"
+                >
+                    <ZoomIn class="w-3.5 h-3.5 text-slate-500" />
+                    <span class="font-mono text-[11px] font-semibold">{{ currentScale }}</span>
+                </button>
+                <ul
+                    tabindex="0"
+                    class="dropdown-content menu menu-sm bg-white border border-slate-200 rounded-xl z-50 p-1.5 shadow-xl w-48 text-slate-700 mt-1"
+                >
+                    <li class="menu-title text-[10px] uppercase font-bold text-slate-400 px-2 py-1">
+                        Display Scale
+                    </li>
+                    <li v-for="scale in availableScales" :key="scale.value">
+                        <button
+                            type="button"
+                            :class="[
+                                'flex items-center justify-between text-xs py-1.5 rounded-lg cursor-pointer',
+                                currentScale === scale.value ? 'active font-semibold bg-bu-blue-50 text-bu-blue-700' : ''
+                            ]"
+                            @click="setScale(scale.value)"
+                        >
+                            <span>{{ scale.label }}</span>
+                            <Check v-if="currentScale === scale.value" class="w-3.5 h-3.5 text-bu-blue-700" />
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
             <button
                 type="button"
                 class="btn btn-ghost btn-circle btn-sm relative text-slate-500 hover:text-slate-800 cursor-pointer"

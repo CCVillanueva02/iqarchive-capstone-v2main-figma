@@ -1,0 +1,682 @@
+[
+  {
+    "id": "comp_area_i",
+    "area_number": 1,
+    "code": "AREA I",
+    "title": "Vision, Mission, Goals and Objectives",
+    "recommendations": [
+      {
+        "id": "rec_a1_1",
+        "number": 1,
+        "recommendation": "The VMGO should be consistently included in all formal communications, such as letters, memoranda, and announcements, to promote greater awareness and ensure its wider dissemination among both internal and external stakeholders.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Prescribed standard header and footer with BU VMGO statements on official department letterheads and transmittal templates",
+          "Issued Office Memorandum requiring all syllabi, event banners, and program notices to incorporate the approved VMGO statement"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a1_1_1",
+            "title": "Standard Letterhead Template with VMGO",
+            "filename": "BU_Standard_Letterhead_VMGO.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "1.2 MB"
+          },
+          {
+            "id": "cdoc_a1_1_2",
+            "title": "Office Memorandum No. 18, s. 2024",
+            "filename": "OM_18_VMGO_Mandatory_Inclusion.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "850 KB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a1_2",
+        "number": 2,
+        "recommendation": "The VMGO should be prominently displayed in strategic locations within the municipality, such as public bulletin boards, community centers, and partner institutions, to strengthen visibility and extend its dissemination beyond the campus.",
+        "status": "partial",
+        "actions_taken": [
+          "Installed permanent acrylic VMGO signboards at the College Lobby, Dean's Office, and Main Building entrances",
+          "Distributed laminated VMGO posters to partner LGU barangay halls in Legazpi City during extension visits"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a1_2_1",
+            "title": "Photo Documentation of VMGO Signboards",
+            "filename": "VMGO_Signboards_Photo_Evidence.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "3.4 MB"
+          },
+          {
+            "id": "cdoc_a1_2_2",
+            "title": "LGU Barangay Transmittal & Acknowledgement Receipts",
+            "filename": "LGU_Transmittal_VMGO_Dissemination.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "1.1 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a1_3",
+        "number": 3,
+        "recommendation": "To address the limited evidence of stakeholder participation in the formulation of the VMGO, it is suggested that the university establish more inclusive mechanisms, such as focus group discussions, surveys, and consultative meetings, to actively involve faculty, alumni, industry partners, community, and other relevant groups.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      },
+      {
+        "id": "rec_a1_4",
+        "number": 4,
+        "recommendation": "The institution may consider conducting orientation programs, information campaigns, and feedback sessions that emphasize the significance of the VMGO and highlight how each sector contributes to realizing the university's Mission and Vision.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      }
+    ]
+  },
+  {
+    "id": "comp_area_ii",
+    "area_number": 2,
+    "code": "AREA II",
+    "title": "Faculty",
+    "recommendations": [
+      {
+        "id": "rec_a2_1",
+        "number": 1,
+        "recommendation": "Prioritize the recruitment and retention of full-time permanent faculty to strengthen academic stability and enhance the overall quality of the program.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "HRMDO published 4 regular permanent Instructor and Assistant Professor plantilla items for the program",
+          "Completed selection board deliberations and issued formal appointments to 3 newly hired permanent faculty"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a2_1_1",
+            "title": "Publication of Plantilla Positions - CSC CSC-RO5",
+            "filename": "CSC_Plantilla_Publication_Faculty.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "1.7 MB"
+          },
+          {
+            "id": "cdoc_a2_1_2",
+            "title": "Special Orders & Appointment Papers of New Faculty",
+            "filename": "Faculty_Appointment_Papers_2024.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "2.3 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a2_2",
+        "number": 2,
+        "recommendation": "Implement a systematic process to ensure timely renewal of all faculty licenses and provide support or incentives to encourage continuous professional certification.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Institutionalized annual Faculty Professional License Verification Matrix monitored by College Secretary",
+          "Allocated college faculty development subsidy for PRC license renewal CPD credit seminar attendance"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a2_2_1",
+            "title": "Faculty PRC License Tracking Matrix 2024",
+            "filename": "Faculty_PRC_License_Tracking_Matrix.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "1.4 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a2_3",
+        "number": 3,
+        "recommendation": "Establish a clear policy that provides appropriate incentives or remuneration for overload teaching to recognize faculty efforts and promote a balanced workload.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      },
+      {
+        "id": "rec_a2_4",
+        "number": 4,
+        "recommendation": "Develop and implement standardized guidelines that define preparation time expectations to ensure fair workload allocation and support effective course delivery.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      },
+      {
+        "id": "rec_a2_5",
+        "number": 5,
+        "recommendation": "Encourage and support faculty participation in relevant professional organizations to enhance their professional growth and keep the program aligned with current industry and academic standards.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      },
+      {
+        "id": "rec_a2_6",
+        "number": 6,
+        "recommendation": "Develop clear processes and support systems for creating, reviewing, and integrating instructional materials to enhance teaching effectiveness and student learning.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      }
+    ]
+  },
+  {
+    "id": "comp_area_iii",
+    "area_number": 3,
+    "code": "AREA III",
+    "title": "Curriculum and Instruction",
+    "recommendations": [
+      {
+        "id": "rec_a3_1",
+        "number": 1,
+        "recommendation": "For immediate action, prioritize the application for the Certificate of Program Compliance (COPC) and ensure all requirements are met to secure this certification, thereby enhancing the program's legitimacy and recognition.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Completed comprehensive COPC institutional compliance documentary portfolio",
+          "CHED Regional Quality Assessment Team (RQAT) conducted on-site visit and issued Official COPC Certificate"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a3_1_1",
+            "title": "Official CHED Certificate of Program Compliance (COPC)",
+            "filename": "CHED_COPC_Official_Certificate.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "2.1 MB"
+          },
+          {
+            "id": "cdoc_a3_1_2",
+            "title": "CHED RQAT Evaluation Report & Transmittal",
+            "filename": "CHED_RQAT_Evaluation_Report.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "1.8 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a3_2",
+        "number": 2,
+        "recommendation": "Conduct a comprehensive review and alignment of the curriculum with benchmark standards, ensuring all supporting documents and practices fully comply with required criteria for quality assurance.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Convened Curriculum Review Committee with industry advisory council and PRC board consultants",
+          "Approved Revised OBE Curriculum aligned with CHED Memorandum Orders and PQF Level 6 benchmarks"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a3_2_1",
+            "title": "Revised OBE Curriculum Matrix & CMO Crosswalk",
+            "filename": "Revised_OBE_Curriculum_Matrix.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "4.2 MB"
+          },
+          {
+            "id": "cdoc_a3_2_2",
+            "title": "University Academic Council Approval Resolution",
+            "filename": "Academic_Council_Approval_Curriculum.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "1.3 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a3_3",
+        "number": 3,
+        "recommendation": "Carefully review and update all submitted documents to ensure full compliance with the benchmark requirements, facilitating a more accurate and comprehensive evaluation.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      }
+    ]
+  },
+  {
+    "id": "comp_area_iv",
+    "area_number": 4,
+    "code": "AREA IV",
+    "title": "Support to Students",
+    "recommendations": [
+      {
+        "id": "rec_a4_1",
+        "number": 1,
+        "recommendation": "Reorganize all files based on the structure and parameters of the AACCUP Instrument. Use clear labeling, categorization, and cross-referencing to facilitate easier validation and ensure the evidence directly supports each indicator.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Restructured student support documentation into standardized AACCUP Parameter folders on IQArchive",
+          "Created digital master cross-reference index mapping student services indicators to verifiable proofs"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a4_1_1",
+            "title": "AACCUP Area IV Evidence Master Index",
+            "filename": "AACCUP_Area_IV_Evidence_Index.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "1.5 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a4_2",
+        "number": 2,
+        "recommendation": "Establish a systematic process for recording student development activities, counseling sessions, orientations, and training programs, including attendance sheets, activity designs, reports, photos, and post activity evaluations.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Deployed standardized Guidance and Student Development Activity Management protocol",
+          "Institutionalized digital intake logs, confidentiality-compliant counseling records, and evaluation summaries"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a4_2_1",
+            "title": "Student Guidance Activity Portfolio & Evaluation Reports",
+            "filename": "Guidance_Activity_Portfolio_2024.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "3.8 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a4_3",
+        "number": 3,
+        "recommendation": "Create a standard monitoring and assessment tool to regularly evaluate the effectiveness of the student services.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      },
+      {
+        "id": "rec_a4_4",
+        "number": 4,
+        "recommendation": "Strengthen the documentation systems for data management by ensuring that complete evidence of data collection, analysis, and utilization is consistently compiled and made accessible.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      }
+    ]
+  },
+  {
+    "id": "comp_area_v",
+    "area_number": 5,
+    "code": "AREA V",
+    "title": "Research",
+    "recommendations": [
+      {
+        "id": "rec_a5_1",
+        "number": 1,
+        "recommendation": "Develop and formalize a Research Agenda that clearly outlines areas, goals, and research direction of the program.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Formulated College Program Research Agenda 2024-2029 aligned with DOST-PAGASA and regional priorities",
+          "Endorsed by College Research Committee and approved through BU RDE Council Resolution"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a5_1_1",
+            "title": "Approved Program Research Agenda 2024-2029",
+            "filename": "Program_Research_Agenda_2024_2029.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "2.9 MB"
+          },
+          {
+            "id": "cdoc_a5_1_2",
+            "title": "BU RDE Council Approval Resolution",
+            "filename": "BU_RDE_Council_Resolution_Research.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "1.1 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a5_2",
+        "number": 2,
+        "recommendation": "Establish a program-based research journal with defined policies, a review process, and a publication schedule.",
+        "status": "partial",
+        "actions_taken": [
+          "Drafted Editorial Board Policies and Double-Blind Peer Review Manual for College Research Journal",
+          "Released Volume 1 Issue 1 Call for Papers for faculty and undergraduate thesis manuscripts"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a5_2_1",
+            "title": "College Journal Editorial Policies & Review Guidelines",
+            "filename": "Journal_Editorial_Policies_Review_Manual.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "1.8 MB"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "comp_area_vi",
+    "area_number": 6,
+    "code": "AREA VI",
+    "title": "Extension and Community Involvement",
+    "recommendations": [
+      {
+        "id": "rec_a6_1",
+        "number": 1,
+        "recommendation": "Develop and implement a flagship extension program with a structured plan, clear objectives, and measurable outcomes to demonstrate the program's community impact.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Launched Flagship Community Early Warning & Climate Resilience Extension Program for Albay coastal barangays",
+          "Signed Tripartite MOA between Bicol University, Provincial DRRMO, and partner host communities"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a6_1_1",
+            "title": "Approved Flagship Extension Project Proposal & Workplan",
+            "filename": "Flagship_Extension_Project_Workplan.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "3.5 MB"
+          },
+          {
+            "id": "cdoc_a6_1_2",
+            "title": "Tripartite MOA with Partner LGUs & DRRMO",
+            "filename": "Tripartite_MOA_Extension_DRRMO.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "2.1 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a6_2",
+        "number": 2,
+        "recommendation": "Conduct systematic community needs assessment and maintain complete records to guide extension planning and implementations.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Conducted Participatory Rural Appraisal (PRA) and Community Risk Needs Assessment in 3 partner barangays",
+          "Compiled needs assessment documentation with survey instruments and stakeholder signatures"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a6_2_1",
+            "title": "Community Needs Assessment Report & PRA Documentation",
+            "filename": "Community_Needs_Assessment_Report.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "2.8 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a6_3",
+        "number": 3,
+        "recommendation": "Establish a structured monitoring and evaluation framework with specific indicators for outputs, outcomes, and community impact to track and improve extension initiatives.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      },
+      {
+        "id": "rec_a6_4",
+        "number": 4,
+        "recommendation": "Create platforms such as an annual report, newsletter, or online portal to showcase extension outputs, best practices, and community benefits.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      },
+      {
+        "id": "rec_a6_5",
+        "number": 5,
+        "recommendation": "Strengthen documentation of MOA, partner involvement, and beneficiary participation to support transparency, collaboration, and program credibility.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      }
+    ]
+  },
+  {
+    "id": "comp_area_vii",
+    "area_number": 7,
+    "code": "AREA VII",
+    "title": "Library",
+    "recommendations": [
+      {
+        "id": "rec_a7_1",
+        "number": 1,
+        "recommendation": "The library is encouraged to renew all expired Memoranda of Understanding and establish new linkages with relevant institutions and organizations to strengthen resource sharing, service enhancement, and professional collaboration.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Renewed inter-library resource sharing agreements with DOST-STII and national academic consortium libraries",
+          "Executed digital resource-sharing partnership with Philippine eLib and regional library network"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a7_1_1",
+            "title": "DOST-STII Library Resource Sharing MOU",
+            "filename": "DOST_Library_Resource_Sharing_MOU.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "1.9 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a7_2",
+        "number": 2,
+        "recommendation": "Continue updating library resources by ensuring at least three copies per book title, along with regular upgrades of furniture and fixtures. This will help maintain a current, functional, and user-friendly library environment that effectively supports the needs of its clientele.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Procured 142 new volume titles in meteorology, atmospheric physics, and computing science (3 copies per title)",
+          "Installed ergonomic study carrels and upgraded LED task lighting in science collection wing"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a7_2_1",
+            "title": "Library Acquisition Invoice & Accession Records 2024",
+            "filename": "Library_Acquisition_Invoices_2024.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "2.6 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a7_3",
+        "number": 3,
+        "recommendation": "Revise the library manual to incorporate updated guidelines and policies, including those related to services in the new-normal or technology-enhanced learning environment.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      },
+      {
+        "id": "rec_a7_4",
+        "number": 4,
+        "recommendation": "Limit submitted evidence to materials within the last three years and remove outdated items that are five years old or older. For lists of books or e-resources, include only materials based on CHED required standards, except for perpetual resources that remain valid despite age.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      }
+    ]
+  },
+  {
+    "id": "comp_area_viii",
+    "area_number": 8,
+    "code": "AREA VIII",
+    "title": "Physical Plant and Facilities",
+    "recommendations": [
+      {
+        "id": "rec_a8_1",
+        "number": 1,
+        "recommendation": "Review and update the janitorial service contract to align with the program's current needs and standards, ensuring a clean and well-maintained learning environment.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Bicol University General Services Office renegotiated and awarded updated outsourced janitorial service contract",
+          "Included dedicated daily maintenance personnel assigned to science laboratories and student common spaces"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a8_1_1",
+            "title": "Updated Janitorial Services Contract & Terms of Reference",
+            "filename": "Janitorial_Service_Contract_2024.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "2.4 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a8_2",
+        "number": 2,
+        "recommendation": "Secure the necessary fire safety certification promptly and establish a regular renewal process to maintain full compliance with fire safety standards.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "BFP Legazpi City conducted comprehensive building fire safety inspection",
+          "Issued Official Fire Safety Inspection Certificate (FSIC) for college academic buildings"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a8_2_1",
+            "title": "Official Fire Safety Inspection Certificate (FSIC) - BFP",
+            "filename": "BFP_Fire_Safety_Inspection_Certificate.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "1.7 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a8_3",
+        "number": 3,
+        "recommendation": "Implement a regular pest control schedule with proper documentation to ensure a safe, hygienic, and conducive environment for students and staff.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      },
+      {
+        "id": "rec_a8_4",
+        "number": 4,
+        "recommendation": "If the budget warrants, construction of restrooms for PWDs should be prioritized to ensure a safe and inclusive environment for all clients.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      },
+      {
+        "id": "rec_a8_5",
+        "number": 5,
+        "recommendation": "The university shall strictly implement its policy, 'No permit, no business operation.' The permit should be updated and it must be visible for customers to see.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      }
+    ]
+  },
+  {
+    "id": "comp_area_ix",
+    "area_number": 9,
+    "code": "AREA IX",
+    "title": "Laboratories",
+    "recommendations": [
+      {
+        "id": "rec_a9_1",
+        "number": 1,
+        "recommendation": "Conduct a thorough audit of laboratory resources and maintain a detailed list that ensures full compliance with CMO guidelines, supporting effective teaching and hands-on learning experiences.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Completed comprehensive laboratory equipment audit comparing inventory against CHED CMO minimum standards",
+          "Acquired digital weather station sensors, barographs, anemometers, and high-spec computing workstations"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a9_1_1",
+            "title": "Comprehensive Laboratory Inventory & CMO Compliance Audit",
+            "filename": "Laboratory_Equipment_CMO_Audit.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "3.9 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a9_2",
+        "number": 2,
+        "recommendation": "Ensure that all maintenance staff renew their licenses promptly and establish a monitoring system to maintain valid certification for personnel responsible for equipment upkeep.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Audited technical credentials of laboratory technicians and equipment custodians",
+          "Established automated renewal notification system for professional electrical and mechanical certifications"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a9_2_1",
+            "title": "Laboratory Custodian Certifications & Training Log",
+            "filename": "Lab_Technician_Certifications.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "1.6 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a9_3",
+        "number": 3,
+        "recommendation": "Implement and regularly document mandatory annual safety training sessions to ensure all personnel and students are well-prepared to respond effectively in emergencies.",
+        "status": "not_started",
+        "actions_taken": [],
+        "supporting_documents": []
+      }
+    ]
+  },
+  {
+    "id": "comp_area_x",
+    "area_number": 10,
+    "code": "AREA X",
+    "title": "Administration",
+    "recommendations": [
+      {
+        "id": "rec_a10_1",
+        "number": 1,
+        "recommendation": "Conduct a review and update the University Code to align it with current standards, policies, and programs.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Technical Working Group completed review and revisions to the BU Code",
+          "BU Board of Regents approved updated University Code incorporating modern statutory mandates"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a10_1_1",
+            "title": "BOR Resolution Approving Revised University Code",
+            "filename": "BOR_Res_Approved_University_Code.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "2.7 MB"
+          }
+        ]
+      },
+      {
+        "id": "rec_a10_2",
+        "number": 2,
+        "recommendation": "Strengthen administrative workflow digitizations and clearance management to improve turn-around time for academic and student services.",
+        "status": "fully_complied",
+        "actions_taken": [
+          "Deployed IQArchive institutional digital document management repository and automated approval workflows",
+          "Conducted user training for college administrative personnel and student records officers"
+        ],
+        "supporting_documents": [
+          {
+            "id": "cdoc_a10_2_1",
+            "title": "Digital Document Workflow Deployment & Training Report",
+            "filename": "Digital_Workflows_Training_Report.pdf",
+            "status": "verified",
+            "type": "pdf",
+            "size": "1.9 MB"
+          }
+        ]
+      }
+    ]
+  }
+]

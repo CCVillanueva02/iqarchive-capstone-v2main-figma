@@ -1,0 +1,62 @@
+# Document Preview Drawer & Table Alignment — Task Plan & Implementation Log
+
+## Plan
+- High-level goal: Center table heads in `RecentEvidenceTable.vue` and replace the direct download table action with a reusable half-screen document preview drawer containing complete metadata, embedded PDF viewer, and download capability referencing v1's detail drawer.
+- Scope:
+  - Center table heads in `RecentEvidenceTable.vue` (and align corresponding table cells).
+  - Change row action from "Download" to "View" with `<Eye />` icon.
+  - Create a modular half-screen slide-over drawer component (`DocumentPreviewDrawer.vue`) in `resources/js/Components/` conforming to DaisyUI and the 150–200 line cap rule.
+  - Re-use the preview drawer across Common Documents and Program Accreditation workspaces.
+  - Implement streaming endpoint in `DocumentController` / `DocumentStorageService` so PDF files preview reliably in local development and production.
+  - Provide download option and full document metadata inside the preview drawer.
+- Key decisions:
+  - Place `DocumentPreviewDrawer.vue` in `resources/js/Components/` for global workspace reusability across Program Accreditation, Common Documents, etc.
+  - Half-screen width: `w-full md:w-1/2` / `max-w-3xl` / `md:w-[50vw]` on desktop workstations with slide-in animation and backdrop blur.
+  - Use embedded `<iframe>` with loading spinner and fallback card for rich PDF preview.
+  - Server-side authorization check (`$this->authorize('view', $document)`) on file streaming endpoint (`/documents/{document}/file`).
+- Edge cases to handle:
+  - Non-PDF files or missing binary assets on disk (graceful fallback card).
+  - Slow network / loading state while pre-signed URL is fetched.
+  - Backdrop click, close button, and Escape key handling to dismiss drawer cleanly.
+- Testing strategy:
+  - Run backend test suite: `php artisan test`.
+  - Compile frontend: `npm run build`.
+  - Visual verification with Playwright browser testing.
+
+## Implementation Progress
+### [2026-09-30 / Session 1]
+- [x] Subtask 1: Added `/documents/{document}/file` streaming route and method with policy authorization and audit logging.
+- [x] Subtask 2: Created reusable `DocumentPreviewDrawer.vue` in `resources/js/Components/` with half-screen layout, metadata, embedded viewer, and download button.
+- [x] Subtask 3: Updated `RecentEvidenceTable.vue` to center table heads, update action to "View", and wire preview drawer.
+- [x] Subtask 4: Integrated `DocumentPreviewDrawer.vue` across `DocumentsTable.vue`, `PppView.vue`, `NarrativeProfileView.vue`, and `ComplianceReportsView.vue`.
+- [x] Subtask 5: Verified full test suite (`php artisan test` - 50/50 passed, 308 assertions) and frontend compilation (`npm run build`).
+- [x] Subtask 6: Verified in browser with Playwright: confirmed centered table heads, "View" action button, and functional half-screen PDF preview drawer in both Program Accreditation and Common Documents workspaces.
+
+### [2026-09-30 / Session 2]
+- [x] Subtask 7: Replaced native browser `<iframe>` with `vue-pdf-embed` powered by Mozilla PDF.js.
+- [x] Subtask 8: Created modular `PdfViewer.vue` with custom DaisyUI controls (page jump, continuous scroll, zoom controls, 90-degree rotate).
+- [x] Subtask 9: Resolved slide-out blackout bug by separating backdrop and drawer transitions, caching active document during leave, and eliminating backdrop-blur canvas compositing conflicts.
+- [x] Subtask 10: Added header close button (`X`) and verified full build and test suites.
+
+## Final Status
+- Completed: 2026-09-30
+- Tests: ✓ (52/52 passing, 332 assertions; Vite build succeeded)
+- Security review: ✓ (DocumentPolicy view gate enforced on streaming route, college-scoped isolation maintained)
+- Commits/Files:
+  - `routes/web.php`
+  - `app/Http/Controllers/DocumentController.php`
+  - `app/Services/DocumentStorageService.php`
+  - `tests/Feature/CommonDocumentsTest.php`
+  - `resources/js/Components/DocumentPreviewDrawer.vue`
+  - `resources/js/Components/PdfViewer.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/Hub/RecentEvidenceTable.vue`
+  - `resources/js/Pages/Documents/Common-Documents/Partials/DocumentsTable.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/Ppp/PppView.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/NarrativeProfile/NarrativeProfileView.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/ComplianceReports/ComplianceReportsView.vue`
+  - `tasks/document-preview-drawer.tasks`
+
+## Lessons & Notes
+- Extracting `DocumentPreviewDrawer.vue` into `resources/js/Components/` allowed seamless reuse across both Program Accreditation and Common Documents without duplicating drawer logic.
+- Providing an inline streaming route (`/documents/{document}/file`) paired with `DocumentStorageService::getTemporaryUrl` ensures consistent PDF rendering in local development and production S3 environments.
+- Using `vue-pdf-embed` inside a separate `PdfViewer.vue` component keeps file sizes under the 150-200 line cap and prevents Chromium GPU compositing glitches during slide-out transitions.

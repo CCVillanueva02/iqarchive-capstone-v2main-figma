@@ -161,7 +161,7 @@ const activeCategoryTitle = computed(() => {
                 <!-- Tier 4: The 5 Document Type Workspaces -->
                 <SupportingDocsView v-else-if="currentTier === 3 && activeCategory === 'supporting-documents'" :college="selectedCollege" :program="selectedProgram" :instrument="instrument" :documents="documents" @open-upload="handleOpenUpload('supporting-documents', $event)" @back-to-hub="handleBackToHub" />
 
-                <SelfSurveyView v-else-if="currentTier === 3 && activeCategory === 'self-survey'" :college="selectedCollege" :program="selectedProgram" @back-to-hub="handleBackToHub" />
+                <SelfSurveyView v-else-if="currentTier === 3 && activeCategory === 'self-survey'" :college="selectedCollege" :program="selectedProgram" :instrument="instrument" @back-to-hub="handleBackToHub" />
 
                 <ComplianceReportsView v-else-if="currentTier === 3 && activeCategory === 'compliance-reports'" :college="selectedCollege" :program="selectedProgram" :documents="documents" @open-upload="handleOpenUpload('compliance-reports')" @back-to-hub="handleBackToHub" />
 

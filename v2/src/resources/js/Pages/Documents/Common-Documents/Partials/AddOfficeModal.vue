@@ -1,36 +1,46 @@
 <!--
 ================================================================================
 IQArchive v2 — Add Administrative Office Modal
-================================================================================
 File: resources/js/Pages/Documents/Common-Documents/Partials/AddOfficeModal.vue
-Role: Modal dialog for registering new institutional administrative offices.
+Role: Modal dialog for registering new institutional administrative offices with icon picker.
 UI Standard: DaisyUI modal, input, textarea, btn, fieldset.
-Line count target: < 150 lines.
 ================================================================================
 -->
 
 <script setup>
+import { computed } from 'vue';
 import { useForm } from '@inertiajs/vue3';
-import { Building2, X, AlertCircle } from 'lucide-vue-next';
+import { Building2, X, AlertCircle, ChevronDown } from 'lucide-vue-next';
+import { OFFICE_ICON_OPTIONS, OFFICE_ICON_MAP } from './officeIcons';
 
 const props = defineProps({
-    show: {
-        type: Boolean,
-        default: false,
-    },
+    show: { type: Boolean, default: false },
 });
-
 const emit = defineEmits(['close']);
 
 const form = useForm({
     name: '',
     description: '',
+    icon: 'building-2',
 });
+
+const selectedIconLabel = computed(() => {
+    return OFFICE_ICON_OPTIONS.find((item) => item.id === form.icon)?.label || 'Administration / General';
+});
+
+const selectedIconComponent = computed(() => OFFICE_ICON_MAP[form.icon] || Building2);
 
 function closeModal() {
     form.clearErrors();
     form.reset();
     emit('close');
+}
+
+function selectIcon(iconId) {
+    form.icon = iconId;
+    if (document.activeElement && typeof document.activeElement.blur === 'function') {
+        document.activeElement.blur();
+    }
 }
 
 function submit() {
@@ -57,9 +67,6 @@ function submit() {
             <!-- Header -->
             <div class="flex items-center justify-between pb-3 border-b border-slate-200">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-bu-blue-50 text-bu-blue-700 flex items-center justify-center">
-                        <Building2 class="w-4 h-4" />
-                    </div>
                     <div>
                         <h3 id="add-office-modal-title" class="text-base font-bold text-slate-800">
                             Add Administrative Office
@@ -78,30 +85,67 @@ function submit() {
 
             <!-- Form -->
             <form @submit.prevent="submit" class="mt-4 space-y-4">
-                <!-- General Error Banner -->
                 <div v-if="form.hasErrors && form.errors.error" class="alert alert-error text-xs p-3">
                     <AlertCircle class="w-4 h-4 shrink-0" />
                     <span>{{ form.errors.error }}</span>
                 </div>
 
-                <!-- Office Name -->
+                <!-- Office Name & Icon Prefix Dropdown -->
                 <fieldset class="fieldset">
-                    <legend class="fieldset-legend font-semibold text-slate-700 text-xs">
-                        Office Name
+                    <legend class="fieldset-legend font-semibold text-slate-700 text-xs flex items-center justify-between">
+                        <span>Office Name</span>
                     </legend>
-                    <input
-                        v-model="form.name"
-                        type="text"
-                        placeholder="e.g. Office of Student Affairs and Services"
-                        class="input input-bordered input-sm w-full"
-                        :class="{ 'input-error': form.errors.name }"
-                        maxlength="100"
-                        required
-                        autofocus
-                    />
-                    <span v-if="form.errors.name" class="text-xs text-error mt-1">
-                        {{ form.errors.name }}
-                    </span>
+                    <div class="join w-full">
+                        <!-- Icon Selector Dropdown -->
+                        <div class="dropdown dropdown-bottom">
+                            <button
+                                tabindex="0"
+                                type="button"
+                                class="btn btn-sm join-item bg-slate-50 hover:bg-slate-100 border border-slate-300 text-slate-700 px-2.5 gap-1.5 focus-visible:outline-none"
+                                :title="`Icon: ${selectedIconLabel} (Click to change)`"
+                                aria-label="Change office icon"
+                            >
+                                <component :is="selectedIconComponent" class="w-4 h-4 text-bu-blue-700" />
+                                <ChevronDown class="w-3 h-3 text-slate-400" />
+                            </button>
+                            <div
+                                tabindex="0"
+                                class="dropdown-content z-30 p-2.5 shadow-xl bg-base-100 border border-slate-200 rounded-xl w-68 mt-1.5"
+                            >
+                                <div class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2 px-1">
+                                    Select Icon
+                                </div>
+                                <div class="grid grid-cols-4 gap-1.5">
+                                    <button
+                                        v-for="opt in OFFICE_ICON_OPTIONS"
+                                        :key="opt.id"
+                                        type="button"
+                                        @click="selectIcon(opt.id)"
+                                        class="btn btn-sm btn-ghost p-1 flex items-center justify-center rounded-lg border transition-all"
+                                        :class="form.icon === opt.id ? 'bg-bu-blue-50 border-bu-blue-300 text-bu-blue-700 ring-1 ring-bu-blue-400' : 'border-transparent hover:bg-slate-100 text-slate-600'"
+                                        :title="opt.label"
+                                        :aria-label="opt.label"
+                                    >
+                                        <component :is="opt.icon" class="w-4 h-4" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Name Input -->
+                        <input
+                            v-model="form.name"
+                            type="text"
+                            placeholder="e.g. Office of Student Affairs and Services"
+                            class="input input-bordered input-sm join-item grow"
+                            :class="{ 'input-error': form.errors.name }"
+                            maxlength="100"
+                            required
+                            autofocus
+                        />
+                    </div>
+                    <span v-if="form.errors.name" class="text-xs text-error mt-1">{{ form.errors.name }}</span>
+                    <span v-if="form.errors.icon" class="text-xs text-error mt-1">{{ form.errors.icon }}</span>
                 </fieldset>
 
                 <!-- Description / Mandate -->
@@ -117,9 +161,7 @@ function submit() {
                         placeholder="Brief summary of office mandates, university charter functions, or policy purview..."
                         maxlength="1000"
                     ></textarea>
-                    <span v-if="form.errors.description" class="text-xs text-error mt-1">
-                        {{ form.errors.description }}
-                    </span>
+                    <span v-if="form.errors.description" class="text-xs text-error mt-1">{{ form.errors.description }}</span>
                 </fieldset>
 
                 <!-- Actions -->

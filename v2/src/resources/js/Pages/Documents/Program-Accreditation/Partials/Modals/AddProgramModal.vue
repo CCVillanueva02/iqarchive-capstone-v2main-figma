@@ -29,7 +29,7 @@ const form = useForm({
     college_id: '',
     code: '',
     name: '',
-    current_level: 'Candidate Status',
+    current_level: 'Candidate',
 });
 
 function handleClose() {
@@ -116,11 +116,12 @@ function submit() {
                         :class="{ 'select-error': form.errors.current_level }"
                         required
                     >
-                        <option value="Candidate Status">Candidate Status</option>
+                        <option value="Candidate">Candidate</option>
                         <option value="Level 1">Level 1</option>
                         <option value="Level 2">Level 2</option>
                         <option value="Level 3">Level 3</option>
                         <option value="Level 4">Level 4</option>
+                        <option value="Level 5">Level 5</option>
                     </select>
                     <p v-if="form.errors.current_level" class="text-error text-xs mt-1">{{ form.errors.current_level }}</p>
                 </div>

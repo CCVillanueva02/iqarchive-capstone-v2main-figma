@@ -297,5 +297,23 @@ body,
     scrollbar-width: none;
 }
 
+/* Prevent native browser drag on sidebar/nav links (anchors are draggable by default) */
+.no-drag a,
+.no-drag img {
+    -webkit-user-drag: none;
+    user-drag: none;
+}
+
+/* -------------------------------------------------------------------------
+ * 8. DESKTOP ROOT SCALE
+ * Calibrated 110% default scale for desktop workstations (≥1024px)
+ * ensuring expansive typography, comfortable touch targets, and high legibility.
+ * ------------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+    html {
+        font-size: 110%; /* 17.6px base for rem units */
+    }
+}
+
 
 

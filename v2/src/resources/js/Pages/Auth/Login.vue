@@ -60,12 +60,12 @@ defineProps({
             aria-label="Bicol University Quality Assurance Welcome"
         >
             <!-- Deep Navy Gradient Overlay for High Contrast Text (Left to Right) -->
-            <div class="absolute inset-0 bg-gradient-to-r from-[#0B1B3D]/95 via-[#0B1B3D]/85 to-[#0B1B3D]/60 pointer-events-none"></div>
+            <div class="absolute inset-0 bg-linear-to-r from-sidebar-blue/95 via-sidebar-blue/85 to-sidebar-blue/60 pointer-events-none"></div>
 
             <div class="relative z-10 max-w-2xl flex flex-col items-start text-left">
                 <!-- Workspace Category Kicker with BU Orange Accent Line -->
                 <div class="flex items-center gap-3 mb-6">
-                    <span class="w-8 h-1 bg-[#F26522] rounded-full inline-block"></span>
+                    <span class="w-8 h-1 bg-bu-orange-500 rounded-full inline-block"></span>
                     <span class="text-xs font-bold tracking-widest uppercase text-slate-200">
                         Internal Quality Assurance Workspace
                     </span>
@@ -75,7 +75,7 @@ defineProps({
                 <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.15]">
                     A Document Management<br class="hidden sm:inline" />
                     &amp; Monitoring System<br class="hidden sm:inline" />
-                    for <span class="text-[#F26522]">Quality Assurance</span>
+                    for <span class="text-bu-orange-500">Quality Assurance</span>
                 </h1>
 
                 <!-- Descriptive Subtitle -->
@@ -94,11 +94,15 @@ defineProps({
 
                     <!-- Brand Seal & Office Title -->
                     <div class="text-center flex flex-col items-center">
-                        <img 
-                            src="/bulogo.png" 
-                            alt="Bicol University Seal" 
-                            class="w-20 h-20 object-contain transition-transform duration-300 hover:scale-105" 
-                        />
+                        <div class="avatar">
+                            <div class="w-20 h-20 mask mask-squircle">
+                                <img
+                                    src="/bulogo.png"
+                                    alt="Bicol University Seal"
+                                    class="object-contain transition-transform duration-300 hover:scale-105"
+                                />
+                            </div>
+                        </div>
 
                         <h2 class="text-2xl font-bold text-slate-900 tracking-tight mt-3">
                             IQArchive
@@ -146,7 +150,7 @@ defineProps({
                     <div class="text-center mt-1">
                         <a
                             href="mailto:bu-iqao@bicol-u.edu.ph"
-                            class="text-xs text-slate-500 hover:text-[#F26522] transition-colors"
+                            class="text-xs text-slate-500 hover:text-bu-orange-500 transition-colors"
                         >
                             Don't have an account?
                         </a>

@@ -5,9 +5,9 @@
  * IQArchive v2 — Sample Common Documents Seeder
  * ============================================================================
  * File: database/seeders/SampleCommonDocumentSeeder.php
- * Responsibility: Generates sample institutional common document PDF entries
- *                 for HRDO and University Registrar offices with valid binary files
- *                 and audit logging.
+ * Responsibility: Generates sample institutional common documents showcasing
+ *                 diverse document types (PDF, Word, Excel, PPTX, Image)
+ *                 for HRDO and University Registrar offices.
  * Architecture: Database Seeder Layer
  * Security Context: Strictly carries null college_id and institutional category_id.
  * ============================================================================
@@ -59,15 +59,33 @@ class SampleCommonDocumentSeeder extends Seeder
                 'office' => $hrdo,
                 'title' => 'BU Faculty Merit Promotion Plan & Plantilla Guidelines (2025 Revised Edition)',
                 'original_filename' => 'BU_HRDO_Faculty_Merit_Promotion_2025.pdf',
+                'mime_type' => 'application/pdf',
                 'doc_number' => 'BU-HRDO-POL-2025-001',
                 'status' => 'iqa_appr',
             ],
             [
                 'office' => $hrdo,
+                'title' => 'Faculty Staffing & Plantilla Position Distribution Matrix 2025',
+                'original_filename' => 'BU_HRDO_Faculty_Plantilla_Matrix_2025.xlsx',
+                'mime_type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'doc_number' => 'BU-HRDO-DAT-2025-002',
+                'status' => 'iqa_appr',
+            ],
+            [
+                'office' => $hrdo,
                 'title' => 'University Code of Conduct and Ethical Standards for Academic Personnel',
-                'original_filename' => 'BU_HRDO_Code_of_Conduct_Policy.pdf',
+                'original_filename' => 'BU_HRDO_Code_of_Conduct_Policy_Revision.docx',
+                'mime_type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 'doc_number' => 'BU-HRDO-POL-2024-008',
                 'status' => 'draft',
+            ],
+            [
+                'office' => $hrdo,
+                'title' => 'Faculty Professional Development & Scholarship Orientation Deck',
+                'original_filename' => 'BU_HRDO_Faculty_Development_Briefing.pptx',
+                'mime_type' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                'doc_number' => 'BU-HRDO-PRE-2025-003',
+                'status' => 'iqa_appr',
             ],
 
             // University Registrar Sample Documents
@@ -75,15 +93,33 @@ class SampleCommonDocumentSeeder extends Seeder
                 'office' => $registrar,
                 'title' => 'Official Academic Calendar & Enrollment Policies AY 2026-2027',
                 'original_filename' => 'OUR_Academic_Calendar_AY2026_2027.pdf',
+                'mime_type' => 'application/pdf',
                 'doc_number' => 'BU-OUR-CIR-2026-004',
                 'status' => 'iqa_appr',
             ],
             [
                 'office' => $registrar,
                 'title' => 'University Retention, Grading System & Scholastic Delinquency Manual',
-                'original_filename' => 'OUR_Retention_and_Grading_Manual.pdf',
+                'original_filename' => 'OUR_Retention_and_Grading_Manual.docx',
+                'mime_type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 'doc_number' => 'BU-OUR-MAN-2025-002',
                 'status' => 'dean_appr',
+            ],
+            [
+                'office' => $registrar,
+                'title' => 'University Graduation Statistics & Completion Analytics AY 2024–2025',
+                'original_filename' => 'OUR_Graduation_Statistics_Analytics_2025.xlsx',
+                'mime_type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'doc_number' => 'BU-OUR-DAT-2025-005',
+                'status' => 'iqa_appr',
+            ],
+            [
+                'office' => $registrar,
+                'title' => 'Freshmen Student Onboarding & Orientation Ceremonial Exhibit',
+                'original_filename' => 'OUR_Student_Orientation_Ceremony_Exhibit.png',
+                'mime_type' => 'image/png',
+                'doc_number' => 'BU-OUR-IMG-2025-006',
+                'status' => 'iqa_appr',
             ],
         ];
 
@@ -91,17 +127,17 @@ class SampleCommonDocumentSeeder extends Seeder
 
         foreach ($sampleEntries as $entry) {
             $office = $entry['office'];
-            $pdfContent = $this->buildPdfContent($entry['title'], $office->name, $entry['doc_number']);
-            $fileHash = hash('sha256', $pdfContent);
-            $fileSize = strlen($pdfContent);
-            $filePath = "evidence/common/{$office->id}/{$fileHash}.pdf";
+            $mime = $entry['mime_type'];
+            $content = $this->generateContent($entry, $office->name);
+            $ext = pathinfo($entry['original_filename'], PATHINFO_EXTENSION);
+            $fileHash = hash('sha256', $content);
+            $fileSize = strlen($content);
+            $filePath = "evidence/common/{$office->id}/{$fileHash}.{$ext}";
 
-            // Store physical PDF file on storage disk
-            Storage::disk($disk)->put($filePath, $pdfContent);
-
-            // Also mirror to public disk if local environment has public storage
+            // Store physical file on storage disk
+            Storage::disk($disk)->put($filePath, $content);
             if ($disk === 'local') {
-                Storage::disk('public')->put($filePath, $pdfContent);
+                Storage::disk('public')->put($filePath, $content);
             }
 
             // Create or update Document record
@@ -118,7 +154,7 @@ class SampleCommonDocumentSeeder extends Seeder
                     'file_path' => $filePath,
                     'file_hash' => $fileHash,
                     'file_size_bytes' => $fileSize,
-                    'mime_type' => 'application/pdf',
+                    'mime_type' => $mime,
                     'status' => $entry['status'],
                     'visibility' => 'univ',
                 ]
@@ -138,12 +174,28 @@ class SampleCommonDocumentSeeder extends Seeder
                     'details' => [
                         'title' => $document->title,
                         'category_id' => $document->category_id,
+                        'mime_type' => $mime,
                         'file_hash' => $document->file_hash,
                         'seeded' => true,
                     ],
                 ]
             );
         }
+    }
+
+    /**
+     * Generate content per file type.
+     */
+    private function generateContent(array $entry, string $officeName): string
+    {
+        $mime = $entry['mime_type'];
+        if ($mime === 'application/pdf') {
+            return $this->buildPdfContent($entry['title'], $officeName, $entry['doc_number']);
+        }
+        if ($mime === 'image/png') {
+            return base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
+        }
+        return "IQArchive Common Document Mock Content\nTitle: {$entry['title']}\nRef: {$entry['doc_number']}\nOffice: {$officeName}\n";
     }
 
     /**
@@ -159,21 +211,21 @@ class SampleCommonDocumentSeeder extends Seeder
         $body = "BT\n"
             . "/F1 16 Tf\n"
             . "50 730 Td\n"
-            . "(BICOL UNIVERSITY) Tj\n"
+            . "(BICOL UNIVERSITY — OFFICIAL INSTITUTIONAL ARCHIVE) Tj\n"
             . "/F1 12 Tf\n"
             . "0 -24 Td\n"
             . "({$cleanOffice}) Tj\n"
             . "/F1 10 Tf\n"
             . "0 -20 Td\n"
-            . "(Document Ref: {$cleanDocNum} | Date: {$date}) Tj\n"
+            . "(Document Control: {$cleanDocNum} | Date: {$date}) Tj\n"
             . "/F1 13 Tf\n"
             . "0 -35 Td\n"
             . "({$cleanTitle}) Tj\n"
             . "/F1 10 Tf\n"
             . "0 -30 Td\n"
-            . "(Official document cataloged under institutional Common Documents vault.) Tj\n"
+            . "(Common reference document cataloged for university-wide AACCUP accreditation.) Tj\n"
             . "0 -16 Td\n"
-            . "(Certified true copy for AACCUP accreditation and quality assurance compliance.) Tj\n"
+            . "(Official digital copy archived in IQArchive. Uncontrolled when printed.) Tj\n"
             . "ET\n";
 
         $bodyLen = strlen($body);
@@ -203,7 +255,7 @@ class SampleCommonDocumentSeeder extends Seeder
         }
 
         $output .= "trailer\n<< /Size " . (count($objects) + 1) . " /Root 1 0 R >>\n";
-        $output .= "startxref\n{$xrefStart}\n%%EOF\n";
+        $output .= "startxref\n{$xrefStart}\n%%EOF";
 
         return $output;
     }

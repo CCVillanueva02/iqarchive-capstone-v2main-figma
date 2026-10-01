@@ -1,56 +1,53 @@
 <!--
 ================================================================================
 IQArchive v2 — Program Selection List (Tier 2)
-================================================================================
 File: resources/js/Pages/Documents/Program-Accreditation/Partials/Navigation/ProgramGrid.vue
-Role: Renders degree programs under the selected college as an interactive list with filters.
 UI Standard: DaisyUI card, badge, btn, input (< 190 lines).
 ================================================================================
 -->
-
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { Search, ArrowRight, X, GraduationCap, FileText } from 'lucide-vue-next';
 
 const props = defineProps({
-    college: {
-        type: Object,
-        required: true,
-    },
-    programs: {
-        type: Array,
-        required: true,
-    },
-    initialSearch: {
-        type: String,
-        default: '',
-    },
+    college: { type: Object, required: true },
+    programs: { type: Array, required: true },
+    initialSearch: { type: String, default: '' },
 });
-
 const emit = defineEmits(['select', 'openAddProgram']);
-
 const searchQuery = ref(props.initialSearch);
 const selectedLevel = ref('all');
+
+function formatLevel(lvl) {
+    if (!lvl) return 'Candidate';
+    return lvl.toLowerCase().includes('candidate') ? 'Candidate' : lvl;
+}
+
+// Reset level filter to 'all' if selected level no longer has matching programs
+watch(() => props.programs, () => {
+    if (selectedLevel.value !== 'all' && !props.programs.some((p) => formatLevel(p.current_level) === selectedLevel.value)) {
+        selectedLevel.value = 'all';
+    }
+});
 
 const levelFilters = computed(() => {
     const counts = {};
     props.programs.forEach((p) => {
-        const lvl = p.current_level || 'Candidate Status';
+        const lvl = formatLevel(p.current_level);
         counts[lvl] = (counts[lvl] || 0) + 1;
     });
 
-    const filters = [{ id: 'all', label: 'All', count: props.programs.length }];
-    const standardOrder = ['Candidate Status', 'Level 1', 'Level 2', 'Level 3', 'Level 4'];
+    const filters = [{ id: 'all', label: 'All', count: props.programs.length, disabled: false }];
+    const standardOrder = ['Candidate', 'Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'];
 
     standardOrder.forEach((lvl) => {
-        if (counts[lvl]) {
-            filters.push({ id: lvl, label: lvl, count: counts[lvl] });
-        }
+        const count = counts[lvl] || 0;
+        filters.push({ id: lvl, label: lvl, count, disabled: count === 0 });
     });
 
     Object.keys(counts).forEach((lvl) => {
         if (!standardOrder.includes(lvl)) {
-            filters.push({ id: lvl, label: lvl, count: counts[lvl] });
+            filters.push({ id: lvl, label: lvl, count: counts[lvl], disabled: false });
         }
     });
 
@@ -59,32 +56,28 @@ const levelFilters = computed(() => {
 
 const filteredPrograms = computed(() => {
     let list = props.programs;
-
     if (selectedLevel.value !== 'all') {
-        list = list.filter((p) => (p.current_level || 'Candidate Status') === selectedLevel.value);
+        list = list.filter((p) => formatLevel(p.current_level) === selectedLevel.value);
     }
-
     if (!searchQuery.value) return list;
     const q = searchQuery.value.toLowerCase().trim();
     return list.filter((p) =>
         p.name.toLowerCase().includes(q) ||
         p.code.toLowerCase().includes(q) ||
-        (p.current_level && p.current_level.toLowerCase().includes(q))
+        formatLevel(p.current_level).toLowerCase().includes(q)
     );
 });
 
 function getLevelBadgeClass(level) {
     const l = (level || '').toLowerCase();
-    if (l.includes('level 3') || l.includes('level 4') || l.includes('level iii') || l.includes('level iv')) {
+    if (l.includes('level 3') || l.includes('level 4') || l.includes('level 5') || l.includes('level iii') || l.includes('level iv') || l.includes('level v')) {
         return 'badge-success badge-soft';
     }
-    if (l.includes('level 1') || l.includes('level 2') || l.includes('level i') || l.includes('level ii')) {
-        return 'badge-info badge-soft';
-    }
-    return 'badge-neutral badge-soft text-slate-600 bg-slate-100 border-none';
+    return (l.includes('level 1') || l.includes('level 2') || l.includes('level i') || l.includes('level ii'))
+        ? 'badge-info badge-soft'
+        : 'badge-neutral badge-soft text-slate-600 bg-slate-100 border-none';
 }
 </script>
-
 <template>
     <div class="space-y-4">
         <!-- Filter & Search Toolbar (Sticky) -->
@@ -95,11 +88,16 @@ function getLevelBadgeClass(level) {
                     v-for="tab in levelFilters"
                     :key="tab.id"
                     type="button"
-                    @click="selectedLevel = tab.id"
+                    :disabled="tab.disabled"
+                    @click="!tab.disabled && (selectedLevel = tab.id)"
                     class="btn btn-xs rounded-lg font-semibold transition-all"
-                    :class="selectedLevel === tab.id
-                        ? 'bg-sidebar-blue text-white shadow-xs'
-                        : 'btn-ghost text-slate-600 hover:bg-slate-100'"
+                    :class="[
+                        tab.disabled
+                            ? 'opacity-40 cursor-not-allowed bg-slate-100/60 text-slate-400 border-none pointer-events-none'
+                            : selectedLevel === tab.id
+                                ? 'bg-sidebar-blue text-white shadow-xs'
+                                : 'btn-ghost text-slate-600 hover:bg-slate-100'
+                    ]"
                 >
                     <span>{{ tab.label }}</span>
                     <span class="opacity-70 text-[10px] tabular-nums">({{ tab.count }})</span>
@@ -163,8 +161,8 @@ function getLevelBadgeClass(level) {
 
                             <!-- Accreditation Level (Centered) -->
                             <td class="py-3.5 px-4 whitespace-nowrap text-center">
-                                <span class="badge text-xs font-semibold px-2.5 py-1 inline-flex" :class="getLevelBadgeClass(program.current_level)">
-                                    {{ program.current_level || 'Candidate Status' }}
+                                <span class="badge w-24 text-xs font-semibold py-1 justify-center inline-flex" :class="getLevelBadgeClass(program.current_level)">
+                                    {{ formatLevel(program.current_level) }}
                                 </span>
                             </td>
 

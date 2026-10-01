@@ -13,15 +13,19 @@
 
 use App\Http\Controllers\AccreditationController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DevAuthController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ExecutiveController;
+use App\Http\Controllers\InstitutionalAccreditationController;
 use App\Http\Controllers\ProgramAccreditationController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 // Public Authentication & Landing Routes
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -45,15 +49,25 @@ Route::get('/', function (Request $request) {
     return app(AuthController::class)->login($request);
 })->name('dashboard');
 
-Route::get('/settings', [AuthController::class, 'settings'])->name('account.settings');
+Route::get('/settings', [UserProfileController::class, 'settings'])->name('account.settings');
 
 // Role-Scoped Workspaces
 Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::get('/colleges', [AdminController::class, 'colleges'])->name('admin.colleges');
+    Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('admin.audit-logs')->middleware('auth');
 });
 
 Route::prefix('iqa')->group(function () {
     Route::get('/', [AccreditationController::class, 'iqaIndex'])->name('iqa.dashboard');
+    Route::get('/visits', function () {
+        return Inertia::render('Iqa/Visits');
+    })->name('iqa.visits');
+});
+
+Route::get('/visits', function () {
+    return redirect()->route('iqa.visits');
 });
 
 Route::prefix('dean')->group(function () {
@@ -82,10 +96,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/documents/common', [DocumentController::class, 'storeCommon'])->name('documents.store.common');
     Route::post('/documents/offices', [DocumentController::class, 'storeOffice'])->name('documents.store.office');
     Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
+    Route::get('/documents/{document}/file', [DocumentController::class, 'file'])->name('documents.file');
 
     // Program Accreditation Workspace
     Route::get('/documents/program-accreditation', [ProgramAccreditationController::class, 'index'])->name('documents.program-accreditation');
     Route::post('/documents/program-accreditation/programs', [ProgramAccreditationController::class, 'storeProgram'])->name('documents.program-accreditation.store-program');
     Route::post('/documents/program-accreditation/documents', [ProgramAccreditationController::class, 'storeDocument'])->name('documents.program-accreditation.store-document');
+    Route::delete('/documents/program-accreditation/documents/{document}', [ProgramAccreditationController::class, 'destroyDocument'])->name('documents.program-accreditation.destroy-document');
+
+    // Institutional Accreditation Workspace
+    Route::get('/documents/institutional-accreditation', [InstitutionalAccreditationController::class, 'index'])->name('documents.institutional-accreditation');
+    Route::post('/documents/institutional-accreditation/documents', [InstitutionalAccreditationController::class, 'storeDocument'])->name('documents.institutional-accreditation.store-document');
+    Route::delete('/documents/institutional-accreditation/documents/{document}', [InstitutionalAccreditationController::class, 'destroyDocument'])->name('documents.institutional-accreditation.destroy-document');
 });
 

@@ -1,0 +1,58 @@
+# Self-Survey Document Type Matrix — Task Plan & Implementation Log
+
+## Plan
+- **High-level goal:** Build the comprehensive, interactive Self-Survey matrix for Program Accreditation with live real-time scoring, section means, parameter means, area means, and official AACCUP rubric.
+- **Scope:**
+  - Area carousel navigation (Areas I to IX) matching AACCUP institutional/program survey format.
+  - Collapsible Rating Scale Reference (NA, 0 to 5) with percentage criteria and standard definitions.
+  - Interactive evaluation matrix with DaisyUI `<select>` dropdowns for Item Ratings (IR).
+  - Live client-side calculation of System Mean, Implementation Mean, Outcome Mean, Parameter Mean, Total Rating, and Area Mean with `tabular-nums font-mono`.
+  - Best Practices textarea per parameter with live reactivity.
+  - Prepared By sign-off and Submit action with local storage persistence and submission feedback.
+  - Clean Print / Export layout for physical inspection.
+- **Key decisions:**
+  - Modular component architecture strictly respecting the 150–200 line limit:
+    - `SelfSurveyView.vue`: Master orchestrator.
+    - `SelfSurveyAreaCarousel.vue`: Horizontal area selection tab strip with completion progress.
+    - `RatingScaleReference.vue`: Collapsible AACCUP 1–5 scoring rubric.
+    - `SelfSurveyParameterBlock.vue`: Parameter table with S/I/O sections, dropdowns, and sub-means.
+    - `SelfSurveySummaryFooter.vue`: Footer bar with Total Rating, Area Mean banner, sign-off input, and submit action.
+    - `selfSurveyData.js`: Centralized data definitions for Areas I–IX, parameters, and indicators extracted from institutional survey instruments.
+  - Pure Vue 3 reactive computation engine for 0ms lag during scoring.
+- **Testing strategy:**
+  - Verify calculations: NA exclusion, valid indicator denominators, parameter mean 3-way averaging, and area mean computation.
+  - Run `php artisan test` and `npm run build` to ensure zero regressions.
+
+## Implementation Progress
+### [Session 1 - 2026-10-01]
+- [x] Researched legacy reference `c:\Users\janss\Herd\iqarchive\backup\document-jans` and sample PDF `IA_Area I - Self Survey.pdf`.
+- [x] Subtask 1: Extract and assemble `selfSurveyData.js` dataset for Areas I to IX.
+- [x] Subtask 2: Create `RatingScaleReference.vue` collapsible rubric with 7-level AACCUP scale.
+- [x] Subtask 3: Create `SelfSurveyAreaCarousel.vue` with completion progress bars and active tabs.
+- [x] Subtask 4: Create `SelfSurveyParameterBlock.vue` with 4-column matrix, live S/I/O sub-means, PM mean, and Best Practices textarea.
+- [x] Subtask 5: Create `SelfSurveySummaryFooter.vue` with Total Rating, green Area Mean banner, sign-off input, and submit action.
+- [x] Subtask 6: Update `SelfSurveyView.vue` and wire into `Index.vue` with print/export support and localStorage draft saving.
+- [x] Subtask 7: Added `test_iqa_user_can_access_self_survey_workspace` to `ProgramAccreditationTest.php`.
+- [x] Subtask 8: Ran `npm run build` (built in 1.27s) and `php artisan test` (61 tests, 388 assertions, all passing).
+
+### [Session 2 - 2026-10-01]
+- [x] Relocated Print / Export button from top toolbar down to bottom action footer alongside Submit in `SelfSurveySummaryFooter.vue` and `SelfSurveyView.vue`.
+- [x] Fixed carousel card tightness in `SelfSurveyAreaCarousel.vue` (expanded height to `min-h-29`, width to `min-w-56 max-w-64`, added comfortable padding and vertical margin).
+- [x] Switched data source from Institutional Accreditation to the official 10-Area AACCUP Program Accreditation Master Survey Instrument (`Program Accreditation-Instrument_Areas I to X-Master Survey Instrument`), preserving the complete self-survey evaluation format with 10 Areas (I to X), parameters, and 1,090 authentic criteria with suggested evidence.
+- [x] Unified Area Carousel styling between Supporting Docs (`AreaCarousel.vue`) and Self-Survey (`SelfSurveyAreaCarousel.vue`): rounded-xl, 2px dark border on active, matching scrollbars.
+- [x] Fixed Area VI ("Extension and Community Involvement") tightness and cut-off percentage bar across both carousels by expanding card width to `min-w-56 max-w-64`, height to `min-h-28 h-28`, and adding `shrink-0` to the progress bar container.
+- [x] Updated the "Enter your name..." input in `SelfSurveySummaryFooter.vue` to use a clean signature underline style (`border-b-2`) instead of a fully rounded box.
+- [x] Ran `npm run build` (built cleanly in 1.33s) and `php artisan test` (61 tests, 388 assertions passing).
+
+## Final Status
+- Completed: 2026-10-01
+- Tests: ✓ (61/61 backend tests passing; zero regressions)
+- Security review: ✓ (Multi-tenant scoping by college_id & program_id; IQA authorization gates enforced)
+- File limits: ✓ (All Vue components strictly under 180 lines)
+- UI Standard: ✓ (100% DaisyUI classes: select, table, collapse, input, btn, card, badge)
+- Known limitations: None.
+
+## Lessons & Notes
+- Converting the official 10 Master Survey Instrument Excel files directly into a cleanly structured JSON file (`programSurveyData.json`) imported by `selfSurveyData.js` allowed us to support all 10 Program Accreditation areas and over 1,000 criteria without violating the 150-200 line SFC rule.
+- Positioning Print/Export alongside the Submit action creates an intuitive completion flow for evaluators preparing and printing survey forms.
+

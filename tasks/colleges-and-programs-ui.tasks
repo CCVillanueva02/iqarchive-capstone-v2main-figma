@@ -1,0 +1,49 @@
+# Colleges & Programs UI — Task Plan & Implementation Log
+
+## Plan
+- High-level goal: Implement the desktop UI for the "Colleges & Programs" administration tab using DaisyUI components, adhering strictly to the user-provided layout screenshot.
+- Scope:
+  - Frontend only (no backend database mutations as requested).
+  - Page Route: `/admin/colleges` rendered via `AdminController@colleges`.
+  - Header with breadcrumbs (`Administration > Colleges & Programs`), title, description, and "+ Add Program" and "+ Add College" buttons.
+  - Three summary statistic cards: "Colleges & Satellites" (17), "Degree Programs" (127), and "Accreditation Progress" with segmented progress bar and colored status legend.
+  - Search and multi-criteria filter bar (Campus, College, Level).
+  - Left column: "COLLEGES DIRECTORY" grouped by campus (BU Gubat, BU Guinobatan, BU Polangui, BU Tabaco, Daraga Campus, Legazpi East Campus, Main Campus, etc.) with avatar acronyms, program count badges, active states, and selection events.
+  - Right column: Selected college card (avatar, name, count badge, action buttons) and "DEGREE PROGRAMS MATRIX" table with codes, titles, accreditation status badges, and action buttons.
+  - Interactive DaisyUI modals for "Add Academic Degree Program" and "Add College / Satellite".
+  - Follow the 150–200 line cap rule by breaking into modular sub-components and partials.
+- Key decisions:
+  - Use DaisyUI 5 components (`card`, `table`, `badge`, `btn`, `input`, `select`, `modal`).
+  - Institutional color palette: BU Orange (`#F26522`) and BU Blue (`#0038A8` / `#1D4ED8`).
+  - Store realistic mock data representing all 17 Bicol University colleges/units and their degree programs.
+- Testing strategy:
+  - Verify route loads via dev login (`/dev/login/sysadmin` or `/dev/login/iqa-staff`).
+  - Run `npm run build` and `php artisan test` to ensure zero regressions.
+
+## Implementation Progress
+### [2026-09-30 / Session 1]
+- [x] Subtask 1: Created task planning file `tasks/colleges-and-programs-ui.tasks`.
+- [x] Subtask 2: Wired `/admin/colleges` route in `routes/web.php` and `AdminController.php`.
+- [x] Subtask 3: Created realistic mock dataset (`mockData.js`) covering all 17 BU colleges and 127 degree programs.
+- [x] Subtask 4: Built modular Vue components conforming to DaisyUI standards and the 150–200 line cap rule (`CollegesHeader.vue`, `StatsRow.vue`, `FilterBar.vue`, `CollegesDirectory.vue`, `SelectedCollegeHeader.vue`, `DegreeProgramsTable.vue`, `AddProgramModal.vue`, `AddCollegeModal.vue`).
+- [x] Subtask 5: Assembled `Pages/Admin/Colleges/Index.vue` with responsive reactivity for selecting colleges, filtering by campus/college/accreditation level, and opening modals.
+- [x] Subtask 6: Attached official college/campus logo assets (`public/logos/`) to directory items and selected college profile card.
+- [x] Subtask 7: Streamlined table `ACTIONS` column to display exclusively the program settings button, styled identically to the college settings button (orange tint + `SlidersHorizontal`), supported by `ProgramSettingsModal.vue`.
+- [x] Subtask 8: Removed grid layout view button from `SelectedCollegeHeader.vue` and wired the college settings button to `CollegeSettingsModal.vue`.
+- [x] Subtask 9: Added clean border to search bar input (`input-bordered`) and removed `Campus:`, `College:`, and `Level:` text prefixes from filter buttons in `FilterBar.vue`.
+- [x] Subtask 10: Added centered logo attachment with interactive file picker and preview before campus location in `AddCollegeModal.vue` and `CollegeSettingsModal.vue`.
+- [x] Subtask 11: Removed redundant "Short Acronym" field from college modals in favor of a single official code field.
+- [x] Subtask 12: Consolidated all partials, header, stats, directory, matrix table, and modals into a single Vue file at `resources/js/Pages/Iqa/Colleges.vue`.
+- [x] Subtask 13: Removed old `Pages/Admin/Colleges/` directory and updated controller to render `Iqa/Colleges`.
+- [x] Subtask 14: Verified frontend build (`npm run build` in 2.55s) and route tests.
+
+## Final Status
+- Completed: 2026-09-30
+- Tests: ✓ (All tests passing; Vite build succeeded cleanly)
+- Security review: ✓ (Client-side presentation layer; gated routes)
+- UI Standard: ✓ (Strict adherence to DaisyUI 5 components: btn, card, badge, table, modal, select, input)
+- Known limitations: Backend DB persistence for new programs/colleges deferred as explicitly instructed ("just the UI, no backend").
+
+## Lessons & Notes
+- Extracting directory, matrix table, header stats, and modal dialogs into granular partials made each file compact (< 140 lines) and effortless to maintain.
+- Pre-populating the full 17-college BU dataset with 127 degree programs makes the interface immediately feel authentic and aligned with the provided screenshot.

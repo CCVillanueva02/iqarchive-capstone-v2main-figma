@@ -28,17 +28,6 @@ const props = defineProps({
 
 const totalColleges = computed(() => props.collegesCount || 17);
 const totalPrograms = computed(() => props.programsCount || props.college?.programs_count || 0);
-
-function getWorkspaceMode(category) {
-    switch (category) {
-        case 'supporting-documents': return '10 Areas & Evidence';
-        case 'self-survey': return 'Evaluation Matrix';
-        case 'compliance-reports': return 'Official Reports';
-        case 'ppp': return 'Performance Profile';
-        case 'narrative-profile': return 'Narrative Profile';
-        default: return 'Accreditation Workspace';
-    }
-}
 </script>
 
 <template>
@@ -49,12 +38,14 @@ function getWorkspaceMode(category) {
     >
         <!-- Left Side: Logo & Program Identity -->
         <div class="flex items-center gap-2.5 min-w-0">
-            <div class="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200/80 p-1 flex items-center justify-center shrink-0">
-                <img
-                    src="/logos/aaccup-logo.png"
-                    alt="AACCUP"
-                    class="w-full h-full object-contain"
-                />
+            <div class="avatar shrink-0">
+                <div class="w-14 h-14 mask mask-squircle bg-slate-50 border border-slate-200/80">
+                    <img
+                        src="/logos/aaccup-logo.png"
+                        alt="AACCUP"
+                        class="object-contain"
+                    />
+                </div>
             </div>
             <div class="min-w-0">
                 <div class="text-xs font-bold text-slate-900 tracking-tight whitespace-nowrap">
@@ -68,10 +59,10 @@ function getWorkspaceMode(category) {
 
         <!-- Right Side: Colleges Stat Counter -->
         <div class="text-right shrink-0 pl-2.5 pr-1.5 border-l border-slate-100">
-            <div class="text-lg font-black text-slate-900 tabular-nums leading-none">
+            <div class="text-lg font-black text-slate-900 tabular-nums leading-none text-center">
                 {{ totalColleges }}
             </div>
-            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1 text-center">
                 Colleges
             </div>
         </div>
@@ -84,14 +75,16 @@ function getWorkspaceMode(category) {
     >
         <!-- Left Side: College Logo & Identity -->
         <div class="flex items-center gap-2.5 min-w-0 flex-1">
-            <div class="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200/80 p-1 flex items-center justify-center shrink-0">
-                <img
-                    v-if="college.logo_url"
-                    :src="college.logo_url"
-                    :alt="college.code"
-                    class="w-full h-full object-contain"
-                />
-                <GraduationCap v-else class="w-5 h-5 text-bu-blue-700" />
+            <div class="avatar shrink-0">
+                <div class="w-14 h-14 mask mask-squircle bg-slate-50 border border-slate-200/80">
+                    <img
+                        v-if="college.logo_url"
+                        :src="college.logo_url"
+                        :alt="college.code"
+                        class="object-contain"
+                    />
+                    <GraduationCap v-else class="w-6 h-6 text-bu-blue-700 m-auto" />
+                </div>
             </div>
             <div class="min-w-0 flex-1">
                 <div class="text-xs font-bold text-slate-900 tracking-tight leading-snug line-clamp-3" :title="college.name">
@@ -102,63 +95,48 @@ function getWorkspaceMode(category) {
 
         <!-- Right Side: Programs Stat Counter -->
         <div class="text-right shrink-0 pl-2.5 pr-1.5 border-l border-slate-100">
-            <div class="text-lg font-black text-slate-900 tabular-nums leading-none">
+            <div class="text-lg font-black text-slate-900 tabular-nums leading-none text-center">
                 {{ totalPrograms }}
             </div>
-            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1 text-center">
                 {{ totalPrograms === 1 ? 'Program' : 'Programs' }}
             </div>
         </div>
     </div>
 
-    <!-- Tier 3: Selected Program Details (Hub View) -->
+    <!-- Tier 3 & Tier 4: Selected Program Details + Document Type (when inside workspace) -->
     <div
-        v-else-if="currentTier === 3 && activeCategory === 'hub' && program"
+        v-else-if="currentTier === 3 && program"
         class="card card-border bg-base-100 border-slate-200 p-3 rounded-2xl shadow-xs flex flex-row items-center gap-2.5 min-h-24"
     >
-        <div class="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200/80 p-1 flex items-center justify-center shrink-0">
-            <img
-                v-if="college?.logo_url"
-                :src="college.logo_url"
-                :alt="college.code"
-                class="w-full h-full object-contain"
-            />
-            <GraduationCap v-else class="w-5 h-5 text-bu-blue-700" />
+        <div class="avatar shrink-0">
+            <div class="w-14 h-14 mask mask-squircle bg-slate-50 border border-slate-200/80">
+                <img
+                    v-if="college?.logo_url"
+                    :src="college.logo_url"
+                    :alt="college.code"
+                    class="object-contain"
+                />
+                <GraduationCap v-else class="w-6 h-6 text-bu-blue-700 m-auto" />
+            </div>
         </div>
         <div class="min-w-0 flex-1">
-            <div class="text-xs font-bold text-slate-900 tracking-tight leading-snug line-clamp-2" :title="program.name">
+            <div
+                class="text-xs font-bold text-slate-900 tracking-tight leading-snug"
+                :class="activeCategory !== 'hub' ? 'line-clamp-1' : 'line-clamp-2'"
+                :title="program.name"
+            >
                 {{ program.name }}
             </div>
             <div class="text-[11px] font-medium text-slate-500 mt-0.5 truncate" :title="college?.name">
                 {{ college?.name || college?.code }}
             </div>
-        </div>
-    </div>
-
-    <!-- Tier 4: Selected Workspace Details -->
-    <div
-        v-else-if="currentTier === 3 && activeCategory !== 'hub'"
-        class="card card-border bg-base-100 border-slate-200 p-3.5 rounded-2xl shadow-xs flex flex-col justify-between space-y-2"
-    >
-        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-            <div class="flex items-center gap-2 min-w-0">
-                <div class="w-7 h-7 rounded-lg bg-orange-50 border border-orange-100 flex items-center justify-center text-bu-orange-500 shrink-0">
-                    <FolderOpen class="w-4 h-4" />
-                </div>
-                <span class="text-xs font-bold text-slate-900 tracking-tight truncate max-w-32.5" :title="activeCategoryTitle">
-                    {{ activeCategoryTitle }}
+            <!-- Document Type Indicator (Tier 4) -->
+            <div v-if="activeCategory !== 'hub' && activeCategoryTitle" class="mt-1 flex items-center gap-1 min-w-0">
+                <span class="badge badge-warning badge-soft text-[10px] font-bold px-2 py-0.5 flex items-center gap-1 truncate max-w-full" :title="activeCategoryTitle">
+                    <FolderOpen class="w-3 h-3 shrink-0" />
+                    <span class="truncate">{{ activeCategoryTitle }}</span>
                 </span>
-            </div>
-            <span class="badge badge-warning badge-soft text-[10px] font-semibold px-2 py-0.5">Workspace</span>
-        </div>
-        <div class="space-y-1 text-xs">
-            <div class="flex items-center justify-between gap-2">
-                <span class="text-slate-500 shrink-0">Target Program:</span>
-                <span class="font-bold font-mono text-sidebar-blue text-right">{{ program?.code }}</span>
-            </div>
-            <div class="flex items-center justify-between gap-2">
-                <span class="text-slate-500 shrink-0">Mode:</span>
-                <span class="font-semibold text-slate-800 text-right">{{ getWorkspaceMode(activeCategory) }}</span>
             </div>
         </div>
     </div>

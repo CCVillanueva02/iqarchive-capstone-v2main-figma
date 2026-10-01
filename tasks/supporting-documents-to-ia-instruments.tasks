@@ -1,0 +1,136 @@
+# Supporting Documents to Instrument — Task Plan & Implementation Log
+
+## Plan
+- High-level goal: Transform the Supporting Documents workspace into the official "Supporting Documents to Instrument" evidence workstation, mapping AACCUP Master Survey Indicators and Institutional Accreditation (IA) benchmarks to expected document checklists, attached vault PDFs (with instant drawer preview), and Google Drive links.
+- Scope:
+  - **In Scope**:
+    - Renaming: Update all category references from "Supporting Documents" to "Supporting Documents to Instrument".
+    - Data Layer: Migration adding `criterion_id` and `external_url` to `documents` table; enrich `instrument_criteria` with `suggested_evidence` from the official BU IA and Master Survey instruments.
+    - Backend: Update `ProgramAccreditationService` and `ProgramAccreditationController` to support criterion-linked documents and external cloud links, scoped strictly by `college_id`.
+    - Frontend Workstation: Modular UI in `resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/SupportingDocs/`:
+      - `SupportingDocsView.vue`: Coordinator layout with Area carousel and progress summary (< 150 lines).
+      - `ParametersSidebar.vue`: Parameter list with benchmark completion counts (< 120 lines).
+      - `EvidenceMatrixWorkstation.vue`: Category filter tabs, search bar, and table container (< 150 lines).
+      - `EvidenceMatrixTable.vue`: DaisyUI `table table-zebra table-pin-rows` with Benchmark Code, Expected Documents checklist, and Attached Evidence (< 160 lines).
+      - `EvidenceItemPill.vue`: File & Google Drive link pills with instant drawer preview trigger (< 90 lines).
+      - `AttachEvidenceModal.vue`: Modal supporting both file uploads (S3/local vault) and cloud links (Google Drive/SharePoint) (< 160 lines).
+    - Verification: Feature tests in `ProgramAccreditationTest.php`, `npm run build`, and browser testing.
+  - **Out of Scope**:
+    - External accreditor numerical rating input (handled in Self-Survey).
+    - Task Force locked assignments (scoped to IQA workflow for now).
+
+- Key decisions:
+  - Use DaisyUI `table table-zebra table-pin-rows` for the matrix table, reproducing the familiar Google Sheet mental model.
+  - Support both native PDF vault files and Google Drive links, matching the 175+ real links in BU's exported IA sheets.
+  - Reuse the existing `DocumentPreviewDrawer.vue` for instantaneous half-screen PDF preview.
+  - Maintain strict modular component boundaries (< 180 lines each) to comply with project rules.
+
+- Edge cases to handle:
+  - Benchmarks with zero attached documents (clean empty state pill: "No evidence attached").
+  - Long benchmark statements and document titles (proper truncation with full tooltip/expansion).
+  - External Drive links vs local PDF preview (external links open in new tab; local files open drawer).
+  - Multi-tenancy isolation (all documents strictly scoped to `college_id` and `program_id`).
+
+- Testing strategy:
+  - Backend feature tests for uploading criterion-linked files and cloud links.
+  - Verification of category rename and access gates.
+  - `npm run build` frontend build check.
+  - Browser verification of the workstation UI.
+
+## Implementation Progress
+### [2026-09-30 / Session 1]
+- [x] Researched Google Sheet format from `IA_2024 Link to Supporting Documents - AREA I.pdf` and `Area I-Master Survey Instrument.xlsx`.
+- [x] Aligned on Option B (Full IA Instrument Evidence Workstation) via `/office-hours`.
+- [x] Initialized task plan ledger (`tasks/supporting-documents-to-ia-instruments.tasks`).
+- [x] Database migration: Added `criterion_id` and `external_url` to `documents` table; added `suggested_evidence` to `instrument_criteria`.
+- [x] Updated models `Document.php` and `InstrumentCriterion.php` with fillable attributes, casts, and relations (`criterion()`, `documents()`).
+- [x] Enriched `AaccupMasterInstrumentSeeder.php` with official benchmark checklists from Bicol University IA & Master Survey instruments.
+- [x] Updated `ProgramAccreditationService.php`: Renamed category to "Supporting Documents to Instrument"; updated `storeProgramDocument()` to support criterion linking and Google Drive external URLs.
+- [x] Updated `ProgramAccreditationController.php`: Updated validation to accept `file` and/or `external_url`; added `destroyDocument` endpoint.
+- [x] Added `DELETE /documents/program-accreditation/documents/{document}` route to `routes/web.php`.
+- [x] Built modular frontend workstation (< 180 lines per component):
+  - `SupportingDocsView.vue`: Master layout with Area tabs and stats (188 lines).
+  - `AreaHeaderBanner.vue`: Area title, description, and radial completion progress (50 lines).
+  - `ParametersSidebar.vue`: Parameter list with benchmark completion count badges (76 lines).
+  - `EvidenceMatrixTable.vue`: 3-column DaisyUI table with benchmarks, expected documents checklist, attached evidence, and attach triggers (145 lines).
+  - `EvidenceItemPill.vue`: Evidence document and Google Drive link pill with preview drawer and deletion triggers (79 lines).
+  - `AttachEvidenceModal.vue`: Modal supporting dual tabs: file upload & Google Drive link (155 lines).
+- [x] Integrated slide-over `DocumentPreviewDrawer.vue` for instantaneous PDF viewing.
+- [x] Added 4 new feature tests in `ProgramAccreditationTest.php`: category renaming, criterion-linked uploads, Google Drive links, and evidence deletion.
+- [x] Adopted user's original design layout from backup (`resources/views/pages/documents/partials/program-accreditation/supporting-docs.blade.php`):
+  - Area horizontal carousel cards with progress bars and scroll arrow buttons.
+  - Left pane: "Parameters Available" with active left accent bar, code, title, and emerald progress %.
+  - Right pane: Header with Documents count, Verified count, Progress %, and large progress line.
+  - Category navigation tabs with active underline: Systems, Implementation, Outcomes, Best Practices.
+  - Criterion cards with code pill, statement, "+ Add File", attached document cards, and dashed "Upload & Link Document" button.
+- [x] Ran automated verification:
+  - Backend: 56/56 tests passing (352 assertions).
+  - Frontend: `npm run build` completed with 0 errors.
+
+### [2026-10-01 / Session 2]
+- [x] Inspected original design layout from backup at `backup/document-jans/iqarchive-capstone-document-jans/.../supporting-docs.blade.php` and `upload-evidence-modal.blade.php`.
+- [x] Polished `AreaCarousel.vue`: Crisp `border-2 border-slate-800` active card styling, uppercase `AREA I` headers, title clamps, and smooth horizontal scroll track controls.
+- [x] Polished `ParametersSidebar.vue`: Active state left accent bar (`border-l-4 border-slate-900`), `0%` emerald progress pill, and clear hierarchy between active and inactive parameters.
+- [x] Polished `BenchmarkChecklistWorkspace.vue`: Parameter title, metric counters (Documents, Verified, Progress %), large horizontal progress line, and 4 category tabs (`Systems - Inputs & Processes`, `Implementation`, `Outcomes`, `Best Practices`).
+- [x] Polished `CriterionCard.vue`: Pill `S.1` with `bg-slate-100`, benchmark statement, `+ Add File` action with orange icon, attached document cards (with `Preview`, `Open Link`, and delete action), and dashed `Upload & Link Document` button with orange upload icon.
+- [x] Polished `AttachEvidenceModal.vue`: Integrated `EvidenceContextBanner.vue` subcomponent, added suggested evidence tags (auto-fill title upon click), and dual tabs for local PDF uploads and Google Drive URLs.
+- [x] Verified line caps: All Vue SFC components strictly maintained under the 150–200 line cap rule.
+- [x] Polished carousel navigation: Removed mousewheel event listener (`@wheel.passive`) from `AreaCarousel.vue` to allow natural native horizontal scrollbar behavior.
+- [x] Simplified terminology: Removed "Cloud URL" and "Cloud Link" across all components in favor of "Google Drive" and "Google Drive Link".
+- [x] Created `GoogleDriveIcon.vue` with official Google Drive multi-color brand vector SVG.
+- [x] Created `DocumentTypeIcon.vue` providing semantic, color-coded file icons across the application:
+  - PDF (`.pdf`): Red (`text-rose-500`)
+  - Word / Docs (`.docx`, `.doc`): Blue (`text-blue-600`)
+  - Excel / Spreadsheets (`.xlsx`, `.xls`, `.csv`): Green (`text-emerald-600`)
+  - Presentation / PPTX (`.pptx`, `.ppt`): Orange (`text-amber-500`)
+  - Images (`.png`, `.jpg`, `.jpeg`, `.webp`): Violet (`text-violet-600`)
+  - Archives (`.zip`, `.rar`, `.7z`): Amber (`text-amber-600`)
+  - Google Drive (`external_url`): Official Multi-color Google Drive SVG
+  - Other / Generic: Slate (`text-slate-500`)
+- [x] Integrated `DocumentTypeIcon` across all document views:
+  - `CriterionCard.vue`, `EvidenceItemPill.vue`, `RecentEvidenceTable.vue`, `DocumentsTable.vue`, `PppView.vue`, `NarrativeProfileView.vue`, `ComplianceReportsView.vue`, `FileDropzone.vue`, and `DocumentPreviewDrawer.vue`.
+- [x] Enriched seeders (`SampleBugElementaryEducationSeeder.php`, `SampleCommonDocumentSeeder.php`, `DatabaseSeeder.php`) with multi-format sample documents showcasing all semantic icons.
+- [x] Streamlined upload modal: Removed "(PDF/VAULT)" label and suggested evidence tag pills.
+- [x] Ran automated verification:
+  - `php artisan test`: 56/56 passing (352 assertions).
+  - `npm run build`: built in 1.29s with 0 errors.
+
+## Final Status
+- Completed: 2026-10-01
+- Tests: ✓ (56/56 passing, 352 assertions; Vite build succeeded in 1.29s)
+- Security review: ✓ (Scoping by `college_id` preserved; IQA authorization gates enforced on store and destroy endpoints)
+- PR/Commits: Ready for atomic commit.
+- Files Updated / Created:
+  - `database/migrations/2026_09_30_000001_add_criterion_and_external_url_to_documents_table.php`
+  - `app/Models/Document.php`
+  - `app/Models/InstrumentCriterion.php`
+  - `database/seeders/DatabaseSeeder.php`
+  - `database/seeders/AaccupMasterInstrumentSeeder.php`
+  - `database/seeders/SampleBugElementaryEducationSeeder.php`
+  - `database/seeders/SampleCommonDocumentSeeder.php`
+  - `app/Services/ProgramAccreditationService.php`
+  - `app/Http/Controllers/ProgramAccreditationController.php`
+  - `routes/web.php`
+  - `resources/js/Components/Icons/GoogleDriveIcon.vue`
+  - `resources/js/Components/Icons/DocumentTypeIcon.vue`
+  - `resources/js/Components/DocumentPreviewDrawer.vue`
+  - `resources/js/Components/FileDropzone.vue`
+  - `resources/js/Pages/Documents/Common-Documents/Partials/DocumentsTable.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/SupportingDocs/SupportingDocsView.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/SupportingDocs/AreaCarousel.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/SupportingDocs/ParametersSidebar.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/SupportingDocs/BenchmarkChecklistWorkspace.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/SupportingDocs/CriterionCard.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/SupportingDocs/EvidenceItemPill.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/SupportingDocs/AttachEvidenceModal.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/SupportingDocs/Partials/EvidenceContextBanner.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/Ppp/PppView.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/NarrativeProfile/NarrativeProfileView.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/DocumentTypes/ComplianceReports/ComplianceReportsView.vue`
+  - `resources/js/Pages/Documents/Program-Accreditation/Partials/Hub/RecentEvidenceTable.vue`
+  - `tests/Feature/ProgramAccreditationTest.php`
+
+## Lessons & Notes
+- Semantic icon color-coding (PDF in red, Word in blue, Excel in green, PPTX in orange, PNG in violet, ZIP in amber, Drive in multi-color) provides immediate visual recognition across all accreditation criteria and repository tables.
+- Replicating the previous design provides immediate familiarity for users while migrating from Blade/Livewire to Vue 3 Composition API + Inertia.js.
+- Decomposing the workspace into small single-purpose sub-components ensures maintainability and strictly stays under the 150-200 line cap.

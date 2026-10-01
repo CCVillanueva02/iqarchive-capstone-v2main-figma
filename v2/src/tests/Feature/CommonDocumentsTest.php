@@ -166,19 +166,46 @@ class CommonDocumentsTest extends TestCase
         ]);
     }
 
-    public function test_upload_validation_rejects_non_pdf_files(): void
+    public function test_upload_validation_rejects_disallowed_file_types(): void
     {
         Storage::fake('local');
 
-        $file = UploadedFile::fake()->create('notes.txt', 128, 'text/plain');
+        $file = UploadedFile::fake()->create('script.exe', 128, 'application/x-msdownload');
 
         $response = $this->actingAs($this->iqaUser)->post('/documents/common', [
-            'title' => 'Invalid Text File',
+            'title' => 'Invalid Executable File',
             'office_id' => $this->hrdoCategory->id,
             'file' => $file,
         ]);
 
         $response->assertSessionHasErrors(['file']);
+    }
+
+    public function test_iqa_staff_can_upload_docx_and_xlsx_common_documents(): void
+    {
+        Storage::fake('local');
+
+        $docxFile = UploadedFile::fake()->create(
+            'Institutional_Manual_2026.docx',
+            256,
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        );
+
+        $response = $this->actingAs($this->iqaUser)->post('/documents/common', [
+            'title' => 'BU Quality Manual 2026',
+            'office_id' => $this->hrdoCategory->id,
+            'file' => $docxFile,
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('documents', [
+            'title' => 'BU Quality Manual 2026',
+            'original_filename' => 'Institutional_Manual_2026.docx',
+            'category_id' => $this->hrdoCategory->id,
+        ]);
+
+        $doc = Document::where('title', 'BU Quality Manual 2026')->first();
+        $this->assertStringEndsWith('.docx', $doc->file_path);
     }
 
     public function test_can_filter_documents_by_office_and_search_query(): void
@@ -277,17 +304,95 @@ class CommonDocumentsTest extends TestCase
         ]);
     }
 
+    public function test_authenticated_user_can_stream_document_file_inline(): void
+    {
+        Storage::fake('local');
+        Storage::disk('local')->put('evidence/common/sample.pdf', '%PDF-1.4 sample content');
+
+        $doc = Document::create([
+            'college_id' => null,
+            'program_id' => null,
+            'category_id' => $this->hrdoCategory->id,
+            'user_id' => $this->iqaUser->id,
+            'title' => 'Public Policy Stream',
+            'original_filename' => 'policy_stream.pdf',
+            'file_path' => 'evidence/common/sample.pdf',
+            'file_hash' => hash('sha256', '%PDF-1.4 sample content'),
+            'file_size_bytes' => 24,
+            'mime_type' => 'application/pdf',
+            'status' => 'draft',
+            'visibility' => 'univ',
+        ]);
+
+        $response = $this->actingAs($this->taskForceUser)->get("/documents/{$doc->id}/file");
+        $response->assertOk();
+        $response->assertHeader('Content-Disposition', 'inline; filename="policy_stream.pdf"');
+
+        $this->assertDatabaseHas('audit_logs', [
+            'action' => 'document.preview',
+            'user_id' => $this->taskForceUser->id,
+            'target_id' => (string) $doc->id,
+        ]);
+    }
+
+    public function test_download_endpoint_returns_external_url_for_cloud_documents(): void
+    {
+        $doc = Document::create([
+            'college_id' => null,
+            'program_id' => null,
+            'category_id' => $this->hrdoCategory->id,
+            'user_id' => $this->iqaUser->id,
+            'title' => 'External Google Drive Policy',
+            'original_filename' => 'drive_link',
+            'external_url' => 'https://drive.google.com/file/d/12345sample/view',
+            'file_path' => 'https://drive.google.com/file/d/12345sample/view',
+            'file_hash' => hash('sha256', 'drive_link'),
+            'file_size_bytes' => 0,
+            'mime_type' => 'application/x-url',
+            'status' => 'draft',
+            'visibility' => 'univ',
+        ]);
+
+        $response = $this->actingAs($this->taskForceUser)->getJson("/documents/{$doc->id}/download");
+        $response->assertOk()
+            ->assertJson(['url' => 'https://drive.google.com/file/d/12345sample/view']);
+    }
+
+    public function test_file_endpoint_redirects_away_for_external_url_documents(): void
+    {
+        $doc = Document::create([
+            'college_id' => null,
+            'program_id' => null,
+            'category_id' => $this->hrdoCategory->id,
+            'user_id' => $this->iqaUser->id,
+            'title' => 'External Cloud Document',
+            'original_filename' => 'cloud_doc',
+            'external_url' => 'https://drive.google.com/file/d/external123/view',
+            'file_path' => 'https://drive.google.com/file/d/external123/view',
+            'file_hash' => hash('sha256', 'external_cloud'),
+            'file_size_bytes' => 0,
+            'mime_type' => 'application/x-url',
+            'status' => 'draft',
+            'visibility' => 'univ',
+        ]);
+
+        $response = $this->actingAs($this->taskForceUser)->get("/documents/{$doc->id}/file");
+        $response->assertRedirect('https://drive.google.com/file/d/external123/view');
+    }
+
     public function test_iqa_staff_can_add_administrative_office(): void
     {
         $response = $this->actingAs($this->iqaUser)->post('/documents/offices', [
             'name' => 'Admissions and Registrar Services',
             'description' => 'Administers university student applications and scholastic records.',
+            'icon' => 'graduation-cap',
         ]);
 
         $created = DocumentCategory::where('name', 'Admissions and Registrar Services')->first();
         $this->assertNotNull($created);
         $this->assertEquals('institutional', $created->scope);
         $this->assertEquals('Administers university student applications and scholastic records.', $created->description);
+        $this->assertEquals('graduation-cap', $created->icon);
 
         $response->assertRedirect("/documents?office_id={$created->id}");
         $response->assertSessionHas('success');
@@ -333,5 +438,50 @@ class CommonDocumentsTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors(['name']);
+    }
+
+    public function test_offices_are_sorted_descending_by_time_added(): void
+    {
+        $thirdOffice = DocumentCategory::create([
+            'name' => 'ZZZ Brand New Office',
+            'scope' => 'institutional',
+            'created_at' => now()->addMinutes(5),
+        ]);
+
+        $response = $this->actingAs($this->iqaUser)->get('/documents?tab=common-documents');
+
+        $response->assertOk();
+        $response->assertInertia(fn (Assert $page) => $page
+            ->component('Documents/Common-Documents/Index')
+            ->has('offices', fn (Assert $offices) => $offices
+                ->where('0.id', $thirdOffice->id)
+                ->etc()
+            )
+        );
+    }
+
+    public function test_common_documents_include_accreditation_links_count(): void
+    {
+        Document::create([
+            'college_id' => null,
+            'program_id' => null,
+            'category_id' => $this->hrdoCategory->id,
+            'user_id' => $this->iqaUser->id,
+            'title' => 'HRDO Code of Conduct Sample',
+            'original_filename' => 'conduct.pdf',
+            'file_path' => 'evidence/common/conduct.pdf',
+            'file_hash' => hash('sha256', 'conduct_content'),
+            'file_size_bytes' => 2048,
+            'mime_type' => 'application/pdf',
+            'status' => 'draft',
+            'visibility' => 'univ',
+        ]);
+
+        $response = $this->actingAs($this->iqaUser)->get("/documents?office_id={$this->hrdoCategory->id}");
+        $response->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('Documents/Common-Documents/Index')
+                ->where('documents.0.document_links_count', 0)
+            );
     }
 }

@@ -29,12 +29,14 @@ class InstrumentCriterion extends Model
         'instrument_parameter_id',
         'benchmark_code',
         'title',
+        'suggested_evidence',
         'type',
     ];
 
     protected function casts(): array
     {
         return [
+            'suggested_evidence' => 'array',
             'created_at' => 'datetime',
         ];
     }
@@ -47,5 +49,10 @@ class InstrumentCriterion extends Model
     public function complianceRequirements(): HasMany
     {
         return $this->hasMany(ComplianceRequirement::class, 'instrument_criteria_id');
+    }
+
+    public function documents(): HasMany
+    {
+        return $this->hasMany(Document::class, 'criterion_id');
     }
 }

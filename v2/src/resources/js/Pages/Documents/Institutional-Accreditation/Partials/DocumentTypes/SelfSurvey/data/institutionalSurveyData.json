@@ -1,0 +1,358 @@
+[
+  {
+    "areaNumber": 1,
+    "roman": "I",
+    "name": "Governance and Management",
+    "fullName": "GOVERNANCE AND MANAGEMENT (including resource generation)",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Governance - Organizational Structure",
+        "criteria": [
+          {
+            "code": "S.1",
+            "name": "The governance of the institution is clearly defined in the organizational structure.",
+            "rating": 4.5
+          },
+          {
+            "code": "I.1",
+            "name": "The policy-making body demonstrates strong leadership and supports the institution's programs and operations.",
+            "rating": 4.8
+          },
+          {
+            "code": "O.1",
+            "name": "Conflict in administrative jurisdictions and official relationships are minimal.",
+            "rating": 4.2
+          }
+        ]
+      },
+      {
+        "letter": "B",
+        "name": "Probity and Ethical Standards",
+        "criteria": [
+          {
+            "code": "S.1",
+            "name": "Clear institutional policies and codes of conduct govern ethical practices across all operations.",
+            "rating": 4.6
+          },
+          {
+            "code": "I.1",
+            "name": "The organization follows institutional processes with respect to governance because leadership was selected based on transparent procedures.",
+            "rating": 4.4
+          },
+          {
+            "code": "O.1",
+            "name": "Stakeholders express high trust and satisfaction in transparent management.",
+            "rating": 4.3
+          }
+        ]
+      },
+      {
+        "letter": "C",
+        "name": "Governance - Strategic Vision",
+        "criteria": [
+          {
+            "code": "S.1",
+            "name": "Management is guided by a well-defined institutional vision and mission consonance with regional, national, and global trends.",
+            "rating": 4.7
+          },
+          {
+            "code": "I.1",
+            "name": "The institution implements the Strategic Plan and periodically evaluates it through Agency Performance Reviews.",
+            "rating": 4.5
+          },
+          {
+            "code": "O.1",
+            "name": "Key developmental milestones in the Strategic Plan are achieved on schedule.",
+            "rating": 4.6
+          }
+        ]
+      },
+      {
+        "letter": "G",
+        "name": "Management and Financial Control",
+        "criteria": [
+          {
+            "code": "S.1",
+            "name": "There is a sound system of management, budget allocation, and financial control.",
+            "rating": 4.5
+          },
+          {
+            "code": "I.1",
+            "name": "The university executes rigid monitoring of income-generating projects and fund utilization.",
+            "rating": 4.3
+          },
+          {
+            "code": "O.1",
+            "name": "Fund utilization is effective and transparent with minimal audit observations.",
+            "rating": 4.4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "areaNumber": 2,
+    "roman": "II",
+    "name": "Teaching, Learning and Evaluation",
+    "fullName": "TEACHING, LEARNING AND EVALUATION",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Setting and Achieving Program Standards",
+        "criteria": [
+          {
+            "code": "S.1",
+            "name": "Academic programs have clearly defined objectives and learning outcomes aligned with the institution's VMGO.",
+            "rating": 4.6
+          },
+          {
+            "code": "I.1",
+            "name": "Periodic review and evaluation of academic programs are conducted incorporating labor market and stakeholder demands.",
+            "rating": 4.4
+          },
+          {
+            "code": "O.1",
+            "name": "Graduates demonstrate desired program competencies and achieve high employability.",
+            "rating": 4.5
+          }
+        ]
+      },
+      {
+        "letter": "B",
+        "name": "Curriculum Design and Evaluation",
+        "criteria": [
+          {
+            "code": "S.1",
+            "name": "Curricula reflect outcomes-based education (OBE) principles and conform to CHED standards.",
+            "rating": 4.7
+          },
+          {
+            "code": "I.1",
+            "name": "Innovative instructional methodologies, flexible learning, and blended coursework are deployed.",
+            "rating": 4.3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "areaNumber": 3,
+    "roman": "III",
+    "name": "Faculty and Staff",
+    "fullName": "FACULTY AND STAFF",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Recruitment, Selection, and Merit Promotion",
+        "criteria": [
+          {
+            "code": "S.1",
+            "name": "A merit selection plan and transparent qualification standards govern the recruitment and promotion of faculty and staff.",
+            "rating": 4.8
+          },
+          {
+            "code": "I.1",
+            "name": "Hiring and promotion processes strictly observe publication requirements, objective scoring, and odd-numbered voting boards.",
+            "rating": 4.6
+          },
+          {
+            "code": "O.1",
+            "name": "The institution maintains a highly qualified corps of full-time faculty holding vertically articulated graduate degrees.",
+            "rating": 4.4
+          }
+        ]
+      },
+      {
+        "letter": "B",
+        "name": "Faculty and Staff Development Program",
+        "criteria": [
+          {
+            "code": "S.1",
+            "name": "A comprehensive Faculty and Staff Development Program (FSDP) provides scholarships, grants, and study leaves.",
+            "rating": 4.7
+          },
+          {
+            "code": "I.1",
+            "name": "Faculty members participate in local, national, and international training, research conferences, and post-graduate studies.",
+            "rating": 4.5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "areaNumber": 4,
+    "roman": "IV",
+    "name": "Research",
+    "fullName": "RESEARCH",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Research Agenda and Management",
+        "criteria": [
+          {
+            "code": "S.1",
+            "name": "The institutional Research, Development, and Extension (RDE) Agenda is approved and aligned with national and regional priorities.",
+            "rating": 4.6
+          },
+          {
+            "code": "I.1",
+            "name": "Research grants, workload deloading, and incentive mechanisms support faculty research initiatives.",
+            "rating": 4.3
+          },
+          {
+            "code": "O.1",
+            "name": "Faculty publish in Scopus/WoS indexed journals, secure external grants, and register intellectual properties.",
+            "rating": 4.2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "areaNumber": 5,
+    "roman": "V",
+    "name": "Extension, Consultancy and Linkages",
+    "fullName": "EXTENSION, OCCUPANCY AND LINKAGES",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Extension Policy and Program Management",
+        "criteria": [
+          {
+            "code": "S.1",
+            "name": "The institutional extension agenda and operational manual guide community engagement and technology transfer.",
+            "rating": 4.5
+          },
+          {
+            "code": "I.1",
+            "name": "Extension programs are implemented in partnership with LGUs, civil society, and adopted communities.",
+            "rating": 4.6
+          },
+          {
+            "code": "O.1",
+            "name": "Community impact assessments demonstrate sustained socioeconomic improvement in partner localities.",
+            "rating": 4.3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "areaNumber": 6,
+    "roman": "VI",
+    "name": "Support to Students",
+    "fullName": "SUPPORT TO STUDENTS",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Student Services Management and Welfare",
+        "criteria": [
+          {
+            "code": "S.1",
+            "name": "A comprehensive Student Affairs and Services (SAS) program provides holistic student development.",
+            "rating": 4.7
+          },
+          {
+            "code": "I.1",
+            "name": "Career placement, counseling, scholarships, and mental health services are available across all campuses.",
+            "rating": 4.5
+          },
+          {
+            "code": "O.1",
+            "name": "Comprehensive graduate tracer studies demonstrate positive alumni career trajectories and employer satisfaction.",
+            "rating": 4.6
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "areaNumber": 7,
+    "roman": "VII",
+    "name": "Library",
+    "fullName": "LIBRARY",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Library Administration, Holdings, and Digital Resources",
+        "criteria": [
+          {
+            "code": "S.1",
+            "name": "The university library is administered by licensed professional librarians with sufficient holdings and e-resources.",
+            "rating": 4.4
+          },
+          {
+            "code": "I.1",
+            "name": "Online public access catalogs (OPAC) and remote electronic databases are accessible to all faculty and students.",
+            "rating": 4.6
+          },
+          {
+            "code": "O.1",
+            "name": "High utilization rates of library and research facilities are recorded across all colleges.",
+            "rating": 4.3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "areaNumber": 8,
+    "roman": "VIII",
+    "name": "Infrastructure and Learning Resources",
+    "fullName": "INFRASTRUCTURE AND OTHER LEARNING SOURCES",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Campus Master Plan and Physical Facilities",
+        "criteria": [
+          {
+            "code": "S.1",
+            "name": "The Land Use Development and Infrastructure Plan (LUDIP) guides physical campus modernization and development.",
+            "rating": 4.7
+          },
+          {
+            "code": "I.1",
+            "name": "Academic buildings, laboratories, and safety infrastructure meet national statutory standards and accessibility law (BP 344).",
+            "rating": 4.5
+          },
+          {
+            "code": "O.1",
+            "name": "Learning spaces provide an environment conducive to instruction, research, and campus life.",
+            "rating": 4.6
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "areaNumber": 9,
+    "roman": "IX",
+    "name": "Quality Assurance Culture",
+    "fullName": "QUALITY ASSURANCE CULTURE",
+    "parameters": [
+      {
+        "letter": "A",
+        "name": "Internal Quality Assurance Office and Systems",
+        "criteria": [
+          {
+            "code": "S.1",
+            "name": "A dedicated, fully equipped Internal Quality Assurance (IQA) Office spearheads university-wide quality assurance.",
+            "rating": 4.9
+          },
+          {
+            "code": "I.1",
+            "name": "A Quality Management System (QMS) aligned with ISO 9001:2015 is implemented with periodic internal quality audits.",
+            "rating": 4.8
+          },
+          {
+            "code": "O.1",
+            "name": "Institutional and program accreditation levels are systematically monitored, maintained, and elevated.",
+            "rating": 4.7
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -12,6 +12,7 @@ Line count target: < 150 lines.
 <script setup>
 import { ref, computed } from 'vue';
 import { Search } from 'lucide-vue-next';
+import { resolveOfficeIcon } from './officeIcons';
 
 const props = defineProps({
     offices: {
@@ -64,13 +65,22 @@ const filteredOffices = computed(() => {
                     :key="office.id"
                     type="button"
                     @click="emit('select', office.id)"
-                    class="w-full text-left p-3 rounded-lg border transition-all flex items-center justify-between gap-2 cursor-pointer"
+                    class="w-full text-left p-3 rounded-lg border transition-all flex items-center gap-2.5 cursor-pointer"
                     :class="[
                         Number(selectedOfficeId) === Number(office.id)
                             ? 'bg-bu-blue-50 border-bu-blue-200 shadow-xs'
                             : 'bg-base-100 hover:bg-slate-50 border-slate-200/80 text-slate-700',
                     ]"
                 >
+                    <!-- Office icon in a tinted circle -->
+                    <div
+                        class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+                        :class="Number(selectedOfficeId) === Number(office.id)
+                            ? 'bg-bu-blue-100 text-bu-blue-700'
+                            : 'bg-slate-100 text-slate-500'"
+                    >
+                        <component :is="resolveOfficeIcon(office)" class="w-3.5 h-3.5" />
+                    </div>
                     <span
                         class="text-xs font-bold leading-tight"
                         :class="Number(selectedOfficeId) === Number(office.id) ? 'text-bu-blue-800' : 'text-slate-800'"
